@@ -32,7 +32,7 @@
 		"typescript": "^3.2.2"
 	},
 	"scripts": {
-		"start": "ts-node src/index.ts",
+		"start": "ts-node src/server.ts",
 		"test": "jest",
 		"dev": "nodemon"
 	},
