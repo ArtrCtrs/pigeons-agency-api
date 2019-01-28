@@ -1,0 +1,42 @@
+{
+	"name": "connect-api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.ts",
+	"dependencies": {
+		"axios": "^0.18.0",
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.5",
+		"express": "^4.16.4",
+		"jsonwebtoken": "^8.4.0",
+		"pg": "^7.7.1",
+		"reflect-metadata": "^0.1.12",
+		"serve-static": "^1.13.2",
+		"typeorm": "^0.2.9",
+		"validatorjs": "^3.15.1"
+	},
+	"devDependencies": {
+		"@types/bcryptjs": "^2.4.2",
+		"@types/cors": "^2.8.4",
+		"@types/express": "^4.16.0",
+		"@types/jest": "^23.3.12",
+		"@types/jsonwebtoken": "^8.3.0",
+		"@types/node": "^10.12.18",
+		"@types/validatorjs": "^3.7.1",
+		"jest": "^23.6.0",
+		"nodemon": "^1.18.9",
+		"ts-jest": "^23.10.5",
+		"ts-node": "^7.0.1",
+		"tslint": "^5.12.0",
+		"typescript": "^3.2.2"
+	},
+	"scripts": {
+		"start": "ts-node src/index.ts",
+		"test": "jest",
+		"dev": "nodemon"
+	},
+	"keywords": [],
+	"author": "Pigeon-agency",
+	"license": "apache 2"
+}

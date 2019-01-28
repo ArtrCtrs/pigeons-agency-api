@@ -1,0 +1,37 @@
+[
+	{
+		"name": "default",
+		"type": "postgres",
+		"host": "localhost",
+		"port": 5432,
+		"username": "postgres",
+		"password": "postgres",
+		"database": "connect",
+		"synchronize": false,
+		"logging": false,
+		"entities": [
+			"src/entities/*.ts"
+		],
+		"cli": {
+			"entitiesDir": "src/entities"
+		}
+	},
+	{
+		"name": "testing",
+		"type": "postgres",
+		"host": "localhost",
+		"port": 5432,
+		"username": "postgres",
+		"password": "postgres",
+		"database": "connect_test",
+		"dropSchema": true,
+		"synchronize": true,
+		"logging": false,
+		"entities": [
+			"src/entities/*.ts"
+		],
+		"cli": {
+			"entitiesDir": "src/entities"
+		}
+	}
+]
