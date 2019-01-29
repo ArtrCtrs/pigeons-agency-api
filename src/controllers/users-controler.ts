@@ -5,8 +5,7 @@ export class UsersControler {
 
     static async addDummyUser(req: Request, res: Response) {
         //check stuff here
-        console.log(req.body);
-        UsersService.addDummyUser(Number.parseInt(req.body.id));
+        await UsersService.addDummyUser(Number.parseInt(req.body.id));
 
         res.status(200).send({
             message: 'ok',
@@ -16,8 +15,8 @@ export class UsersControler {
     }
 
     static async getUsers(req: Request, res: Response) {
-        let data = UsersService.getUsers();
-
+       
+        let data = await UsersService.getUsers();
         res.status(200).send({
             message: 'ok',
             data: data

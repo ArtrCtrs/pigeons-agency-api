@@ -2,19 +2,18 @@ let pg = require('pg');
 const { Pool, Client } = require('pg');
 
 let pool: any;
-
 let config: any;
 
 try {
-  config = new Pool({
+  config = {
     user: 'postgres',
     host: 'localhost',
-    database: 'test',
+    database: 'pigeonagency',
     password: 'iguane',
     port: 5432,
     max: 10,
     idleTimeoutMillis: 30000,
-  });
+  }
 } catch(err) {
   console.error(err);
 }

@@ -10,7 +10,11 @@ export class UsersService{
     static async getUsers(): Promise<string>{
         let text = 'SELECT * FROM USERS;';
         let dbres = await pool.query(text); 
-        return dbres.rows;
+        console.log(dbres.rows);
+        let ret = await Promise.resolve(dbres.rows);
+       
+        return ret;
+        //return dbres.rows;
 
-    }
+    };
 }

@@ -1,10 +1,13 @@
 import { UsersControler } from './controllers/users-controler';
 import express, { Response, Request } from 'express';
 import db from './db/pgpool';
+import bodyParser from 'body-parser';
 let pool = db.getPool();
 
 console.log("hello hugo");
 const app = express();
+
+app.use(bodyParser.json());
 
 initDB();
 
