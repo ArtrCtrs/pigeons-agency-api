@@ -31,27 +31,29 @@ export class AuthentificationService{
 
 
 		static async loginUser(username: string, password: string) {
+			console.log("password");
 			if (!username || !password) {
 				throw new ConnectError('INVALID_PARAMETERS');
 			}
 
 			let prep = "SELECT * FROM USERS WHERE username = $1";
 			let user = await pool.query(prep,[username]);
+			console.log(user.rows[0].password);
+			console.log(password);
 	
 			if (!user) {
 				throw new ConnectError('INVALID_CREDENTIALS');
 			}
-			console.log(user.rows[0].password);
-			console.log(password);
-	
-			if (!bcrypt.compareSync(password, JSON.stringify(user.rows[0].password))) {
+		
+			const match = await bcrypt.compare(password, String(user.rows[0].password));
+			if(!match){
 				throw new ConnectError('INVALID_CREDENTIALS');
 			}
 	
 			const payload = {
 				user: {
-					id: user.id,
-					username: user.username
+					id: user.rows[0].id,
+					username: user.rows[0].username
 				}
 			};
 	
