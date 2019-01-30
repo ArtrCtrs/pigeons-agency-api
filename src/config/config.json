@@ -3,5 +3,5 @@
 	"testing-port": 4000,
 	"production-port": 3000,
 	"bodyLimit": "100kb",
-	"jwtSecret": "WJxbtLjOQibu2pJdPdV01"
+	"jwtSecret": "hugo"
 }
