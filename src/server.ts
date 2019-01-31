@@ -8,25 +8,39 @@ import MiddlewareHelper from './helpers/middleware-helper';
 let pool = db.getPool();
 const wrapAsync = MiddlewareHelper.wrapAsync;
 
-console.log("hello hugo");
+console.log("hello pigeons!");
 const app = express();
 
 app.use(bodyParser.json());
-app.use(ErrorHelper.clientErrorHandler);
 
-initDB();
+handleInitDB();
+async function handleInitDB(){
+    //await dropDB();
+    await initDB();
+}
 
-app.get('/testget', wrapAsync(UsersControler.getUsers));
 
-app.post('/testpost', wrapAsync(UsersControler.addDummyUser));
+app.get('/testget',[MiddlewareHelper.isLoggedIn],wrapAsync(UsersControler.getUsers));
+
+app.post('/testpost',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.addDummyUser));
 app.post('/register', wrapAsync(AuthentificationControler.register));
 app.post('/login', wrapAsync(AuthentificationControler.login));
 
-const PORT = 5000;
+app.use(ErrorHelper.clientErrorHandler);
 
+const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`);
 });
+
+async function dropDB(){
+    let  text = 'DROP TABLE PIGEONS';
+    let res = await pool.query(text);
+
+    text = 'DROP TABLE USERS';
+    res = await pool.query(text);
+
+}
 
 async function initDB() {
     let text = 'CREATE TABLE IF NOT EXISTS USERS (id SERIAL, username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,maxbirds int DEFAULT 5, grain int DEFAULT 0, PRIMARY KEY (id));'

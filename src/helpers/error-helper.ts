@@ -45,9 +45,7 @@ static handledErrors: Errors = {
 	 * @param next 
 	 */
 	static clientErrorHandler(err: Error, req: Request, res: Response, next: Function) {
-		console.log("2")
 		if (err instanceof ConnectError) {
-			console.log("3")
 			// handled error
 			let errorCode = 520;
 			let errorMessage = 'A technical error occured. Please try again later.';

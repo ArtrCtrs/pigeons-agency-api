@@ -16,7 +16,6 @@ export class AuthentificationService{
 		let dbres = await pool.query(prep,[username]);
 
 		if(dbres.rows.length>0){
-			console.log("1")
 			throw new ConnectError('USERNAME_ALREADY_EXISTS');
 		}
 
@@ -31,29 +30,26 @@ export class AuthentificationService{
 
 
 		static async loginUser(username: string, password: string) {
-			console.log("password");
 			if (!username || !password) {
 				throw new ConnectError('INVALID_PARAMETERS');
 			}
 
 			let prep = "SELECT * FROM USERS WHERE username = $1";
-			let user = await pool.query(prep,[username]);
-			console.log(user.rows[0].password);
-			console.log(password);
+			let user = (await pool.query(prep,[username])).rows[0];
 	
 			if (!user) {
 				throw new ConnectError('INVALID_CREDENTIALS');
 			}
 		
-			const match = await bcrypt.compare(password, String(user.rows[0].password));
+			const match = await bcrypt.compare(password, String(user.password));
 			if(!match){
 				throw new ConnectError('INVALID_CREDENTIALS');
 			}
 	
 			const payload = {
 				user: {
-					id: user.rows[0].id,
-					username: user.rows[0].username
+					id: user.id,
+					username: user.username
 				}
 			};
 	
