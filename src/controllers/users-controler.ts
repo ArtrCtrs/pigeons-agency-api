@@ -1,6 +1,7 @@
 import { UsersService } from '../services/users-service';
 import { Response, Request } from 'express';
-export class UsersControler {
+import { AbstractController } from './abstract-controler';
+export class UsersControler extends AbstractController{
 
 
     static async addDummyUser(req: Request, res: Response) {

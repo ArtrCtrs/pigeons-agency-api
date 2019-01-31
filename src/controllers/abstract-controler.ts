@@ -16,11 +16,9 @@ export class AbstractController {
 
         const token = req.headers.authorization.split(' ')[1];
         const decodedPayload: any = jwt.verify(token, config.jwtSecret);
-
-        //const user: User = await User.findOne(decodedPayload.id);
         
-        const text = "SELECT * FROM USERS WHERE 'id'=$1;";
-        let user = (await pool.query(text,[decodedPayload.id])).rows[0]; 
+        const text = "SELECT * FROM USERS WHERE id=$1;";
+        let user = (await pool.query(text,[decodedPayload.user.id])).rows[0];
 
         if (!user.id) {
             throw new ConnectError('INVALID_TOKEN');

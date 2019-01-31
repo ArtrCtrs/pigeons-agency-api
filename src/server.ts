@@ -5,13 +5,16 @@ import bodyParser from 'body-parser';
 import ErrorHelper from './helpers/error-helper';
 import { AuthentificationControler } from './controllers/authentification-controler';
 import MiddlewareHelper from './helpers/middleware-helper';
+import { PigeonsControler } from './controllers/pigeons-controler';
 let pool = db.getPool();
+const cors = require('cors');
 const wrapAsync = MiddlewareHelper.wrapAsync;
 
 console.log("hello pigeons!");
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 handleInitDB();
 async function handleInitDB(){
@@ -19,6 +22,8 @@ async function handleInitDB(){
     await initDB();
 }
 
+app.get('/pigeons',[MiddlewareHelper.isLoggedIn],wrapAsync(PigeonsControler.getPigeons));
+app.post('/pigeons',[MiddlewareHelper.isLoggedIn],wrapAsync(PigeonsControler.addPigeon));
 
 app.get('/testget',[MiddlewareHelper.isLoggedIn],wrapAsync(UsersControler.getUsers));
 
