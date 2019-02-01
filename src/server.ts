@@ -6,6 +6,8 @@ import ErrorHelper from './helpers/error-helper';
 import { AuthentificationControler } from './controllers/authentification-controler';
 import MiddlewareHelper from './helpers/middleware-helper';
 import { PigeonsControler } from './controllers/pigeons-controler';
+import { AbstractController } from './controllers/abstract-controler';
+import { ExpeditionsControler } from './controllers/expeditions-controler';
 let pool = db.getPool();
 const cors = require('cors');
 const wrapAsync = MiddlewareHelper.wrapAsync;
@@ -17,17 +19,22 @@ app.use(bodyParser.json());
 app.use(cors());
 
 handleInitDB();
-async function handleInitDB(){
+async function handleInitDB() {
     //await dropDB();
     await initDB();
 }
+app.get('/expedition',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
+app.post('/expedition',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
 
-app.get('/pigeons',[MiddlewareHelper.isLoggedIn],wrapAsync(PigeonsControler.getPigeons));
-app.post('/pigeons',[MiddlewareHelper.isLoggedIn],wrapAsync(PigeonsControler.addPigeon));
+app.get('/user',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
-app.get('/testget',[MiddlewareHelper.isLoggedIn],wrapAsync(UsersControler.getUsers));
+app.get('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
+app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon));
 
-app.post('/testpost',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.addDummyUser));
+app.get('/users', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsers));
+
+app.post('/testpost', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.addDummyUser));
+
 app.post('/register', wrapAsync(AuthentificationControler.register));
 app.post('/login', wrapAsync(AuthentificationControler.login));
 
@@ -38,20 +45,24 @@ app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`);
 });
 
-async function dropDB(){
-    let  text = 'DROP TABLE PIGEONS';
+async function dropDB() {
+    let text = 'DROP TABLE IF EXISTS PIGEONS';
     let res = await pool.query(text);
-
-    text = 'DROP TABLE USERS';
+    text = 'DROP TABLE IF EXISTS EXPEDITIONS';
+    res = await pool.query(text);
+    text = 'DROP TABLE IF EXISTS USERS';
     res = await pool.query(text);
 
 }
 
 async function initDB() {
-    let text = 'CREATE TABLE IF NOT EXISTS USERS (id SERIAL, username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,maxbirds int DEFAULT 5, grain int DEFAULT 0, PRIMARY KEY (id));'
+    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,maxbirds int DEFAULT 5, seeds int DEFAULT 0,seedsminute int DEFAULT 1, droppings int DEFAULT 0, totaldropingsminute int DEFAULT 0, xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL, PRIMARY KEY (id));";
     let res = await pool.query(text);
 
-    text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,attack int, defense int, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
+    text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,lvl int DEFAULT 1,attack int DEFAULT 1, defense int DEFAULT 1,life int DEFAULT 3, droppingsminute int DEFAULT 2, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
+    res = await pool.query(text);
+
+    text = 'CREATE TABLE IF NOT EXISTS EXPEDITIONS (id SERIAL, type int NOT NULL,lvl int DEFAULT 1, starttime bigint, duration int DEFAULT 15000,finished boolean DEFAULT false, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
     res = await pool.query(text);
 }
 

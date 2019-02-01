@@ -33,7 +33,11 @@ static handledErrors: Errors = {
     'EMAIL_ALREADY_EXISTS': {
         errorCode: 409,
         errorMessage: 'This email is not available.'
-    }
+	},
+	'REQUIREMENTS_ERROR':{
+		errorCode: 409,
+        errorMessage: 'You don\'t have the necessary ressources.'
+	}
 };
 
 /**
