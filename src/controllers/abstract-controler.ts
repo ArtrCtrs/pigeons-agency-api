@@ -23,7 +23,7 @@ export class AbstractController {
         }
 
         let text = "SELECT * FROM USERS WHERE id=$1;";
-        let user = (await pool.query(text, [decodedPayload.user.id])).rows[0];
+        let user:HomePageDataAPIReturn = (await pool.query(text, [decodedPayload.user.id])).rows[0];
         if (!user.id) {
             throw new ConnectError('INVALID_TOKEN');
         }
@@ -58,4 +58,21 @@ export class AbstractController {
 
 
     }
+    
+}
+export interface HomePageDataAPIReturn { //to check
+        id: number;
+        username: string;
+        password: string;
+        lvl: number;
+        maxbirds: number;
+        seeds: number;
+        seedsminute: number;
+        droppings: number;
+        totaldropingsminute: number;
+        wings: number;
+        xcoord: number;
+        ycoord: number;
+        lastupdate: number;
+    
 }

@@ -17,9 +17,8 @@ export class PigeonsControler extends AbstractController {
     static async addPigeon(req: Request, res: Response) {
 
         const user = await PigeonsControler.getUserFromRequest(req);
-        console.log(req.body);
        
-        await PigeonsService.addPigeon(user.id,req.body.pigeon);
+        await PigeonsService.addPigeon(user.id,req.body.expedition);
         res.status(200).send({
             message: 'ok',
             data: null
