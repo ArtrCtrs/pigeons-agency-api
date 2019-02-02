@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/config.json';
 import { ConnectError } from '../classes/connect-error';
 import db from '../db/pgpool';
+import { PigeonsService } from '../services/pigeons-service';
 let pool = db.getPool();
 
 export class AbstractController {
@@ -37,8 +38,6 @@ export class AbstractController {
 
         await this.updateExpeditions(user);
 
-
-
         return user;
     };
 
@@ -47,12 +46,13 @@ export class AbstractController {
         let expeditions = (await pool.query(text, [user.id])).rows;
         const time = Date.now();
 
-        //a optimiser
+        //to optimise
         for (let i = 0; i < expeditions.length; i++) {
             if (time > Number.parseInt(expeditions[i].starttime) + Number.parseInt(expeditions[i].duration)) {
                 let text = "UPDATE EXPEDITIONS SET finished = true WHERE ownerid=$1 AND finished = false;";
                 await pool.query(text, [user.id]);
-                //create pigeon
+                await PigeonsService.addPigeon(user.id, expeditions[i].type);
+                
             }
         }
 

@@ -3,7 +3,7 @@ import { AbstractController } from './abstract-controler';
 import { ExpeditionsService } from '../services/expeditions-service';
 import { ConnectError } from "../classes/connect-error";
 
-import expeditions from '../model/expeditions';
+import expeditionsList from '../model/expeditionsList';
 export class ExpeditionsControler extends AbstractController {
 
     static async getExpeditions(req: Request, res: Response) {
@@ -19,15 +19,15 @@ export class ExpeditionsControler extends AbstractController {
         const user = await ExpeditionsControler.getUserFromRequest(req);
         const expeditiontype: number = req.body.expeditiontype;
         
-        if (expeditiontype < 0 || expeditiontype >= expeditions.length) {
+        if (expeditiontype < 0 || expeditiontype >= expeditionsList.length) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
-        if (user.seeds < expeditions[expeditiontype].seeds) {
+        if (user.seeds < expeditionsList[expeditiontype].seeds) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
-        await ExpeditionsService.launchExpedition(user.id, expeditiontype, expeditions[expeditiontype].duration);
+        await ExpeditionsService.launchExpedition(user.id, expeditiontype, expeditionsList[expeditiontype].duration);
 
-        user.seeds -= expeditions[expeditiontype].seeds;
+        user.seeds -= expeditionsList[expeditiontype].seeds;
         await ExpeditionsService.paySeeds(user.id, user.seeds);
         res.status(200).send({
             message: 'ok',

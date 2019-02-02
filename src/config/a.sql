@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,maxbirds int DEFAULT 10, seeds int DEFAULT 0,seedsminute int DEFAULT 1, droppings int DEFAULT 0, totaldropingsminute int DEFAULT 0, wings int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL, PRIMARY KEY (id));
