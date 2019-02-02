@@ -29,7 +29,7 @@ app.post('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsCont
 app.get('/user',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
 app.get('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
-app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame
+app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
 
 app.get('/allusers', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsers)); //all users not updated
 
