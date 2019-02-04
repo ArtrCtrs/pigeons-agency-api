@@ -49,8 +49,8 @@ export class AbstractController {
         //to optimise
         for (let i = 0; i < expeditions.length; i++) {
             if (time > Number.parseInt(expeditions[i].starttime) + Number.parseInt(expeditions[i].duration)) {
-                let text = "UPDATE EXPEDITIONS SET finished = true WHERE ownerid=$1 AND finished = false;";
-                await pool.query(text, [user.id]);
+                let text = "UPDATE EXPEDITIONS SET finished = true WHERE id=$1;";
+                await pool.query(text, [expeditions[i].id]);
                 await PigeonsService.addPigeon(user.id, expeditions[i].type);
                 
             }
