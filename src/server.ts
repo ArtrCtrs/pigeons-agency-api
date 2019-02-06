@@ -29,11 +29,10 @@ app.post('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsCont
 app.get('/user',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
 app.get('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
-app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
+//app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
+app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.deletePigeon));
 
 app.get('/allusers', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsers)); //all users not updated
-
-//app.post('/testpost', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.addDummyUser)); //not ingame
 
 app.post('/register', wrapAsync(AuthentificationControler.register));
 app.post('/login', wrapAsync(AuthentificationControler.login));
@@ -56,10 +55,10 @@ async function dropDB() {
 }
 
 async function initDB() {
-    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,maxbirds int DEFAULT 10, seeds int DEFAULT 0,seedsminute int DEFAULT 1, droppings int DEFAULT 0, totaldropingsminute int DEFAULT 0, wings int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL, PRIMARY KEY (id));";
+    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10, seeds int DEFAULT 0,seedsminute int DEFAULT 1, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL, PRIMARY KEY (id));";
     let res = await pool.query(text);
 
-    text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,lvl int DEFAULT 1,attack int DEFAULT 1, defense int DEFAULT 1,life int DEFAULT 3, droppingsminute int DEFAULT 2,wings int DEFAULT 2, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
+    text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,name varchar(255), rank int DEFAULT 1,attack int DEFAULT 1, defense int DEFAULT 1,life int DEFAULT 3, droppingsminute int DEFAULT 2,feathers int DEFAULT 2,creationtime bigint, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
     res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS EXPEDITIONS (id SERIAL, type int NOT NULL,lvl int DEFAULT 1, starttime bigint, duration int DEFAULT 15000,finished boolean DEFAULT false, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'

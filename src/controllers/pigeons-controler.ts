@@ -26,4 +26,15 @@ export class PigeonsControler extends AbstractController {
 
     }
 
+    static async deletePigeon(req:Request,res:Response){
+        const user = await PigeonsControler.getUserFromRequest(req);
+       
+        await PigeonsService.deletePigeon(user.id,req.body.pigeonid);
+        res.status(200).send({
+            message: 'ok',
+            data: null
+        });
+
+    }
+
 }

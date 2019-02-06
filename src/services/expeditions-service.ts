@@ -4,7 +4,7 @@ let pool = db.getPool();
 export class ExpeditionsService {
 
     static async getExpeditions(id: number): Promise<string> {
-        const text = "SELECT * FROM EXPEDITIONS WHERE ownerid=$1;";
+        const text = "SELECT * FROM EXPEDITIONS WHERE ownerid=$1 AND finished=false;";
         const dbres = await pool.query(text, [id]);
         return dbres.rows;
 

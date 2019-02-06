@@ -1,7 +1,8 @@
 const pigeonList =
     [{
         id: 0,
-        lvl: 1,
+        name:"Petit pigeon commun",
+        rank: 1,
         attack: 2,
         attackvariance: 1,
         defense: 2,
@@ -10,10 +11,11 @@ const pigeonList =
         lifevariance: 1,
         droppingsminute: 2,
         droppingsminutevariance: 1,
-        wings: 2
+        feathers: 2
     }, {
         id: 1,
-        lvl: 2,
+        name:"Petit pigeon atypique",
+        rank: 2,
         attack: 4,
         attackvariance: 2,
         defense: 2,
@@ -22,10 +24,11 @@ const pigeonList =
         lifevariance: 2,
         droppingsminute: 3,
         droppingsminutevariance: 1,
-        wings: 3
+        feathers: 3
     }, {
         id: 2,
-        lvl: 3,
+        name:"Petit pigeon rare",
+        rank: 3,
         attack: 4,
         attackvariance: 1,
         defense: 3,
@@ -34,10 +37,11 @@ const pigeonList =
         lifevariance: 1,
         droppingsminute: 6,
         droppingsminutevariance: 2,
-        wings: 3
+        feathers: 3
     }, {
         id: 3,
-        lvl: 4,
+        name:"Petit pigeon épique",
+        rank: 4,
         attack: 7,
         attackvariance: 2,
         defense: 6,
@@ -46,7 +50,7 @@ const pigeonList =
         lifevariance: 2,
         droppingsminute: 3,
         droppingsminutevariance: 1,
-        wings: 4
+        feathers: 4
     }]
 
 export default pigeonList;

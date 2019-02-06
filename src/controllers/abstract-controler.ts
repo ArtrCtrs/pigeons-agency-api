@@ -32,9 +32,10 @@ export class AbstractController {
         const elapsedTime = (Date.now() - user.lastupdate) / 1000; //seconds 
         user.lastupdate = Date.now();
         user.seeds += Math.floor(user.seedsminute * elapsedTime);
+        user.droppings+=Math.floor(user.totaldroppingsminute*elapsedTime);
 
-        text = 'UPDATE USERS SET seeds = $1, lastupdate = $2  WHERE id =$3;';
-        await pool.query(text, [user.seeds, user.lastupdate, user.id]);
+        text = 'UPDATE USERS SET seeds = $1, droppings = $2, lastupdate = $3  WHERE id =$4;';
+        await pool.query(text, [user.seeds,user.droppings, user.lastupdate, user.id]);
 
         await this.updateExpeditions(user);
 
@@ -46,12 +47,13 @@ export class AbstractController {
         let expeditions = (await pool.query(text, [user.id])).rows;
         const time = Date.now();
 
-        //to optimise
         for (let i = 0; i < expeditions.length; i++) {
             if (time > Number.parseInt(expeditions[i].starttime) + Number.parseInt(expeditions[i].duration)) {
                 let text = "UPDATE EXPEDITIONS SET finished = true WHERE id=$1;";
                 await pool.query(text, [expeditions[i].id]);
-                await PigeonsService.addPigeon(user.id, expeditions[i].type);
+                if(user.birds<user.maxbirds){
+                    await PigeonsService.addPigeon(user.id, expeditions[i].type);
+                }
                 
             }
         }
@@ -65,12 +67,13 @@ export interface HomePageDataAPIReturn { //to check
         username: string;
         password: string;
         lvl: number;
+        birds:number;
         maxbirds: number;
         seeds: number;
         seedsminute: number;
         droppings: number;
-        totaldropingsminute: number;
-        wings: number;
+        totaldroppingsminute: number;
+        feathers: number;
         xcoord: number;
         ycoord: number;
         lastupdate: number;
