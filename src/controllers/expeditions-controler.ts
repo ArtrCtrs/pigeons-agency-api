@@ -28,7 +28,8 @@ export class ExpeditionsControler extends AbstractController {
         await ExpeditionsService.launchExpedition(user.id, expeditiontype, expeditionsList[expeditiontype].duration);
 
         user.seeds -= expeditionsList[expeditiontype].seeds;
-        await ExpeditionsService.paySeeds(user.id, user.seeds);
+        user.totalspentseeds += expeditionsList[expeditiontype].seeds;
+        await ExpeditionsService.updatePlayer(user.id, user.seeds,user.totalspentseeds);
         res.status(200).send({
             message: 'ok',
             data: null

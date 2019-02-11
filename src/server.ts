@@ -1,3 +1,4 @@
+import { UpgradesControler } from './controllers/upgrades-controler';
 import { UsersControler } from './controllers/users-controler';
 import express, { Response, Request } from 'express';
 import db from './db/pgpool';
@@ -6,7 +7,6 @@ import ErrorHelper from './helpers/error-helper';
 import { AuthentificationControler } from './controllers/authentification-controler';
 import MiddlewareHelper from './helpers/middleware-helper';
 import { PigeonsControler } from './controllers/pigeons-controler';
-import { AbstractController } from './controllers/abstract-controler';
 import { ExpeditionsControler } from './controllers/expeditions-controler';
 let pool = db.getPool();
 const cors = require('cors');
@@ -25,6 +25,10 @@ async function handleInitDB() {
 }
 app.get('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
 app.post('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
+
+app.get('/upgrades',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
+app.post('/upgrades/farm',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
+app.post('/upgrades/aviary',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
 
 app.get('/user',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
@@ -55,7 +59,7 @@ async function dropDB() {
 }
 
 async function initDB() {
-    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10, seeds int DEFAULT 0,seedsminute int DEFAULT 1, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL, PRIMARY KEY (id));";
+    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10,maxexpeditions int DEFAULT 3, seeds int DEFAULT 0,seedsminute int DEFAULT 30, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL,farmlvl int DEFAULT 0,aviarylvl int DEFAULT 0,totalspentseeds int DEFAULT 0, totalspentdroppings int DEFAULT 0, totalspentfeathers int DEFAULT 0, PRIMARY KEY (id));";
     let res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,name varchar(255), rank int DEFAULT 1,attack int DEFAULT 1, defense int DEFAULT 1,life int DEFAULT 3, droppingsminute int DEFAULT 2,feathers int DEFAULT 2,creationtime bigint, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'

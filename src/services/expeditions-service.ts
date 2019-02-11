@@ -16,10 +16,10 @@ export class ExpeditionsService {
         await pool.query(text, [exptype, Date.now(), duration, id]);
 
     }
-    static async paySeeds(id: number, amount: number) {
+    static async updatePlayer(id: number, amount: number,total:number) {
 
-        const text = 'UPDATE USERS SET seeds = $1  WHERE id =$2;';
-        await pool.query(text, [amount, id]);
+        const text = 'UPDATE USERS SET seeds = $1,totalspentseeds = $2  WHERE id =$3;';
+        await pool.query(text, [amount,total, id]);
     }
 
 }

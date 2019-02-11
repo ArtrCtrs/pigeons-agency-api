@@ -23,7 +23,6 @@ export class PigeonsControler extends AbstractController {
             message: 'ok',
             data: null
         });
-
     }
 
     static async deletePigeon(req:Request,res:Response){

@@ -45,7 +45,7 @@ export class PigeonsService {
         const pigeon = (await pool.query(text, [pigeonid])).rows[0];
         text = "SELECT totaldroppingsminute,feathers,birds from USERS WHERE id=$1"
         const user = (await pool.query(text, [userid])).rows[0];
-        text = text = "UPDATE USERS SET totaldroppingsminute = $1,feathers=$2,birds=$3  WHERE id =$4;";
+        text = "UPDATE USERS SET totaldroppingsminute = $1,feathers=$2,birds=$3  WHERE id =$4;";
         await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers,user.birds-1, userid]);
         text = "DELETE FROM PIGEONS WHERE id=$1"
         await pool.query(text, [pigeonid]);

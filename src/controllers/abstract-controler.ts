@@ -1,3 +1,4 @@
+import { HomePageDataAPIReturn } from './../entities/HomePageDataAPIReturn';
 import { Request } from 'express';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.json';
@@ -29,7 +30,7 @@ export class AbstractController {
         }
 
         //update ressources
-        const elapsedTime = (Date.now() - user.lastupdate) / 1000; //seconds 
+        const elapsedTime = (Date.now() - user.lastupdate) / (1000*60); //minutes 
         user.lastupdate = Date.now();
         user.seeds += Math.floor(user.seedsminute * elapsedTime);
         user.droppings+=Math.floor(user.totaldroppingsminute*elapsedTime);
@@ -62,20 +63,4 @@ export class AbstractController {
     }
     
 }
-export interface HomePageDataAPIReturn { //to check
-        id: number;
-        username: string;
-        password: string;
-        lvl: number;
-        birds:number;
-        maxbirds: number;
-        seeds: number;
-        seedsminute: number;
-        droppings: number;
-        totaldroppingsminute: number;
-        feathers: number;
-        xcoord: number;
-        ycoord: number;
-        lastupdate: number;
-    
-}
+
