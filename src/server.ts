@@ -16,27 +16,33 @@ console.log("hello pigeons!");
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 
 handleInitDB();
 async function handleInitDB() {
     //await dropDB();
     await initDB();
 }
-app.get('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
-app.post('/expeditions',[MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
+app.get('/expeditions', [MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
+app.post('/expeditions', [MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
 
-app.get('/upgrades',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
-app.post('/upgrades/farm',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
-app.post('/upgrades/aviary',[MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
+app.get('/upgrades', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
+app.post('/upgrades/farm', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
+app.post('/upgrades/aviary', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
+app.post('/upgrades/farmstorage', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarmStorage));
+app.post('/upgrades/droppingsstorage', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeDroppingsStorage));
 
-app.get('/user',[MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
+app.get('/user', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
 app.get('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
 //app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
 app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.deletePigeon));
 
-app.get('/allusers', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsers)); //all users not updated
+app.get('/allusers', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers)); //all users not updated
 
 app.post('/register', wrapAsync(AuthentificationControler.register));
 app.post('/login', wrapAsync(AuthentificationControler.login));
@@ -59,7 +65,7 @@ async function dropDB() {
 }
 
 async function initDB() {
-    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10,maxexpeditions int DEFAULT 3, seeds int DEFAULT 0,seedsminute int DEFAULT 30, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL,farmlvl int DEFAULT 0,aviarylvl int DEFAULT 0,totalspentseeds int DEFAULT 0, totalspentdroppings int DEFAULT 0, totalspentfeathers int DEFAULT 0, PRIMARY KEY (id));";
+    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10,maxseeds int DEFAULT 200, maxdroppings int DEFAULT 200,maxexpeditions int DEFAULT 3, seeds int DEFAULT 10,seedsminute int DEFAULT 30, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord int DEFAULT 0, ycoord int DEFAULT 0, lastupdate bigint NOT NULL,farmlvl int DEFAULT 0,aviarylvl int DEFAULT 0,farmstoragelvl int DEFAULT 0, droppingsstoragelvl int DEFAULT 0,totalspentseeds int DEFAULT 0, totalspentdroppings int DEFAULT 0, totalspentfeathers int DEFAULT 0, PRIMARY KEY (id));";
     let res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,name varchar(255), rank int DEFAULT 1,attack int DEFAULT 1, defense int DEFAULT 1,life int DEFAULT 3, droppingsminute int DEFAULT 2,feathers int DEFAULT 2,creationtime bigint, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'

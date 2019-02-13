@@ -1,6 +1,6 @@
 import db from '../db/pgpool';
-import expeditionsList from '../model/expeditionsList';
-import pigeonList from '../model/pigeonsList';
+import expeditionsList from '../lists/expeditionsList';
+import pigeonList from '../lists/pigeonsList';
 let pool = db.getPool();
 
 export class PigeonsService {

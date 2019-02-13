@@ -6,6 +6,7 @@ export class PigeonsControler extends AbstractController {
     static async getPigeons(req: Request, res: Response) {
 
         const user = await PigeonsControler.getUserFromRequest(req);
+        await PigeonsControler.updateUserInfo(user);
        
         let data = await PigeonsService.getPigeons(user.id);
         res.status(200).send({
@@ -17,6 +18,7 @@ export class PigeonsControler extends AbstractController {
     static async addPigeon(req: Request, res: Response) {
 
         const user = await PigeonsControler.getUserFromRequest(req);
+        await PigeonsControler.updateUserInfo(user);
        
         await PigeonsService.addPigeon(user.id,req.body.expedition);
         res.status(200).send({
@@ -27,6 +29,7 @@ export class PigeonsControler extends AbstractController {
 
     static async deletePigeon(req:Request,res:Response){
         const user = await PigeonsControler.getUserFromRequest(req);
+        await PigeonsControler.updateUserInfo(user);
        
         await PigeonsService.deletePigeon(user.id,req.body.pigeonid);
         res.status(200).send({

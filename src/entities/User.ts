@@ -1,10 +1,13 @@
-export interface HomePageDataAPIReturn { //to check
+export interface User { 
     id: number;
     username: string;
     password: string;
     lvl: number;
     birds:number;
     maxbirds: number;
+    maxseeds:number;
+    maxdroppings:number;
+    maxexpeditions:number,
     seeds: number;
     seedsminute: number;
     droppings: number;
@@ -15,6 +18,8 @@ export interface HomePageDataAPIReturn { //to check
     lastupdate: number;
     farmlvl:number;
     aviarylvl:number;
+    farmstoragelvl:number;
+    droppingsstoragelvl:number;
     totalspentseeds:number;
     totalspentdroppings:number;
     totalspentfeathers:number;

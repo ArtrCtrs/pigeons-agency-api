@@ -83,3 +83,6 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+#configs
+config.json
+

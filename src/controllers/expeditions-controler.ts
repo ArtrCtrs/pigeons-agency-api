@@ -3,11 +3,13 @@ import { AbstractController } from './abstract-controler';
 import { ExpeditionsService } from '../services/expeditions-service';
 import { ConnectError } from "../classes/connect-error";
 
-import expeditionsList from '../model/expeditionsList';
+import expeditionsList from '../lists/expeditionsList';
 export class ExpeditionsControler extends AbstractController {
 
     static async getExpeditions(req: Request, res: Response) {
         const user = await ExpeditionsControler.getUserFromRequest(req);
+        await ExpeditionsControler.updateUserInfo(user);
+
         let data = await ExpeditionsService.getExpeditions(user.id);
         res.status(200).send({
             message: 'ok',
@@ -17,6 +19,8 @@ export class ExpeditionsControler extends AbstractController {
     static async launchExpedition(req: Request, res: Response) {
 
         const user = await ExpeditionsControler.getUserFromRequest(req);
+        await ExpeditionsControler.updateUserInfo(user);
+        
         const expeditiontype: number = req.body.expeditiontype;
         
         if (expeditiontype < 0 || expeditiontype >= expeditionsList.length) {
