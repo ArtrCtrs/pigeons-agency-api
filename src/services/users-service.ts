@@ -33,16 +33,18 @@ export class UsersService {
         const text = 'UPDATE USERS SET seeds = $1, droppings = $2, lastupdate = $3  WHERE id =$4;';
         await pool.query(text, [user.seeds, user.droppings, user.lastupdate, user.id]);
     }
+
     static async updateExpeditions(user: User) {
         let text = "SELECT * FROM EXPEDITIONS WHERE ownerid=$1 AND finished = false;";
         let expeditions = (await pool.query(text, [user.id])).rows;
         const time = Date.now();
-
+        
         for (let i = 0; i < expeditions.length; i++) {
             if (time > Number.parseInt(expeditions[i].starttime) + Number.parseInt(expeditions[i].duration)) {
                 let text = "UPDATE EXPEDITIONS SET finished = true WHERE id=$1;";
                 await pool.query(text, [expeditions[i].id]);
                 if (user.birds < user.maxbirds) {
+                    user.birds+=1;
                     await PigeonsService.addPigeon(user.id, expeditions[i].type);
                 }
 
