@@ -47,11 +47,7 @@ export class UsersService {
                     user.birds+=1;
                     await PigeonsService.addPigeon(user.id, expeditions[i].type);
                 }
-
             }
         }
-
-
     }
-
 }

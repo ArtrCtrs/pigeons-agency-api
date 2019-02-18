@@ -49,7 +49,6 @@ export class PigeonsService {
         await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers,user.birds-1, userid]);
         text = "DELETE FROM PIGEONS WHERE id=$1"
         await pool.query(text, [pigeonid]);
-
     }
 
     static async updateUser(userid: number, droppings: number) {

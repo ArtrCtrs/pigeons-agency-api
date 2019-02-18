@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ConnectError } from "../classes/connect-error";
+import { ErrorService } from '../services/error-service';
 export default class ErrorHelper {
 static handledErrors: Errors = {
     'MISSING_TOKEN': {
@@ -48,7 +49,7 @@ static handledErrors: Errors = {
 	 * @param res 
 	 * @param next 
 	 */
-	static clientErrorHandler(err: Error, req: Request, res: Response, next: Function) {
+	static async clientErrorHandler(err: Error, req: Request, res: Response, next: Function) {
 		if (err instanceof ConnectError) {
 			// handled error
 			let errorCode = 520;
@@ -68,6 +69,8 @@ static handledErrors: Errors = {
 				data: null,
 				message: errorMessage
 			});
+			
+			await ErrorService.logError(errorCode,errorMessage);
 		} else {
 			// unhandled error
 			console.error(err.stack);
@@ -84,7 +87,9 @@ static handledErrors: Errors = {
 				data: data,
 				message: 'Something went wrong.'
 			});
+			await ErrorService.logError(500,data);
 		}
+		
 	}
 }
 interface Errors {

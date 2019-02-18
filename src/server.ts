@@ -27,25 +27,25 @@ async function handleInitDB() {
     //await dropDB();
     await initDB();
 }
-app.get('/expeditions', [MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
-app.post('/expeditions', [MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
+app.get('/expeditions', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
+app.post('/expeditions', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
 
-app.get('/upgrades', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
-app.post('/upgrades/farm', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
-app.post('/upgrades/aviary', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
-app.post('/upgrades/farmstorage', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarmStorage));
-app.post('/upgrades/droppingsstorage', [MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeDroppingsStorage));
+app.get('/upgrades', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
+app.post('/upgrades/farm', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
+app.post('/upgrades/aviary', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
+app.post('/upgrades/farmstorage', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarmStorage));
+app.post('/upgrades/droppingsstorage', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeDroppingsStorage));
 
-app.get('/user', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
+app.get('/user', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
 
-app.get('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
+app.get('/pigeons', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
 //app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
-app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.deletePigeon));
+app.post('/pigeons', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.deletePigeon));
 
-app.get('/allusers', [MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers)); //all users not updated
+app.get('/allusers', [MiddlewareHelper.logRequest,MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers)); //all users not updated
 
-app.post('/register', wrapAsync(AuthentificationControler.register));
-app.post('/login', wrapAsync(AuthentificationControler.login));
+app.post('/register',[MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.register));
+app.post('/login',[MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.login));
 
 app.use(ErrorHelper.clientErrorHandler);
 
@@ -55,12 +55,16 @@ app.listen(PORT, () => {
 });
 
 async function dropDB() {
-    let text = 'DROP TABLE IF EXISTS PIGEONS';
-    let res = await pool.query(text);
-    text = 'DROP TABLE IF EXISTS EXPEDITIONS';
-    res = await pool.query(text);
-    text = 'DROP TABLE IF EXISTS USERS';
-    res = await pool.query(text);
+    // let text = 'DROP TABLE IF EXISTS PIGEONS';
+    // let res = await pool.query(text);
+    // text = 'DROP TABLE IF EXISTS EXPEDITIONS';
+    // res = await pool.query(text);
+    // text = 'DROP TABLE IF EXISTS USERS';
+    // res = await pool.query(text);
+    // let text = 'DROP TABLE IF EXISTS LOGS';
+    // let res = await pool.query(text);
+    // let text = 'DROP TABLE IF EXISTS ERRORS';
+    // let res = await pool.query(text);
 
 }
 
@@ -72,6 +76,12 @@ async function initDB() {
     res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS EXPEDITIONS (id SERIAL, type int NOT NULL,lvl int DEFAULT 1, starttime bigint, duration int DEFAULT 15000,finished boolean DEFAULT false, ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
+    res = await pool.query(text);
+
+    text='CREATE TABLE IF NOT EXISTS LOGS (id SERIAL, userid int, method VARCHAR(255), url VARCHAR(255), body VARCHAR(255),ip VARCHAR(255), date bigint, PRIMARY KEY (id));'
+    res = await pool.query(text);
+
+    text='CREATE TABLE IF NOT EXISTS ERRORS (id SERIAL,errorcode int,details VARCHAR(255), date bigint, PRIMARY KEY (id));'
     res = await pool.query(text);
 }
 
