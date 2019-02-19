@@ -25,8 +25,8 @@ export class AuthentificationService {
 
 		const time = Date.now();
 
-		prep = "INSERT INTO USERS(username,password,lastupdate) VALUES($1,$2,$3)";
-		dbres = await pool.query(prep, [username, hash, time]);
+		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime) VALUES($1,$2,$3,$4)";
+		dbres = await pool.query(prep, [username, hash, time,Date.now()]);
 
 	};
 

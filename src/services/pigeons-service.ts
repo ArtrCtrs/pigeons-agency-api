@@ -6,7 +6,7 @@ let pool = db.getPool();
 export class PigeonsService {
 
     static async getPigeons(id: number): Promise<string> {
-        const text = "SELECT * FROM PIGEONS WHERE ownerid=$1;";
+        const text = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime desc;";
         const dbres = await pool.query(text, [id]);
         return dbres.rows;
 
@@ -18,25 +18,23 @@ export class PigeonsService {
         while (random > expeditionsList[expeditiontype].reward[i].probability) {
             i++;
         }
-        const pigeonid = expeditionsList[expeditiontype].reward[i].pigeontype;
+        const pigeontype = expeditionsList[expeditiontype].reward[i].pigeontype;
 
-        const attackdiff = Math.round(Math.random() * pigeonList[pigeonid].attackvariance * 2 - pigeonList[pigeonid].attackvariance);
-        const pigeonattack = pigeonList[pigeonid].attack + attackdiff;
+        const attackdiff = Math.round(Math.random() * pigeonList[pigeontype].attackvariance * 2 - pigeonList[pigeontype].attackvariance);
+        const pigeonattack = pigeonList[pigeontype].attack + attackdiff;
 
-        const defensediff = Math.round(Math.random() * pigeonList[pigeonid].defensevariance * 2 - pigeonList[pigeonid].defensevariance);
-        const pigeondefense = pigeonList[pigeonid].defense + defensediff;
+        const shielddiff = Math.round(Math.random() * pigeonList[pigeontype].shieldvariance * 2 - pigeonList[pigeontype].shieldvariance);
+        const pigeonshield = pigeonList[pigeontype].shield + shielddiff;
 
-        const lifediff = Math.round(Math.random() * pigeonList[pigeonid].lifevariance * 2 - pigeonList[pigeonid].lifevariance);
-        const pigeonlife = pigeonList[pigeonid].life + lifediff;
+        const defensediff = Math.round(Math.random() * pigeonList[pigeontype].defensevariance * 2 - pigeonList[pigeontype].defensevariance);
+        const pigeondefense = pigeonList[pigeontype].defense + defensediff;
 
-        const droppingsdiff = Math.round(Math.random() * pigeonList[pigeonid].droppingsminutevariance * 2 - pigeonList[pigeonid].droppingsminutevariance);
-        const pigeondroppings = pigeonList[pigeonid].droppingsminute + droppingsdiff;
-
-
+        const droppingsdiff = Math.round(Math.random() * pigeonList[pigeontype].droppingsminutevariance * 2 - pigeonList[pigeontype].droppingsminutevariance);
+        const pigeondroppings = pigeonList[pigeontype].droppingsminute + droppingsdiff;
 
 
-        const text = "INSERT INTO PIGEONS(type,name,rank,attack,defense,life,droppingsminute,feathers,ownerid) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9)";
-        await pool.query(text, [pigeonid, pigeonList[pigeonid].name, pigeonList[pigeonid].rank, pigeonattack, pigeondefense, pigeonlife, pigeondroppings, pigeonList[pigeonid].feathers, id]);
+        const text = "INSERT INTO PIGEONS(type,name,rank,attack,shield,defense,droppingsminute,feathers,energy,element,creationtime,ownerid) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)";
+        await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonshield, pigeondefense, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, Date.now(), id]);
         await this.updateUser(id, pigeondroppings);
 
     }
@@ -46,7 +44,7 @@ export class PigeonsService {
         text = "SELECT totaldroppingsminute,feathers,birds from USERS WHERE id=$1"
         const user = (await pool.query(text, [userid])).rows[0];
         text = "UPDATE USERS SET totaldroppingsminute = $1,feathers=$2,birds=$3  WHERE id =$4;";
-        await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers,user.birds-1, userid]);
+        await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers, user.birds - 1, userid]);
         text = "DELETE FROM PIGEONS WHERE id=$1"
         await pool.query(text, [pigeonid]);
     }
@@ -56,7 +54,7 @@ export class PigeonsService {
         const user = (await pool.query(text, [userid])).rows[0];
 
         text = "UPDATE USERS SET totaldroppingsminute = $1,birds=$2  WHERE id =$3;";
-        await pool.query(text, [user.totaldroppingsminute + droppings,user.birds+1, userid]);
+        await pool.query(text, [user.totaldroppingsminute + droppings, user.birds + 1, userid]);
 
 
     }

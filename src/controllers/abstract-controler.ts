@@ -23,7 +23,7 @@ export class AbstractController {
             throw new ConnectError('INVALID_TOKEN');
         }
         let user: User = await UsersService.getUserFromRequest(decodedPayload.user.id);
-        if (!user.id) {
+        if (!user) {
             throw new ConnectError('INVALID_TOKEN');
         }
         return user;

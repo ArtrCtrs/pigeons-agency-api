@@ -17,7 +17,7 @@ export class UsersService {
         const dbres = await pool.query(text);
         return dbres.rows;
 
-    };
+    }
 
     static async updateUserInfo(user: User) {
         //update ressources
