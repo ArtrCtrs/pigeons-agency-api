@@ -10,6 +10,7 @@ export interface PrivatePigeonStat {
     shieldvariance: number,
     defense: number,
     defensevariance: number,
+    defenserandomness:number,
     energy:number,
     feedcost:number,
     droppingsminute: number,

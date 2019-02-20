@@ -87,7 +87,7 @@ static handledErrors: Errors = {
 				data: data,
 				message: 'Something went wrong.'
 			});
-			await ErrorService.logError(500,data);
+			await ErrorService.logError(500,err.stack);
 		}
 		
 	}

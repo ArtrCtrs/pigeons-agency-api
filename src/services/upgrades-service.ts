@@ -23,8 +23,6 @@ export class upgradesService {
         const droppingscost = seedsStorageList[user.farmstoragelvl + 1].droppingsCost;
         const featherscost = seedsStorageList[user.farmstoragelvl + 1].feathersCost;
         const text = "UPDATE USERS SET maxseeds = $1,droppings=$2, feathers=$3, farmstoragelvl=$4,totalspentdroppings=$5, totalspentfeathers=$6  WHERE id =$7;";
-        console.log(seedsStorageList[user.farmstoragelvl])
-        console.log(seedsStorageList[user.farmstoragelvl + 1])
         await pool.query(text, [seedsStorageList[user.farmstoragelvl + 1].seedsStorage, user.droppings - droppingscost, user.feathers - featherscost, user.farmstoragelvl + 1, user.totalspentdroppings + droppingscost, user.totalspentfeathers + featherscost, user.id]);
 
     }
@@ -32,8 +30,6 @@ export class upgradesService {
         const seedsCost = droppingsStorageList[user.droppingsstoragelvl + 1].seedsCost;
         const featherscost = droppingsStorageList[user.droppingsstoragelvl + 1].feathersCost;
         const text = "UPDATE USERS SET maxdroppings = $1,seeds=$2, feathers=$3, droppingsstoragelvl=$4,totalspentseeds=$5, totalspentfeathers=$6  WHERE id =$7;";
-        console.log(droppingsStorageList[user.droppingsstoragelvl])
-        console.log(droppingsStorageList[user.droppingsstoragelvl + 1])
         await pool.query(text, [droppingsStorageList[user.droppingsstoragelvl + 1].droppingsStorage, user.seeds - seedsCost, user.feathers - featherscost, user.droppingsstoragelvl + 1, user.totalspentseeds + seedsCost, user.totalspentfeathers + featherscost, user.id]);
 
     }
