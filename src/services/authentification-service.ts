@@ -20,7 +20,7 @@ export class AuthentificationService {
 		}
 
 
-		const saltRounds = 10;
+		const saltRounds = 8;
 		const hash = bcrypt.hashSync(password, saltRounds);
 
 		const time = Date.now();
