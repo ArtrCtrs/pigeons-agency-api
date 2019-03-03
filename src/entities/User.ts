@@ -2,6 +2,7 @@ export interface User {
     id: number;
     username: string;
     password: string;
+    icon:string;
     lvl: number;
     birds:number;
     maxbirds: number;

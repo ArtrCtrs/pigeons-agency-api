@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.json';
 import { ConnectError } from "../classes/connect-error";
+import iconsList from "../lists/iconsList";
 import db from '../db/pgpool';
 let pool = db.getPool();
 
@@ -25,8 +26,12 @@ export class AuthentificationService {
 
 		const time = Date.now();
 
-		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime) VALUES($1,$2,$3,$4)";
-		dbres = await pool.query(prep, [username, hash, time,Date.now()]);
+		const x = (Math.random() * 20) - 10;
+		const y = (Math.random() * 20) - 10;
+		const random = Math.floor(Math.random() * (iconsList.length - 1));
+		const icon = iconsList[random];
+		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime,xcoord,ycoord,icon) VALUES($1,$2,$3,$4,$5,$6,$7)";
+		dbres = await pool.query(prep, [username, hash, time, Date.now(), x, y,icon]);
 
 	};
 
