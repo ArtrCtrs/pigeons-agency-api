@@ -16,5 +16,4 @@ const iconsList: string[] = [
     "user_2.png"
 
 ]
-
 export default iconsList;

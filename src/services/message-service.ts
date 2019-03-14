@@ -17,4 +17,10 @@ export class MessageService {
         await pool.query(text, [userid]);
     }
 
+    static async getMessages(userid: number) {
+        const text = "SELECT * FROM messages WHERE ownerid=$1 OR ownerid=-1 ORDER BY date DESC;"
+        const dbres = await pool.query(text, [userid]);
+        return dbres.rows;
+    }
+
 }

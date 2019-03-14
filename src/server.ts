@@ -9,6 +9,7 @@ import MiddlewareHelper from './helpers/middleware-helper';
 import { PigeonsControler } from './controllers/pigeons-controler';
 import { ExpeditionsControler } from './controllers/expeditions-controler';
 import { AttackControler } from './controllers/attack-controler';
+import { MessagesControler } from './controllers/messages-controler';
 let pool = db.getPool();
 const cors = require('cors');
 const wrapAsync = MiddlewareHelper.wrapAsync;
@@ -45,6 +46,8 @@ app.post('/pigeons', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn],
 app.post('/pigeons/feed', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.feedPigeon));
 
 app.post('/map/attack', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(AttackControler.attackPlayer));
+
+app.get('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.getMessages));
 
 app.get('/allusers', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers));
 

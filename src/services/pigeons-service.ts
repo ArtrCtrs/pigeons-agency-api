@@ -73,8 +73,11 @@ export class PigeonsService {
         text = 'UPDATE PIGEONS SET energy = $1 WHERE id = $2';
         await pool.query(text, [pigeon.energy + 1, pigeonid]);
 
+    }
 
-
+    static async setDefender(user:User,pigeonid:number){
+        let text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1';
+        
     }
 
     static async updateUser(userid: number, droppings: number) {
