@@ -8,8 +8,8 @@ let pool = db.getPool();
 
 export class AttackService {
     static async attackPlayer(attacker: User, defenderid: number) {
-        const text1 = "SELECT * FROM USERS WHERE id=$1";
-        let defender: User = (await pool.query(text1, [defenderid])).rows[0];
+        let text = "SELECT * FROM USERS WHERE id=$1";
+        let defender: User = (await pool.query(text, [defenderid])).rows[0];
         if (!defender) {
             throw new ConnectError('INVALID_PARAMETERS');
         }
@@ -18,7 +18,7 @@ export class AttackService {
         let attacktotal = 0;
         let defensetotal = 0;
 
-        const text = "SELECT * FROM Pigeons WHERE ownerid=$1"
+         text = "SELECT * FROM Pigeons WHERE ownerid=$1"
         let attackingPigeons: Pigeon[] = (await pool.query(text, [attacker.id])).rows;
         let defendingPigeons: Pigeon[] = (await pool.query(text, [defender.id])).rows;
 
@@ -30,8 +30,11 @@ export class AttackService {
             defensetotal += p.defense;
             messagebody += p.name + " has defended for " + p.attack + "\n";
         });
-        let messagetitle = attacktotal > defensetotal ? "attacker " + attacker.username + " has won!" : "defender " + defender.username + " has won!";
 
+         text="UPDATE USERS SET militaryscore = $1  WHERE id =$2 ";
+        await pool.query(text, [attacker.militaryscore+1,attacker.id]);
+
+        let messagetitle = attacktotal > defensetotal ? "attacker " + attacker.username + " has won!" : "defender " + defender.username + " has won!";
         message = { ownerid: defender.id, title: messagetitle, body: messagebody, sender: "info" };
 
         await MessageService.createMessage(message);
