@@ -65,7 +65,7 @@ export class PigeonsService {
         let text = 'SELECT feedcost,energy,maxenergy FROM PIGEONS WHERE id=$1';
         const pigeon = (await pool.query(text, [pigeonid])).rows[0];
         const feedcost = pigeonList[pigeon.type].feedcost;
-        if (user.seeds < feedcost || pigeon.energy>=pigeon.maxenergy) {
+        if (user.seeds < feedcost || pigeon.energy >= pigeon.maxenergy) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
         text = 'UPDATE USERS SET seeds = $1 WHERE id = $2';
@@ -75,9 +75,38 @@ export class PigeonsService {
 
     }
 
-    static async setDefender(user:User,pigeonid:number){
-        let text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1';
-        
+    static async setDefender(user: User, pigeonid: number) {
+        let text = 'SELECT defender FROM Pigeons where pigeonid=$1';
+        const isDefender = await pool.query(text, [pigeonid]).rows[0].defender;
+        if (!isDefender) {
+            text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1 AND defender=true';
+            const nbrDefs = await pool.query(text, [user.id]);
+            if (nbrDefs >= 5) {
+                throw new ConnectError('REQUIREMENTS_ERROR');
+            }
+            text = 'UPDATE PIGEONS SET defender = true WHERE id = $2';
+            await pool.query(text, [pigeonid]);
+        } else if (isDefender) {
+            text = 'UPDATE PIGEONS SET defender = false WHERE id = $2';
+            await pool.query(text, [pigeonid]);
+        }
+    }
+
+    static async setAttacker(user: User, pigeonid: number) {
+        let text = 'SELECT attacker FROM Pigeons where pigeonid=$1';
+        const isAttacker = await pool.query(text, [pigeonid]).rows[0].defender;
+        if (!isAttacker) {
+            text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1 AND attacker=true';
+            const nbrAtks = await pool.query(text, [user.id]);
+            if (nbrAtks >= 5) {
+                throw new ConnectError('REQUIREMENTS_ERROR');
+            }
+            text = 'UPDATE PIGEONS SET attacker = true WHERE id = $2';
+            await pool.query(text, [pigeonid]);
+        } else if (isAttacker) {
+            text = 'UPDATE PIGEONS SET attacker = false WHERE id = $2';
+            await pool.query(text, [pigeonid]);
+        }
     }
 
     static async updateUser(userid: number, droppings: number) {

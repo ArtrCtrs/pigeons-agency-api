@@ -54,5 +54,31 @@ export class PigeonsControler extends AbstractController {
         });
 
     }
+    static async setAttacker(req:Request,res:Response){
+        const user = await PigeonsControler.getUserFromRequest(req);
+        await PigeonsControler.updateUserInfo(user);
+        if(!req.body.pigeonid){
+            throw new ConnectError('INVALID_PARAMETERS');
+        }
+       
+        await PigeonsService.setAttacker(user,req.body.pigeonid);
+        res.status(200).send({
+            message: 'ok',
+            data: null
+        });
+    }
+    static async setDefender(req:Request,res:Response){
+        const user = await PigeonsControler.getUserFromRequest(req);
+        await PigeonsControler.updateUserInfo(user);
+        if(!req.body.pigeonid){
+            throw new ConnectError('INVALID_PARAMETERS');
+        }
+       
+        await PigeonsService.setDefender(user,req.body.pigeonid);
+        res.status(200).send({
+            message: 'ok',
+            data: null
+        });
+    }
 
 }
