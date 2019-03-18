@@ -76,35 +76,35 @@ export class PigeonsService {
     }
 
     static async setDefender(user: User, pigeonid: number) {
-        let text = 'SELECT defender FROM Pigeons where pigeonid=$1';
-        const isDefender = await pool.query(text, [pigeonid]).rows[0].defender;
+        let text = 'SELECT defender FROM Pigeons where id=$1';
+        const isDefender = (await pool.query(text, [pigeonid])).rows[0].defender;
         if (!isDefender) {
-            text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1 AND defender=true';
-            const nbrDefs = await pool.query(text, [user.id]);
+            text = 'SELECT COUNT(*) FROM PIGEONS WHERE ownerid=$1 AND defender=true';
+            const nbrDefs = (await pool.query(text, [user.id])).rows[0].count;
             if (nbrDefs >= 5) {
                 throw new ConnectError('REQUIREMENTS_ERROR');
             }
-            text = 'UPDATE PIGEONS SET defender = true WHERE id = $2';
+            text = 'UPDATE PIGEONS SET defender = true WHERE id = $1';
             await pool.query(text, [pigeonid]);
         } else if (isDefender) {
-            text = 'UPDATE PIGEONS SET defender = false WHERE id = $2';
+            text = 'UPDATE PIGEONS SET defender = false WHERE id = $1';
             await pool.query(text, [pigeonid]);
         }
     }
 
     static async setAttacker(user: User, pigeonid: number) {
-        let text = 'SELECT attacker FROM Pigeons where pigeonid=$1';
-        const isAttacker = await pool.query(text, [pigeonid]).rows[0].defender;
+        let text = 'SELECT attacker FROM Pigeons where id=$1';
+        const isAttacker = (await pool.query(text, [pigeonid])).rows[0].attacker;
         if (!isAttacker) {
-            text = 'SELECT COUNT(*) FROM PIGEONS WHERE userid=$1 AND attacker=true';
-            const nbrAtks = await pool.query(text, [user.id]);
+            text = 'SELECT COUNT(*) FROM PIGEONS WHERE ownerid=$1 AND attacker=true';
+            const nbrAtks = (await pool.query(text, [user.id])).rows[0].count;
             if (nbrAtks >= 5) {
                 throw new ConnectError('REQUIREMENTS_ERROR');
             }
-            text = 'UPDATE PIGEONS SET attacker = true WHERE id = $2';
+            text = 'UPDATE PIGEONS SET attacker = true WHERE id = $1';
             await pool.query(text, [pigeonid]);
         } else if (isAttacker) {
-            text = 'UPDATE PIGEONS SET attacker = false WHERE id = $2';
+            text = 'UPDATE PIGEONS SET attacker = false WHERE id = $1';
             await pool.query(text, [pigeonid]);
         }
     }
