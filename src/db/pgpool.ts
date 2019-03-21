@@ -1,15 +1,16 @@
 let pg = require('pg');
 const { Pool, Client } = require('pg');
+import config from '../config/config.json';
 
 let pool: any;
-let config: any;
+let connconfig: any;
 
 try {
-  config = {
-    user: 'postgres',
+  connconfig = {
+    user: config.dbuser,
     host: 'localhost',
     database: 'pigeonagency',
-    password: 'iguane',
+    password: config.dbpwd,
     port: 5432,
     max: 10,
     idleTimeoutMillis: 5000,
@@ -24,7 +25,7 @@ let db:any=null;
 db = {
   getPool: () => {
     if (pool) return pool;
-    pool = new pg.Pool(config);
+    pool = new pg.Pool(connconfig);
     return pool;
   }
 };

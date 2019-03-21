@@ -26,8 +26,8 @@ export class AuthentificationService {
 
 		const time = Date.now();
 
-		const x = (Math.random() * 20) - 10;
-		const y = (Math.random() * 20) - 10;
+		const x = (Math.random() * 100) - 50;
+		const y = (Math.random() * 100) - 50;
 		const random = Math.floor(Math.random() * (iconsList.length - 1));
 		const icon = iconsList[random];
 		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime,xcoord,ycoord,icon) VALUES($1,$2,$3,$4,$5,$6,$7)";
