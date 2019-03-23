@@ -52,6 +52,7 @@ app.post('/attack', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], 
 app.get('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.getMessages));
 
 app.get('/allusers', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers));
+app.get('/allusers/attacks', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsersForAttacks));
 
 app.post('/register', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.register));
 app.post('/login', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.login));

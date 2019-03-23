@@ -13,6 +13,17 @@ export class UsersControler extends AbstractController {
         });
 
     }
+    static async getUsersForAttacks(req: Request, res: Response) {
+
+        let user = await UsersControler.getUserFromRequest(req);
+
+        const data = await UsersService.getUsersForAttacks(user);
+        res.status(200).send({
+            message: 'ok',
+            data: data
+        });
+
+    }
 
     static async getUpdatedUserInfo(req: Request, res: Response){
         let user = await UsersControler.getUserFromRequest(req);

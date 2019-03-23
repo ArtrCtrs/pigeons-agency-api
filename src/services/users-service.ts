@@ -19,6 +19,13 @@ export class UsersService {
 
     }
 
+    static async getUsersForAttacks(user:User): Promise<string> {
+        const text = 'SELECT * FROM USERS ORDER BY (totalspentdroppings + totalspentseeds + 10 * totalspentfeathers) DESC;';
+        const dbres = await pool.query(text);
+        return dbres.rows;
+
+    }
+
     static async updateUserInfo(user: User) {
         //update ressources
         const elapsedTime = (Date.now() - user.lastupdate) / (1000 * 60); //minutes 
