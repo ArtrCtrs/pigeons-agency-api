@@ -3,7 +3,7 @@ const pigeonList: PrivatePigeonStat[] =
     [
         {
             type: 0,
-            name: "Petit pigeon commun",
+            name: "Small common pigeon",
             rank: 1,
             element: 1,
             attack: 2,
@@ -18,12 +18,12 @@ const pigeonList: PrivatePigeonStat[] =
             feedcost: 5,
             droppingsminute: 1,
             droppingsminutevariance: 0,
-            feathers: 2
+            feathers: 1
         },
         {
             type: 1,
-            name: "Petit pigeon atypique",
-            rank: 1,
+            name: "Small uncommon pigeon",
+            rank: 2,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -41,8 +41,8 @@ const pigeonList: PrivatePigeonStat[] =
         },
         {
             type: 2,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Small rare pigeon",
+            rank: 3,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -56,12 +56,12 @@ const pigeonList: PrivatePigeonStat[] =
             feedcost: 5,
             droppingsminute: 1,
             droppingsminutevariance: 0,
-            feathers: 2
+            feathers: 3
         },
         {
             type: 3,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Small epic pigeon",
+            rank: 4,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -75,12 +75,12 @@ const pigeonList: PrivatePigeonStat[] =
             feedcost: 5,
             droppingsminute: 1,
             droppingsminutevariance: 0,
-            feathers: 2
+            feathers: 5
         },
         {
             type: 4,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Small legendary pigeon",
+            rank: 5,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -94,11 +94,11 @@ const pigeonList: PrivatePigeonStat[] =
             feedcost: 5,
             droppingsminute: 1,
             droppingsminutevariance: 0,
-            feathers: 2
+            feathers: 10
         },
         {
             type: 5,
-            name: "Petit pigeon commun",
+            name: "Fat common pigeon",
             rank: 1,
             element: 1,
             attack: 2,
@@ -117,8 +117,8 @@ const pigeonList: PrivatePigeonStat[] =
         },
         {
             type: 6,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Fat uncommon pigeon",
+            rank: 2,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -136,8 +136,8 @@ const pigeonList: PrivatePigeonStat[] =
         },
         {
             type: 7,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Fat rare pigeon",
+            rank: 3,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -155,8 +155,8 @@ const pigeonList: PrivatePigeonStat[] =
         },
         {
             type: 8,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Fat epic pigeon",
+            rank: 4,
             element: 1,
             attack: 2,
             attackvariance: 1,
@@ -175,8 +175,8 @@ const pigeonList: PrivatePigeonStat[] =
         ,
         {
             type: 9,
-            name: "Petit pigeon commun",
-            rank: 1,
+            name: "Fat legendary pigeon",
+            rank: 5,
             element: 1,
             attack: 2,
             attackvariance: 1,

@@ -8,12 +8,12 @@ let connconfig: any;
 try {
   connconfig = {
     user: config.dbuser,
-    host: 'localhost',
-    database: 'pigeonagency',
+    host: config.dbhost,
+    database: config.dbdatabase,
     password: config.dbpwd,
-    port: 5432,
-    max: 10,
-    idleTimeoutMillis: 5000,
+    port: config.dbport,
+    max: config.dbmax,
+    idleTimeoutMillis: config.dbidle,
   }
 } catch(err) {
   console.error(err);
