@@ -29,34 +29,35 @@ async function handleInitDB() {
     await dropDB();
     await initDB();
 }
-app.get('/expeditions', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
-app.post('/expeditions', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
 
-app.get('/upgrades', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
-app.post('/upgrades/farm', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
-app.post('/upgrades/aviary', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
-app.post('/upgrades/farmstorage', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarmStorage));
-app.post('/upgrades/droppingsstorage', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeDroppingsStorage));
+app.get('/api/expeditions', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.getExpeditions));
+app.post('/api/expeditions', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(ExpeditionsControler.launchExpedition));
 
-app.get('/user', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
+app.get('/api/upgrades', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.getCurrentUpgrades));
+app.post('/api/upgrades/farm', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarm));
+app.post('/api/upgrades/aviary', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeAviary));
+app.post('/api/upgrades/farmstorage', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeFarmStorage));
+app.post('/api/upgrades/droppingsstorage', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UpgradesControler.upgradeDroppingsStorage));
 
-app.get('/pigeons', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
+app.get('/api/user', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUpdatedUserInfo));
+
+app.get('/api/pigeons', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.getPigeons));
 //app.post('/pigeons', [MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.addPigeon)); //not ingame, for testing
-app.post('/pigeons/sell', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.sellPigeon));
-app.post('/pigeons/feed', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.feedPigeon));
-app.post('/pigeons/attacker', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.setAttacker));
-app.post('/pigeons/defender', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.setDefender));
+app.post('/api/pigeons/sell', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.sellPigeon));
+app.post('/api/pigeons/feed', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.feedPigeon));
+app.post('/api/pigeons/attacker', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.setAttacker));
+app.post('/api/pigeons/defender', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(PigeonsControler.setDefender));
 
-app.post('/attack', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(AttackControler.attackPlayer));
+app.post('/api/attack', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(AttackControler.attackPlayer));
 
-app.get('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.getMessages));
-app.post('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.sendMessage));
+app.get('/api/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.getMessages));
+app.post('/api/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.sendMessage));
 
-app.get('/allusers', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers));
-app.get('/allusers/attacks', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsersForAttacks));
+app.get('/api/allusers', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers));
+app.get('/api/allusers/attacks', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsersForAttacks));
 
-app.post('/register', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.register));
-app.post('/login', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.login));
+app.post('/api/register', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.register));
+app.post('/api/login', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.login));
 
 app.use(ErrorHelper.clientErrorHandler);
 
