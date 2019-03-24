@@ -13,15 +13,15 @@ export class UsersService {
 
     }
     static async getAllUsers(): Promise<string> {
-        const text = 'SELECT * FROM USERS ORDER BY (totalspentdroppings + totalspentseeds + 10 * totalspentfeathers) DESC;';
+        const text = 'SELECT * FROM USERS ORDER BY militaryscore DESC, (totalspentdroppings + totalspentseeds + 10 * totalspentfeathers) DESC;';
         const dbres = await pool.query(text);
         return dbres.rows;
 
     }
 
     static async getUsersForAttacks(user:User): Promise<string> {
-        const text = 'SELECT * FROM USERS ORDER BY (totalspentdroppings + totalspentseeds + 10 * totalspentfeathers) DESC;';
-        const dbres = await pool.query(text);
+        const text = 'SELECT * FROM USERS ORDER BY (ABS($1 - militaryscore)) ASC,lastupdate DESC;';
+        const dbres = await pool.query(text,[user.militaryscore]);
         return dbres.rows;
 
     }

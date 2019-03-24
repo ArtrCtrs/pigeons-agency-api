@@ -19,7 +19,7 @@ const app = express();
 
 app.use(bodyParser.json());
 const corsOptions = {
-    origin: 'http://localhost:4200',
+    origin: ["http://localhost:4200","http://pigeons.agency"],
     optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions))

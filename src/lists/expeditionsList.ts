@@ -3,140 +3,158 @@ const expeditionsList =
     [{
         id: 0,
         seeds: 10,
-        duration: 15000,
+        duration: 10000,
         name:"Garden run",
         reward: [{
-            pigeontype: 0,
-            probability: 60
-        },
-        {
             pigeontype: 1,
-            probability: 90
+            probability: 45
         },
         {
             pigeontype: 2,
-            probability: 95
+            probability: 60
         },
         {
-            pigeontype: 5,
+            pigeontype: 11,
+            probability: 75
+        },
+        {
+            pigeontype: 6,
+            probability: 90
+        },
+        {
+            pigeontype: 3,
             probability: 101
         }]
     },
     {
         id: 1,
-        seeds: 100,
-        duration: 60000,
-        name:"Big garden run",
+        seeds: 70,
+        duration: 25000,
+        name:"Macdonald tour",
         reward: [{
-            pigeontype: 0,
-            probability: 15
-        },
-        {
-            pigeontype: 1,
-            probability: 30
-        },
-        {
             pigeontype: 2,
-            probability: 45
+            probability: 10
         },
         {
             pigeontype: 3,
-            probability: 50
+            probability: 20
         },
         {
-            pigeontype: 5,
-            probability: 75
-        }
-        ,
+            pigeontype: 4,
+            probability: 25
+        },
         {
             pigeontype: 6,
-            probability: 90
+            probability: 65
+        },
+        {
+            pigeontype: 7,
+            probability: 84
+        },
+        {
+            pigeontype: 8,
+            probability: 94
         }
         ,
         {
-            pigeontype: 7,
+            pigeontype: 9,
             probability: 101
         }]
     },
     {
         id: 2,
-        seeds: 500,
-        duration: 90000,
-        name:"Under neighbor's car",
+        seeds: 70,
+        duration: 25000,
+        name:"Sushi Tour",
         reward: [{
-            pigeontype: 1,
-            probability: 5
-        },
-        {
             pigeontype: 2,
-            probability: 20
+            probability: 10
         },
         {
             pigeontype: 3,
-            probability: 45
+            probability: 20
         },
         {
             pigeontype: 4,
-            probability: 50
+            probability: 25
         },
         {
-            pigeontype: 5,
-            probability: 60
-        }
-        ,
-        {
-            pigeontype: 6,
-            probability: 75
-        }
-        ,
-        {
-            pigeontype: 7,
-            probability: 90
+            pigeontype: 11,
+            probability: 65
         },
         {
-            pigeontype: 8,
+            pigeontype: 12,
+            probability: 84
+        },
+        {
+            pigeontype: 13,
+            probability: 94
+        },
+        {
+            pigeontype: 14,
             probability: 101
         }]
     },
     {
         id: 3,
-        seeds: 2000,
-        duration: 180000,
-        name:"At neighbor's window",
+        seeds: 250,
+        duration: 120000,
+        name:"Luxury Macdonald Tour",
         reward: [{
-            pigeontype: 1,
-            probability: 5
-        },
-        {
-            pigeontype: 2,
-            probability: 20
-        },
-        {
             pigeontype: 3,
-            probability: 45
-        },
-        {
-            pigeontype: 4,
-            probability: 50
-        },
-        {
-            pigeontype: 5,
-            probability: 60
-        }
-        ,
-        {
-            pigeontype: 6,
-            probability: 75
-        }
-        ,
-        {
-            pigeontype: 7,
-            probability: 90
+            probability: 23
         },
         {
             pigeontype: 8,
-            probability: 101
+            probability: 46
+        },
+        {
+            pigeontype: 4,
+            probability: 68
+        },
+        {
+            pigeontype: 9,
+            probability: 90
+        },
+        {
+            pigeontype: 5,
+            probability: 95
+        },
+        {
+            pigeontype: 10,
+            probability:101
+        }]
+    },
+    {
+        id: 4,
+        seeds: 250,
+        duration: 120000,
+        name:"Luxury Sushi Tour",
+        reward: [{
+            pigeontype: 3,
+            probability: 23
+        },
+        {
+            pigeontype: 13,
+            probability: 46
+        },
+        {
+            pigeontype: 4,
+            probability: 68
+        },
+        {
+            pigeontype: 14,
+            probability: 90
+        },
+        {
+            pigeontype: 5,
+            probability: 95
+        },
+        {
+            pigeontype: 15,
+            probability:101
         }]
     }]
 
 export default expeditionsList;
+
