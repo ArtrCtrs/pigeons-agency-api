@@ -305,6 +305,25 @@ const pigeonList: PrivatePigeonStat[] =
             droppingsminute: 7,
             droppingsminutevariance: 0,
             feathers: 20
+        },
+        {
+            type: 16,
+            name: "Hugo pigeon",
+            rank: 1,
+            element: 1,
+            attack: 0,
+            attackvariance: 0,
+            attackrandomness: 0,
+            shield: 0,
+            shieldvariance: 0,
+            defense: 0,
+            defensevariance: 0,
+            defenserandomness:0,
+            energy: 5,
+            feedcost: 1,
+            droppingsminute: 20,
+            droppingsminutevariance: 0,
+            feathers: 20
         }
     ]
 

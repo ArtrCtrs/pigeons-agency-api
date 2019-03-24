@@ -65,7 +65,7 @@ export class AttackService {
                 defenderwonpoints++;
             }
         }
-        messagebody += "<br>" + (attacktotal > defensetotal ? "Attacker " + attacker.username + " has won! <br>" : "Defender " + defender.username + " has won! <br>");
+        messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won!</strong> <br>" : "<strong>Defender " + defender.username + " has won!</strong> <br>");
         messagebody += "Scores : " + attacktotal + " attack vs " + defensetotal + " defense and " + shieldtotal + " shield<br>";
         messagebody += "Stolen feathers : " + stolenFeathers + "<br>";
         messagebody += "Attacker got  : " + attackerwonpoints + " points<br>";
