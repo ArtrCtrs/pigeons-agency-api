@@ -101,7 +101,7 @@ const expeditionsList =
     },
     {
         id: 3,
-        seeds: 250,
+        seeds: 650,
         duration: 120000,
         name:"Luxury Macdonald Tour",
         reward: [{
@@ -131,7 +131,7 @@ const expeditionsList =
     },
     {
         id: 4,
-        seeds: 250,
+        seeds: 650,
         duration: 120000,
         name:"Luxury Sushi Tour",
         reward: [{

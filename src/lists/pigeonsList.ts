@@ -202,7 +202,7 @@ const pigeonList: PrivatePigeonStat[] =
             attackrandomness: 1,
             shield: 5,
             shieldvariance: 0,
-            defense: 20,
+            defense: 23,
             defensevariance: 4,
             defenserandomness:3,
             energy: 25,
@@ -321,9 +321,9 @@ const pigeonList: PrivatePigeonStat[] =
             defenserandomness:0,
             energy: 5,
             feedcost: 1,
-            droppingsminute: 20,
+            droppingsminute: 5,
             droppingsminutevariance: 0,
-            feathers: 20
+            feathers: 10
         }
     ]
 
