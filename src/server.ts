@@ -19,7 +19,7 @@ const app = express();
 
 app.use(bodyParser.json());
 const corsOptions = {
-    origin: ["http://localhost:4200","http://pigeons.agency"],
+    origin: ["http://localhost:4200","http://pigeons.agency","https://pigeons.agency"],
     optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions))
@@ -50,6 +50,7 @@ app.post('/pigeons/defender', [MiddlewareHelper.logRequest, MiddlewareHelper.isL
 app.post('/attack', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(AttackControler.attackPlayer));
 
 app.get('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.getMessages));
+app.post('/messages', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MessagesControler.sendMessage));
 
 app.get('/allusers', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getAllUsers));
 app.get('/allusers/attacks', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(UsersControler.getUsersForAttacks));

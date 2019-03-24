@@ -12,6 +12,8 @@ export class MessageService {
 
     }
 
+    
+
     static async readMessages(userid: number) {
         const text = "UPDATE USERS SET hasnotifications=false WHERE id=$1;"
         await pool.query(text, [userid]);

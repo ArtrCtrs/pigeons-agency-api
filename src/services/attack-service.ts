@@ -40,7 +40,7 @@ export class AttackService {
         });
 
 
-        const diff = Math.abs(attacker.militaryscore - defender.militaryscore);
+        const diff = Math.abs(attacker.militaryscore - defender.militaryscore) < 20 ? Math.abs(attacker.militaryscore - defender.militaryscore) : 20;
         const higherscore = attacker.militaryscore > defender.militaryscore;
         let attackerwonpoints;
         let defenderwonpoints;
@@ -54,7 +54,7 @@ export class AttackService {
             }
             defenderwonpoints = -(1 + Math.round((20 - diff) / 6));
 
-            stolenFeathers = defender.feathers * (0.3 + 0.01 * shieldtotal);
+            stolenFeathers = Math.round(defender.feathers * (0.3 + 0.01 * shieldtotal));
 
 
 
@@ -65,7 +65,7 @@ export class AttackService {
                 defenderwonpoints++;
             }
         }
-        messagebody += "<br>" + (attacktotal > defensetotal ? "attacker " + attacker.username + " has won!" : "defender " + defender.username + " has won! <br>");
+        messagebody += "<br>" + (attacktotal > defensetotal ? "Attacker " + attacker.username + " has won! <br>" : "Defender " + defender.username + " has won! <br>");
         messagebody += "Scores : " + attacktotal + " attack vs " + defensetotal + " defense and " + shieldtotal + " shield<br>";
         messagebody += "Stolen feathers : " + stolenFeathers + "<br>";
         messagebody += "Attacker got  : " + attackerwonpoints + " points<br>";

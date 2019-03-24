@@ -8,22 +8,27 @@ export class UsersService {
     static async getUserFromRequest(id: number): Promise<User> {
         let text = "SELECT * FROM USERS WHERE id=$1;";
         let user: User = (await pool.query(text, [id])).rows[0];
-
+        user.password=null;
         return user;
 
     }
-    static async getAllUsers(): Promise<string> {
+    static async getAllUsers(): Promise<User[]> {
         const text = 'SELECT * FROM USERS ORDER BY militaryscore DESC, (totalspentdroppings + totalspentseeds + 10 * totalspentfeathers) DESC;';
-        const dbres = await pool.query(text);
-        return dbres.rows;
+        const users:User[] = (await pool.query(text)).rows;
+        users.forEach(element => {
+            element.password=null;
+        });
+        return users;
 
     }
 
-    static async getUsersForAttacks(user:User): Promise<string> {
+    static async getUsersForAttacks(user:User): Promise<User[]> {
         const text = 'SELECT * FROM USERS ORDER BY (ABS($1 - militaryscore)) ASC,lastupdate DESC;';
-        const dbres = await pool.query(text,[user.militaryscore]);
-        return dbres.rows;
-
+        const users:User[] = (await pool.query(text,[user.militaryscore])).rows;
+        users.forEach(element => {
+            element.password=null;
+        });
+        return users;
     }
 
     static async updateUserInfo(user: User) {
