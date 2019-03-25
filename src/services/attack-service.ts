@@ -21,6 +21,7 @@ export class AttackService {
         let attacktotal = 0;
         let defensetotal = 0;
         let shieldtotal = 0;
+        let messagedetails = "";
 
         text = "SELECT * FROM Pigeons WHERE ownerid=$1 AND attacker=true"
         let attackingPigeons: Pigeon[] = (await pool.query(text, [attacker.id])).rows;
@@ -30,13 +31,13 @@ export class AttackService {
         attackingPigeons.forEach(p => {
             const currentattack = p.attack + (Math.round(Math.random() * 2 * p.attackrandomness - p.attackrandomness));
             attacktotal += currentattack;
-            messagebody += p.name + " has attacked for " + currentattack + "<br>";
+            messagedetails += p.name + " has attacked for " + currentattack + "<br>";
         });
         defendingPigeons.forEach(p => {
             const currentdefense = p.defense + (Math.round(Math.random() * 2 * p.defenserandomness - p.defenserandomness));
             defensetotal += currentdefense;
             shieldtotal += p.shield;
-            messagebody += p.name + " has defended for " + currentdefense + "<br>";
+            messagedetails += p.name + " has defended for " + currentdefense + "<br>";
         });
 
 
@@ -54,9 +55,7 @@ export class AttackService {
             }
             defenderwonpoints = -(1 + Math.round((20 - diff) / 6));
 
-            stolenFeathers = Math.round(defender.feathers * (0.3 + 0.01 * shieldtotal));
-
-
+            stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
 
         } else {
             attackerwonpoints = -(1 + Math.round((20 - diff) / 6));
@@ -65,19 +64,21 @@ export class AttackService {
                 defenderwonpoints++;
             }
         }
-        messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won!</strong> <br>" : "<strong>Defender " + defender.username + " has won!</strong> <br>");
-        messagebody += "Scores : " + attacktotal + " attack vs " + defensetotal + " defense and " + shieldtotal + " shield<br>";
+        messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won !</strong> <br>" : "<strong>Defender " + defender.username + " has won !</strong> <br>");
+        messagebody += "Results : " + attacktotal + " total attack vs " + defensetotal + " total defense and " + shieldtotal + " shield<br>";
         messagebody += "Stolen feathers : " + stolenFeathers + "<br>";
-        messagebody += "Attacker got  : " + attackerwonpoints + " points<br>";
-        messagebody += "Defender got  : " + defenderwonpoints + " points<br>";
+        messagebody += "Attacker military score got  : " + attackerwonpoints + " points<br>";
+        messagebody += "Defender military score got  : " + defenderwonpoints + " points<br>";
 
-        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4  WHERE id =$5 ";
+        messagebody += "<br>Details : <br>" + messagedetails + "";
+
+        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5  WHERE id =$6 ";
         const newattackkscore = (attacker.militaryscore + attackerwonpoints) > 0 ? (attacker.militaryscore + attackerwonpoints) : 0;
-        await pool.query(text, [newattackkscore, Date.now() + (1000 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.id]);
+        await pool.query(text, [newattackkscore, Date.now() + (1000 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.id]);
 
         const newdefensescore = (defender.militaryscore + defenderwonpoints) > 0 ? (defender.militaryscore + defenderwonpoints) : 0;
-        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3  WHERE id =$4 ";
-        await pool.query(text, [newdefensescore, Date.now() + (15000 * 60), defender.feathers - stolenFeathers, defender.id]);
+        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4  WHERE id =$5 ";
+        await pool.query(text, [newdefensescore, Date.now() + (15000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.id]);
 
 
         message = { ownerid: defender.id, title: "Your have been attacked by " + attacker.username, body: messagebody, sender: "info" };
