@@ -41,7 +41,7 @@ export class AttackService {
         });
 
 
-        const diff = Math.abs(attacker.militaryscore - defender.militaryscore) < 20 ? Math.abs(attacker.militaryscore - defender.militaryscore) : 20;
+        const diff = Math.abs(attacker.militaryscore - defender.militaryscore);
         const higherscore = attacker.militaryscore > defender.militaryscore;
         let attackerwonpoints;
         let defenderwonpoints;
@@ -49,24 +49,28 @@ export class AttackService {
 
 
         if (attacktotal > defensetotal) {
-            attackerwonpoints = 1 + Math.round((20 - diff) / 4);
             if (!higherscore) {
-                attackerwonpoints++;
+                attackerwonpoints = 7;
+                defenderwonpoints = -6;
+            } else {
+                attackerwonpoints = (7 - Math.round(diff / 6)) > 0 ? (7 - Math.round(diff / 6)) : 0;
+                defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? -(6 - Math.round(diff / 6)) : 0;
             }
-            defenderwonpoints = -(1 + Math.round((20 - diff) / 6));
-
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
 
         } else {
-            attackerwonpoints = -(1 + Math.round((20 - diff) / 6));
-            defenderwonpoints = (1 + Math.round((20 - diff) / 5));
             if (higherscore) {
-                defenderwonpoints++;
+                attackerwonpoints = -6;
+                defenderwonpoints = 5;
+            } else {
+                attackerwonpoints = (6 - Math.round(diff / 6)) > 0 ? -(6 - Math.round(diff / 6)) : 0;
+                defenderwonpoints = (5 - Math.round(diff / 6)) > 0 ? (5 - Math.round(diff / 6)) : 0;
             }
+
         }
         messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won !</strong> <br>" : "<strong>Defender " + defender.username + " has won !</strong> <br>");
-        messagebody += "Results : " + attacktotal + " total attack vs " + defensetotal + " total defense and " + shieldtotal + " shield<br>";
-        messagebody += "Stolen feathers : " + stolenFeathers + "<br>";
+        messagebody += "Results : " + attacktotal + " total attack vs " + defensetotal + " total defense.<br>";
+        messagebody += "Stolen feathers : " + stolenFeathers + "  (shield total : "+shieldtotal+" )<br>";
         messagebody += "Attacker military score got  : " + attackerwonpoints + " points<br>";
         messagebody += "Defender military score got  : " + defenderwonpoints + " points<br>";
 

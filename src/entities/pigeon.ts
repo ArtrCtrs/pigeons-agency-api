@@ -18,4 +18,5 @@ export interface Pigeon {
     attacker:boolean;
     defender:boolean;
     ownerid:number;
+    nickname:string;
 }
