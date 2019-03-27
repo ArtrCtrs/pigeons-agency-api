@@ -60,11 +60,11 @@ export class AttackService {
 
         } else {
             if (higherscore) {
-                attackerwonpoints = -6;
-                defenderwonpoints = 5;
+                attackerwonpoints = -5;
+                defenderwonpoints = 6;
             } else {
-                attackerwonpoints = (6 - Math.round(diff / 6)) > 0 ? -(6 - Math.round(diff / 6)) : 0;
-                defenderwonpoints = (5 - Math.round(diff / 6)) > 0 ? (5 - Math.round(diff / 6)) : 0;
+                attackerwonpoints = (5 - Math.round(diff / 6)) > 0 ? -(5 - Math.round(diff / 6)) : 0;
+                defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6- Math.round(diff / 6)) : 0;
             }
 
         }
