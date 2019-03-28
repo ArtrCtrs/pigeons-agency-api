@@ -53,8 +53,8 @@ export class AttackService {
                 attackerwonpoints = 7;
                 defenderwonpoints = -6;
             } else {
-                attackerwonpoints = (7 - Math.round(diff / 6)) > 0 ? (7 - Math.round(diff / 6)) : 0;
-                defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? -(6 - Math.round(diff / 6)) : 0;
+                attackerwonpoints = (7 - Math.round(diff / 5)) > 0 ? (7 - Math.round(diff / 5)) : 0;
+                defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
 
