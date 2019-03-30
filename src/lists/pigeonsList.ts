@@ -572,7 +572,7 @@ const pigeonList: PrivatePigeonStat[] =
         },
         {
             type: 30,
-            name: "Assassin epic pigeon",
+            name: "Assassin legendary pigeon",
             rank: 5,
             element: 1,
             attack: 32,

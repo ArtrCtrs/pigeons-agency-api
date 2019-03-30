@@ -8,9 +8,44 @@ let pool = db.getPool();
 
 export class PigeonsService {
 
-    static async getPigeons(id: number): Promise<string> {
-        const text = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime desc;";
-        const dbres = await pool.query(text, [id]);
+    static async getPigeons(id: number, orderbyid: number): Promise<string> {
+        let statement;
+        switch (+orderbyid) {
+            case 1:
+                //newest
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime desc;"
+                break;
+            case 2:
+                //oldest
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime asc;"
+                break;
+            case 3:
+                //high attack
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attack desc,creationtime desc;"
+                break;
+            case 4:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defense desc,creationtime desc;"
+                break;
+            case 5:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY rank desc,creationtime desc;"
+                break;
+            case 6:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY type desc,creationtime desc;"
+                break;
+            case 7:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY droppingsminute desc,creationtime desc;"
+                break;
+            case 8:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attacker desc,creationtime desc;"
+                break;
+            case 9:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defender desc,creationtime desc;"
+                break;
+            default:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime desc;"
+
+        }
+        const dbres = await pool.query(statement, [id]);
         return dbres.rows;
 
     }
@@ -35,9 +70,9 @@ export class PigeonsService {
         const droppingsdiff = Math.round(Math.random() * pigeonList[pigeontype].droppingsminutevariance * 2 - pigeonList[pigeontype].droppingsminutevariance);
         const pigeondroppings = pigeonList[pigeontype].droppingsminute + droppingsdiff;
 
-        const randomname=namesList[(Math.floor(Math.random()*namesList.length))];
+        const randomname = namesList[(Math.floor(Math.random() * namesList.length))];
         const text = "INSERT INTO PIGEONS(type,name,rank,attack,attackrandomness,shield,defense,defenserandomness,droppingsminute,feathers,energy,maxenergy,element,feedcost,creationtime,ownerid,nickname) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)";
-        await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, Date.now(), id,randomname]);
+        await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, Date.now(), id, randomname]);
         await this.updateUser(id, pigeondroppings);
 
     }

@@ -8,8 +8,15 @@ export class PigeonsControler extends AbstractController {
 
         const user = await PigeonsControler.getUserFromRequest(req);
         await PigeonsControler.updateUserInfo(user);
-       
-        let data = await PigeonsService.getPigeons(user.id);
+        console.log(req.query)
+        
+        if(!req.query.orderby){
+            throw new ConnectError('INVALID_PARAMETERS');
+        }
+        if(isNaN(req.query.orderby)){
+            throw new ConnectError('INVALID_PARAMETERS');
+        }
+        let data = await PigeonsService.getPigeons(user.id,req.query.orderby);
         res.status(200).send({
             message: 'ok',
             data: data
