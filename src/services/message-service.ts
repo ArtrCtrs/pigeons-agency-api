@@ -4,15 +4,13 @@ let pool = db.getPool();
 
 export class MessageService {
     static async createMessage(message: Message) {
-        const text = "INSERT INTO messages(ownerid,title,body,sender,date) VALUES ($1,$2,$3,$4,$5);"
-        await pool.query(text, [message.ownerid, message.title, message.body, message.sender, Date.now()]);
+        const text = "INSERT INTO messages(ownerid,title,body,sender,date,isattack,iswin,attackvalue,defensevalue,shieldvalue,stolenfeathers,myscore,opponentscore,mynewpoints,opponentnewpoints) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);"
+        await pool.query(text, [message.ownerid, message.title, message.body, message.sender, Date.now(), message.isattack, message.iswin, message.attackvalue, message.defensevalue, message.shieldvalue, message.stolenfeathers, message.myscore, message.opponentscore, message.mynewpoints, message.opponentnewpoints]);
 
         const text2 = "UPDATE USERS SET hasnotifications=true WHERE id=$1;"
         await pool.query(text2, [message.ownerid]);
-
     }
 
-    
 
     static async readMessages(userid: number) {
         const text = "UPDATE USERS SET hasnotifications=false WHERE id=$1;"

@@ -5,5 +5,15 @@ export interface Message {
     body:string;
     sender:string;
     //time:number;
+    isattack:number;
+    iswin:number;
+    attackvalue:number;
+    defensevalue:number;
+    shieldvalue:number;
+    stolenfeathers:number;
+    myscore:number;
+    opponentscore:number;
+    mynewpoints:number;
+    opponentnewpoints:number;
 
 } 

@@ -64,15 +64,15 @@ export class AttackService {
                 defenderwonpoints = 6;
             } else {
                 attackerwonpoints = (5 - Math.round(diff / 6)) > 0 ? -(5 - Math.round(diff / 6)) : 0;
-                defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6- Math.round(diff / 6)) : 0;
+                defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6 - Math.round(diff / 6)) : 0;
             }
 
         }
-        messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won !</strong> <br>" : "<strong>Defender " + defender.username + " has won !</strong> <br>");
-        messagebody += "Results : " + attacktotal + " total attack vs " + defensetotal + " total defense.<br>";
-        messagebody += "Stolen feathers : " + stolenFeathers + "  (shield total : "+shieldtotal+" )<br>";
-        messagebody += "Attacker military score got  : " + attackerwonpoints + " points<br>";
-        messagebody += "Defender military score got  : " + defenderwonpoints + " points<br>";
+        // messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won !</strong> <br>" : "<strong>Defender " + defender.username + " has won !</strong> <br>");
+        // messagebody += "Results : " + attacktotal + " total attack vs " + defensetotal + " total defense.<br>";
+        // messagebody += "Stolen feathers : " + stolenFeathers + "  (shield total : " + shieldtotal + " )<br>";
+        // messagebody += "Attacker military score got  : " + attackerwonpoints + " points<br>";
+        // messagebody += "Defender military score got  : " + defenderwonpoints + " points<br>";
 
         messagebody += "<br>Details : <br>" + messagedetails + "";
 
@@ -85,10 +85,42 @@ export class AttackService {
         await pool.query(text, [newdefensescore, Date.now() + (15000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.id]);
 
 
-        message = { ownerid: defender.id, title: "Your have been attacked by " + attacker.username, body: messagebody, sender: "info" };
+        message = {
+            ownerid: defender.id,
+            title: "You have been attacked by " + attacker.username,
+            body: messagebody,
+            sender: "info",
+            isattack: 2,
+            iswin: attacktotal > defensetotal ? 2 : 1,
+            attackvalue: attacktotal,
+            defensevalue: defensetotal,
+            shieldvalue: shieldtotal,
+            stolenfeathers: stolenFeathers,
+            myscore: newdefensescore,
+            opponentscore: newattackkscore,
+            mynewpoints: defenderwonpoints,
+            opponentnewpoints: attackerwonpoints
+
+
+        };
         await MessageService.createMessage(message);
 
-        message = { ownerid: attacker.id, title: "You have attacked " + defender.username, body: messagebody, sender: "info" };
+        message = {
+            ownerid: attacker.id,
+            title: "You have attacked " + defender.username,
+            body: messagebody,
+            sender: "info",
+            isattack: 1,
+            iswin: attacktotal > defensetotal ? 1 : 2,
+            attackvalue: attacktotal,
+            defensevalue: defensetotal,
+            shieldvalue: shieldtotal,
+            stolenfeathers: stolenFeathers,
+            myscore: newattackkscore,
+            opponentscore: newdefensescore,
+            mynewpoints: attackerwonpoints,
+            opponentnewpoints: defenderwonpoints
+        };
         await MessageService.createMessage(message);
 
     }
