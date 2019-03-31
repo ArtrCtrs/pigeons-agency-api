@@ -23,7 +23,19 @@ export class MessagesControler extends AbstractController {
             ownerid:-2,
             title:"message from "+user.username,
             body:req.body.message,
-            sender:user.username
+            sender:user.username,
+            isattack: 0,
+            iswin: 0,
+            attackvalue: 0,
+            defensevalue: 0,
+            shieldvalue: 0,
+            stolenfeathers: 0,
+            myscore: 0,
+            opponentscore: 0,
+            mynewpoints: 0,
+            opponentnewpoints: 0,
+            stolenDroppings:0
+
         }
 
         await MessageService.createMessage(message);
