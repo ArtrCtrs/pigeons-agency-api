@@ -8,7 +8,6 @@ export class PigeonsControler extends AbstractController {
 
         const user = await PigeonsControler.getUserFromRequest(req);
         await PigeonsControler.updateUserInfo(user);
-        console.log(req.query)
         
         if(!req.query.orderby){
             throw new ConnectError('INVALID_PARAMETERS');

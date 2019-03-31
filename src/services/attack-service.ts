@@ -31,13 +31,13 @@ export class AttackService {
         attackingPigeons.forEach(p => {
             const currentattack = p.attack + (Math.round(Math.random() * 2 * p.attackrandomness - p.attackrandomness));
             attacktotal += currentattack;
-            messagedetails += p.name + " has attacked for " + currentattack + "<br>";
+            messagedetails += p.name +" rank "+p.rank+ " has attacked for " + currentattack + "<br>";
         });
         defendingPigeons.forEach(p => {
             const currentdefense = p.defense + (Math.round(Math.random() * 2 * p.defenserandomness - p.defenserandomness));
             defensetotal += currentdefense;
             shieldtotal += p.shield;
-            messagedetails += p.name + " has defended for " + currentdefense + "<br>";
+            messagedetails += p.name +" rank "+p.rank+ " has defended for " + currentdefense + "<br>";
         });
 
 

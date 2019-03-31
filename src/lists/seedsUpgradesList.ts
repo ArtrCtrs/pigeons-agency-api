@@ -32,39 +32,55 @@ const seedsUpgradesList = [
     },
     {
         lvl: 6,
-        droppingsCost: 1000,
+        droppingsCost: 950,
         newSeeds: 180
     },
     {
         lvl: 7,
-        droppingsCost: 1500,
+        droppingsCost: 1400,
         newSeeds: 220
     },
     {
         lvl: 8,
-        droppingsCost: 3000,
+        droppingsCost: 2700,
         newSeeds: 250
     },
     {
         lvl: 9,
-        droppingsCost: 6000,
+        droppingsCost: 4800,
         newSeeds: 300
     },{
         lvl: 10,
-        droppingsCost: 12000,
-        newSeeds: 400
+        droppingsCost: 11000,
+        newSeeds: 450
     },{
         lvl: 11,
-        droppingsCost: 24000,
-        newSeeds: 500
+        droppingsCost: 18000,
+        newSeeds: 850
     },{
         lvl: 12,
-        droppingsCost: 48000,
-        newSeeds: 600
+        droppingsCost: 25000,
+        newSeeds: 1000
     },{
         lvl: 13,
-        droppingsCost: 10000000,
-        newSeeds: 700
+        droppingsCost: 35000,
+        newSeeds: 1300
+    },{
+        lvl: 14,
+        droppingsCost: 45000,
+        newSeeds: 1800
+    },{
+        lvl: 15,
+        droppingsCost: 55000,
+        newSeeds: 2400
+    },{
+        lvl: 16,
+        droppingsCost: 69000,
+        newSeeds: 2800
+    },{
+        lvl: 17,
+        droppingsCost: 1000000000,
+        newSeeds: 3000
     }
 ]
 

@@ -27,7 +27,7 @@ const expeditionsList =
         },
         {
             pigeontype: 3,
-            probability: 101
+            probability: 100
         }]
     },
     {
@@ -62,7 +62,7 @@ const expeditionsList =
             ,
         {
             pigeontype: 9,
-            probability: 101
+            probability: 100
         }]
     },
     {
@@ -96,7 +96,7 @@ const expeditionsList =
         },
         {
             pigeontype: 14,
-            probability: 101
+            probability: 100
         }]
     },
     {
@@ -126,7 +126,7 @@ const expeditionsList =
         },
         {
             pigeontype: 10,
-            probability: 101
+            probability: 100
         }]
     },
     {
@@ -156,90 +156,54 @@ const expeditionsList =
         },
         {
             pigeontype: 15,
-            probability: 101
+            probability: 100
         }]
     },
     {
         id: 5,
-        seeds: 4500,
+        seeds: 3300,
         duration: 120000,
         name: "London Tour",
         reward: [{
             pigeontype: 21,
-            probability: 21
+            probability: 45
         },
         {
             pigeontype: 22,
-            probability: 42
-        },
-        {
-            pigeontype: 9,
-            probability: 50
+            probability: 88
         },
         {
             pigeontype: 23,
-            probability: 79
-        },
-        {
-            pigeontype: 10,
-            probability: 93
-        },
-        {
-            pigeontype: 24,
-            probability: 99
-        },
-        {
-            pigeontype: 25,
             probability: 100
         }]
     },
     {
         id: 6,
-        seeds: 4500,
+        seeds: 3300,
         duration: 120000,
         name: "Tokyo Tour",
         reward: [{
             pigeontype: 26,
-            probability: 21
+            probability: 45
         },
         {
             pigeontype: 27,
-            probability: 42
-        },
-        {
-            pigeontype: 14,
-            probability: 50
+            probability: 88
         },
         {
             pigeontype: 28,
-            probability: 79
-        },
-        {
-            pigeontype: 15,
-            probability: 93
-        },
-        {
-            pigeontype: 29,
-            probability: 99
-        },
-        {
-            pigeontype: 30,
             probability: 100
         }]
     },
     {
         id: 7,
-        seeds: 11500,
+        seeds: 7500,
         duration: 180000,
         name: "Luxury London Tour",
         reward: [
             {
                 pigeontype: 23,
-                probability: 30
-            },
-            {
-                pigeontype: 10,
-                probability: 60
+                probability: 55
             },
             {
                 pigeontype: 24,
@@ -252,17 +216,13 @@ const expeditionsList =
     },
     {
         id: 8,
-        seeds: 11500,
+        seeds: 7500,
         duration: 180000,
         name: "Luxury Tokyo Tour",
         reward: [
             {
                 pigeontype: 28,
-                probability: 30
-            },
-            {
-                pigeontype: 15,
-                probability: 60
+                probability: 55
             },
             {
                 pigeontype: 29,
@@ -270,6 +230,190 @@ const expeditionsList =
             },
             {
                 pigeontype: 30,
+                probability: 100
+            }]
+    },
+    {
+        id: 9,
+        seeds: 13500,
+        duration: 180000,
+        name: " London tour2",
+        reward: [
+            {
+                pigeontype: 51,
+                probability: 3
+            },
+            {
+                pigeontype: 31,
+                probability: 45
+            },
+            {
+                pigeontype: 32,
+                probability: 88
+            },
+            {
+                pigeontype: 33,
+                probability: 100
+            }]
+    },
+    {
+        id: 10,
+        seeds: 13500,
+        duration: 180000,
+        name: "tokyo tour2",
+        reward: [
+            {
+                pigeontype: 51,
+                probability: 3
+            },
+            {
+                pigeontype: 36,
+                probability: 45
+            },
+            {
+                pigeontype: 37,
+                probability: 88
+            },
+            {
+                pigeontype: 38,
+                probability: 100
+            }]
+    },
+    {
+        id: 11,
+        seeds: 19000,
+        duration: 180000,
+        name: " luxury London tour2",
+        reward: [
+            {
+                pigeontype: 52,
+                probability: 3
+            },
+            {
+                pigeontype: 33,
+                probability: 55
+            },
+            {
+                pigeontype: 34,
+                probability: 90
+            },
+            {
+                pigeontype: 35,
+                probability: 100
+            }]
+    },
+    {
+        id: 12,
+        seeds: 19000,
+        duration: 180000,
+        name: " luxury tokyo tour2",
+        reward: [
+            {
+                pigeontype: 52,
+                probability: 3
+            },
+            {
+                pigeontype: 38,
+                probability: 55
+            },
+            {
+                pigeontype: 39,
+                probability: 90
+            },
+            {
+                pigeontype: 40,
+                probability: 100
+            }]
+    },
+    {
+        id: 13,
+        seeds: 27000,
+        duration: 180000,
+        name: " London tour3",
+        reward: [
+            {
+                pigeontype: 53,
+                probability: 3
+            },
+            {
+                pigeontype: 41,
+                probability: 45
+            },
+            {
+                pigeontype: 42,
+                probability: 88
+            },
+            {
+                pigeontype: 43,
+                probability: 100
+            }]
+    },
+    {
+        id: 14,
+        seeds: 27000,
+        duration: 180000,
+        name: " tokyo tour 3",
+        reward: [
+            {
+                pigeontype: 53,
+                probability: 3
+            },
+            {
+                pigeontype: 46,
+                probability: 45
+            },
+            {
+                pigeontype: 47,
+                probability: 88
+            },
+            {
+                pigeontype: 48,
+                probability: 100
+            }]
+    },
+    {
+        id: 15,
+        seeds: 34500,
+        duration: 180000,
+        name: " luxury london 3",
+        reward: [
+            {
+                pigeontype: 54,
+                probability: 3
+            },
+            {
+                pigeontype: 43,
+                probability: 55
+            },
+            {
+                pigeontype: 44,
+                probability: 90
+            },
+            {
+                pigeontype: 45,
+                probability: 100
+            }]
+    },
+    {
+        id: 16,
+        seeds: 34500,
+        duration: 180000,
+        name: " luxury tokyo 3",
+        reward: [
+            {
+                pigeontype: 54,
+                probability: 3
+            },
+            {
+                pigeontype: 48,
+                probability: 55
+            },
+            {
+                pigeontype: 49,
+                probability: 90
+            },
+            {
+                pigeontype: 50,
                 probability: 100
             }]
     }]

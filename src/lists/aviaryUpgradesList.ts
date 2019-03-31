@@ -60,9 +60,29 @@ const aviaryUpgradesList = [
         newBirds: 32
     },
     {
-        lvl: 12,
-        feathersCost: 100000000,
+        lvl: 13,
+        feathersCost: 1250,
         newBirds: 34
+    },
+    {
+        lvl: 14,
+        feathersCost: 1600,
+        newBirds: 36
+    },
+    {
+        lvl: 15,
+        feathersCost: 2500,
+        newBirds: 38
+    },
+    {
+        lvl: 16,
+        feathersCost: 3000,
+        newBirds: 40
+    },
+    {
+        lvl: 17,
+        feathersCost: 100000000,
+        newBirds: 42
     }
 ]
 
