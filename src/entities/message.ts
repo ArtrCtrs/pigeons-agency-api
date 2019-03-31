@@ -15,5 +15,6 @@ export interface Message {
     opponentscore:number;
     mynewpoints:number;
     opponentnewpoints:number;
+    stolenDroppings:number;
 
 } 

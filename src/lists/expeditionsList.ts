@@ -33,8 +33,8 @@ const expeditionsList =
     {
         id: 1,
         seeds: 70,
-        duration: 25000,
-        name: "Macdonald tour",
+        duration: 20000,
+        name: "Macdonald tour (+def)",
         reward: [{
             pigeontype: 2,
             probability: 10
@@ -68,8 +68,8 @@ const expeditionsList =
     {
         id: 2,
         seeds: 70,
-        duration: 25000,
-        name: "Sushi Tour",
+        duration: 20000,
+        name: "Sushi Tour (+atk)",
         reward: [{
             pigeontype: 2,
             probability: 10
@@ -102,8 +102,8 @@ const expeditionsList =
     {
         id: 3,
         seeds: 650,
-        duration: 90000,
-        name: "Luxury Macdonald Tour",
+        duration: 60000,
+        name: "Luxury Macdonald Tour (+def)",
         reward: [{
             pigeontype: 3,
             probability: 23
@@ -132,8 +132,8 @@ const expeditionsList =
     {
         id: 4,
         seeds: 650,
-        duration: 90000,
-        name: "Luxury Sushi Tour",
+        duration: 60000,
+        name: "Luxury Sushi Tour (+atk)",
         reward: [{
             pigeontype: 3,
             probability: 23
@@ -162,8 +162,8 @@ const expeditionsList =
     {
         id: 5,
         seeds: 3300,
-        duration: 120000,
-        name: "London Tour",
+        duration: 90000,
+        name: "London Tour (+def)",
         reward: [{
             pigeontype: 21,
             probability: 45
@@ -180,8 +180,8 @@ const expeditionsList =
     {
         id: 6,
         seeds: 3300,
-        duration: 120000,
-        name: "Tokyo Tour",
+        duration: 90000,
+        name: "Tokyo Tour (+atk)",
         reward: [{
             pigeontype: 26,
             probability: 45
@@ -198,8 +198,8 @@ const expeditionsList =
     {
         id: 7,
         seeds: 7500,
-        duration: 180000,
-        name: "Luxury London Tour",
+        duration: 120000,
+        name: "Luxury London Tour (+def)",
         reward: [
             {
                 pigeontype: 23,
@@ -217,8 +217,8 @@ const expeditionsList =
     {
         id: 8,
         seeds: 7500,
-        duration: 180000,
-        name: "Luxury Tokyo Tour",
+        duration: 120000,
+        name: "Luxury Tokyo Tour (+atk)",
         reward: [
             {
                 pigeontype: 28,
@@ -236,8 +236,8 @@ const expeditionsList =
     {
         id: 9,
         seeds: 13500,
-        duration: 180000,
-        name: " London tour2",
+        duration: 150000,
+        name: "Berlin tour (+def)",
         reward: [
             {
                 pigeontype: 51,
@@ -259,8 +259,8 @@ const expeditionsList =
     {
         id: 10,
         seeds: 13500,
-        duration: 180000,
-        name: "tokyo tour2",
+        duration: 150000,
+        name: "Singapore tour (+atk)",
         reward: [
             {
                 pigeontype: 51,
@@ -282,8 +282,8 @@ const expeditionsList =
     {
         id: 11,
         seeds: 19000,
-        duration: 180000,
-        name: " luxury London tour2",
+        duration: 170000,
+        name: "Luxury Berlin tour (+def)",
         reward: [
             {
                 pigeontype: 52,
@@ -305,8 +305,8 @@ const expeditionsList =
     {
         id: 12,
         seeds: 19000,
-        duration: 180000,
-        name: " luxury tokyo tour2",
+        duration: 170000,
+        name: "Luxury Singapore tour (+atk)",
         reward: [
             {
                 pigeontype: 52,
@@ -328,8 +328,8 @@ const expeditionsList =
     {
         id: 13,
         seeds: 27000,
-        duration: 180000,
-        name: " London tour3",
+        duration: 190000,
+        name: "New York tour (+def)",
         reward: [
             {
                 pigeontype: 53,
@@ -351,8 +351,8 @@ const expeditionsList =
     {
         id: 14,
         seeds: 27000,
-        duration: 180000,
-        name: " tokyo tour 3",
+        duration: 190000,
+        name: "Shanghai tour (+atk)",
         reward: [
             {
                 pigeontype: 53,
@@ -374,8 +374,8 @@ const expeditionsList =
     {
         id: 15,
         seeds: 34500,
-        duration: 180000,
-        name: " luxury london 3",
+        duration: 190000,
+        name: "Luxury New York tour (+def)",
         reward: [
             {
                 pigeontype: 54,
@@ -397,8 +397,8 @@ const expeditionsList =
     {
         id: 16,
         seeds: 34500,
-        duration: 180000,
-        name: " luxury tokyo 3",
+        duration: 190000,
+        name: "Luxury Shanghai tour (+atk)",
         reward: [
             {
                 pigeontype: 54,

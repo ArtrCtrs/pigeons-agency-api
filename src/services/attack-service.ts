@@ -2,6 +2,7 @@ import { User } from './../entities/User';
 import db from '../db/pgpool';
 import { Pigeon } from '../entities/pigeon';
 import { MessageService } from './message-service';
+import { UsersService } from './users-service';
 import { Message } from '../entities/message';
 import { ConnectError } from '../classes/connect-error';
 let pool = db.getPool();
@@ -16,6 +17,9 @@ export class AttackService {
         if (defender.protecteduntil > Date.now()) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
+        UsersService.updateUserInfo(defender);
+        defender = (await pool.query(text, [defenderid])).rows[0];
+
         let message: Message;
         let messagebody = "";
         let attacktotal = 0;
@@ -31,13 +35,13 @@ export class AttackService {
         attackingPigeons.forEach(p => {
             const currentattack = p.attack + (Math.round(Math.random() * 2 * p.attackrandomness - p.attackrandomness));
             attacktotal += currentattack;
-            messagedetails += p.name +" rank "+p.rank+ " has attacked for " + currentattack + "<br>";
+            messagedetails += p.name + " rank " + p.rank + " has attacked for " + currentattack + "<br>";
         });
         defendingPigeons.forEach(p => {
             const currentdefense = p.defense + (Math.round(Math.random() * 2 * p.defenserandomness - p.defenserandomness));
             defensetotal += currentdefense;
             shieldtotal += p.shield;
-            messagedetails += p.name +" rank "+p.rank+ " has defended for " + currentdefense + "<br>";
+            messagedetails += p.name + " rank " + p.rank + " has defended for " + currentdefense + "<br>";
         });
 
 
@@ -46,6 +50,7 @@ export class AttackService {
         let attackerwonpoints;
         let defenderwonpoints;
         let stolenFeathers = 0;
+        let stolenDroppings = 0;
 
 
         if (attacktotal > defensetotal) {
@@ -57,6 +62,10 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
+            const potentialStolenfeathers = Math.round(defender.droppings / 100);
+            const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
+            stolenDroppings = potentialStolenfeathers < attackerDroppingsSpace ? potentialStolenfeathers : attackerDroppingsSpace;
+
 
         } else {
             if (higherscore) {
@@ -76,13 +85,13 @@ export class AttackService {
 
         messagebody += "<br>Details : <br>" + messagedetails + "";
 
-        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5  WHERE id =$6 ";
+        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5,droppings=$6  WHERE id =$7 ";
         const newattackkscore = (attacker.militaryscore + attackerwonpoints) > 0 ? (attacker.militaryscore + attackerwonpoints) : 0;
-        await pool.query(text, [newattackkscore, Date.now() + (1000 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.id]);
+        await pool.query(text, [newattackkscore, Date.now() + (1000 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.droppings + stolenDroppings, attacker.id]);
 
         const newdefensescore = (defender.militaryscore + defenderwonpoints) > 0 ? (defender.militaryscore + defenderwonpoints) : 0;
-        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4  WHERE id =$5 ";
-        await pool.query(text, [newdefensescore, Date.now() + (15000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.id]);
+        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4,droppings=$5  WHERE id =$6 ";
+        await pool.query(text, [newdefensescore, Date.now() + (15000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.droppings - stolenDroppings, defender.id]);
 
 
         message = {
@@ -99,7 +108,8 @@ export class AttackService {
             myscore: newdefensescore,
             opponentscore: newattackkscore,
             mynewpoints: defenderwonpoints,
-            opponentnewpoints: attackerwonpoints
+            opponentnewpoints: attackerwonpoints,
+            stolenDroppings:stolenDroppings
 
 
         };
@@ -119,7 +129,8 @@ export class AttackService {
             myscore: newattackkscore,
             opponentscore: newdefensescore,
             mynewpoints: attackerwonpoints,
-            opponentnewpoints: defenderwonpoints
+            opponentnewpoints: defenderwonpoints,
+            stolenDroppings:stolenDroppings
         };
         await MessageService.createMessage(message);
 
