@@ -32,4 +32,5 @@ export interface User {
     totalattacks:number;
     totaldefenses:number;
     creationtime:number;
+    lastattack:number;
 }
