@@ -17,7 +17,7 @@ export class AttackService {
         if (defender.protecteduntil > Date.now()) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
-        if(attacker.lastattack==defender.id){
+        if (attacker.lastattack == defender.id) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
 
@@ -66,7 +66,7 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
-            const potentialStolenfeathers = Math.round(defender.droppings / 100);
+            const potentialStolenfeathers = (Math.round(defender.droppings / 100) + Math.round(defender.maxdroppings * 0.25 / 100)) / 2;
             const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
             stolenDroppings = potentialStolenfeathers < attackerDroppingsSpace ? potentialStolenfeathers : attackerDroppingsSpace;
 
@@ -91,7 +91,7 @@ export class AttackService {
 
         text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5,droppings=$6,lastattack=$7  WHERE id =$8 ";
         const newattackkscore = (attacker.militaryscore + attackerwonpoints) > 0 ? (attacker.militaryscore + attackerwonpoints) : 0;
-        await pool.query(text, [newattackkscore, Date.now() + (1500 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.droppings + stolenDroppings,defender.id, attacker.id]);
+        await pool.query(text, [newattackkscore, Date.now() + (1500 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.droppings + stolenDroppings, defender.id, attacker.id]);
 
         const newdefensescore = (defender.militaryscore + defenderwonpoints) > 0 ? (defender.militaryscore + defenderwonpoints) : 0;
         text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4,droppings=$5  WHERE id =$6 ";
@@ -113,7 +113,7 @@ export class AttackService {
             opponentscore: newattackkscore,
             mynewpoints: defenderwonpoints,
             opponentnewpoints: attackerwonpoints,
-            stolenDroppings:stolenDroppings
+            stolenDroppings: stolenDroppings
 
 
         };
@@ -134,7 +134,7 @@ export class AttackService {
             opponentscore: newdefensescore,
             mynewpoints: attackerwonpoints,
             opponentnewpoints: defenderwonpoints,
-            stolenDroppings:stolenDroppings
+            stolenDroppings: stolenDroppings
         };
         await MessageService.createMessage(message);
 

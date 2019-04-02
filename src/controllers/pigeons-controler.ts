@@ -22,17 +22,17 @@ export class PigeonsControler extends AbstractController {
         });
 
     }
-    static async addPigeon(req: Request, res: Response) {
+    // static async addPigeon(req: Request, res: Response) {
 
-        const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
+    //     const user = await PigeonsControler.getUserFromRequest(req);
+    //     await PigeonsControler.updateUserInfo(user);
        
-        await PigeonsService.addPigeon(user.id,req.body.expedition);
-        res.status(200).send({
-            message: 'ok',
-            data: null
-        });
-    }
+    //     await PigeonsService.addPigeon(user.id,req.body.expedition);
+    //     res.status(200).send({
+    //         message: 'ok',
+    //         data: null
+    //     });
+    // }
 
     static async sellPigeon(req:Request,res:Response){
         const user = await PigeonsControler.getUserFromRequest(req);
