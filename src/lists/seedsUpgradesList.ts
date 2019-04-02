@@ -79,8 +79,20 @@ const seedsUpgradesList = [
         newSeeds: 2800
     },{
         lvl: 17,
-        droppingsCost: 1000000000,
-        newSeeds: 3000
+        droppingsCost: 99000,
+        newSeeds: 3350
+    },{
+        lvl: 18,
+        droppingsCost: 145000,
+        newSeeds: 3800
+    },{
+        lvl: 19,
+        droppingsCost: 199000,
+        newSeeds: 4350
+    },{
+        lvl: 20,
+        droppingsCost: 99999999,
+        newSeeds: 4350
     }
 ]
 

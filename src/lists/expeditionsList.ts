@@ -416,6 +416,88 @@ const expeditionsList =
                 pigeontype: 50,
                 probability: 100
             }]
+    },
+    {
+        id: 17,
+        seeds: 41500,
+        duration: 190000,
+        name: "Paris tour (+def)",
+        reward: [
+            {
+                pigeontype: 61,
+                probability: 45
+            },
+            {
+                pigeontype: 62,
+                probability: 88
+            },
+            {
+                pigeontype: 63,
+                probability: 100
+            }]
+    },
+    {
+        id: 18,
+        seeds: 41500,
+        duration: 190000,
+        name: "Los Angeles tour (+atk)",
+        reward: [
+            {
+                pigeontype: 66,
+                probability: 45
+            },
+            {
+                pigeontype: 67,
+                probability: 88
+            },
+            {
+                pigeontype: 68,
+                probability: 100
+            }]
+    },{
+        id: 19,
+        seeds: 50000,
+        duration: 190000,
+        name: "Luxury Paris tour (+def)",
+        reward: [
+            {
+                pigeontype: 55,
+                probability: 3
+            },
+            {
+                pigeontype: 63,
+                probability: 55
+            },
+            {
+                pigeontype: 64,
+                probability: 91
+            },
+            {
+                pigeontype: 65,
+                probability: 100
+            }]
+    },{
+        id: 20,
+        seeds: 50000,
+        duration: 190000,
+        name: "Luxury Los Angeles tour (+atk)",
+        reward: [
+            {
+                pigeontype: 55,
+                probability: 3
+            },
+            {
+                pigeontype: 68,
+                probability: 55
+            },
+            {
+                pigeontype: 69,
+                probability: 91
+            },
+            {
+                pigeontype: 70,
+                probability: 100
+            }]
     }]
 
 export default expeditionsList;

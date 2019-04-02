@@ -81,9 +81,21 @@ const seedsStorageList = [
     },
     {
         lvl: 13,
-        droppingsCost: 10000000000,
-        feathersCost:10000000,
-        seedsStorage: 48000
+        droppingsCost: 3500000,
+        feathersCost:700,
+        seedsStorage: 49000
+    },
+    {
+        lvl: 14,
+        droppingsCost: 5200000,
+        feathersCost:1300,
+        seedsStorage: 60000
+    },
+    {
+        lvl: 15,
+        droppingsCost: 9999999999,
+        feathersCost:999999999,
+        seedsStorage: 999999999
     }
     
 ]
