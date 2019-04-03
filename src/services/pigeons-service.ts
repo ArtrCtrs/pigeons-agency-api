@@ -21,24 +21,27 @@ export class PigeonsService {
                 break;
             case 3:
                 //high attack
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attack desc,creationtime desc;"
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attack desc,defense desc,shield desc,creationtime desc;"
                 break;
             case 4:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defense desc,creationtime desc;"
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defense desc,shield desc, attack desc,creationtime desc;"
                 break;
             case 5:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY rank desc,creationtime desc;"
-                break;
-            case 6:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY type desc,creationtime desc;"
-                break;
-            case 7:
                 statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY droppingsminute desc,creationtime desc;"
                 break;
+            case 6:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY droppingsminute asc,creationtime desc;"
+                break;
+            case 7:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY rank desc,creationtime desc;"
+                break;
             case 8:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attacker desc,creationtime desc;"
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY type desc,creationtime desc;"
                 break;
             case 9:
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attacker desc,creationtime desc;"
+                break;
+            case 10:
                 statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defender desc,creationtime desc;"
                 break;
             default:
