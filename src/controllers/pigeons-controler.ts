@@ -7,7 +7,7 @@ export class PigeonsControler extends AbstractController {
     static async getPigeons(req: Request, res: Response) {
 
         const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
+        //await PigeonsControler.updateUserInfo(user);
         
         if(!req.query.orderby){
             throw new ConnectError('INVALID_PARAMETERS');
@@ -36,9 +36,9 @@ export class PigeonsControler extends AbstractController {
 
     static async sellPigeon(req:Request,res:Response){
         const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
+        //await PigeonsControler.updateUserInfo(user);
        
-        await PigeonsService.sellPigeon(req.body.pigeonid);
+        await PigeonsService.sellPigeon(user,req.body.pigeonid);
         res.status(200).send({
             message: 'ok',
             data: null
@@ -46,23 +46,23 @@ export class PigeonsControler extends AbstractController {
 
     }
 
-    static async feedPigeon(req:Request,res:Response){
-        const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
-        if(!req.body.pigeonid){
-            throw new ConnectError('INVALID_PARAMETERS');
-        }
+    // static async feedPigeon(req:Request,res:Response){
+    //     const user = await PigeonsControler.getUserFromRequest(req);
+    //     //await PigeonsControler.updateUserInfo(user);
+    //     if(!req.body.pigeonid){
+    //         throw new ConnectError('INVALID_PARAMETERS');
+    //     }
        
-        await PigeonsService.feedPigeon(user,req.body.pigeonid);
-        res.status(200).send({
-            message: 'ok',
-            data: null
-        });
+    //     await PigeonsService.feedPigeon(user,req.body.pigeonid);
+    //     res.status(200).send({
+    //         message: 'ok',
+    //         data: null
+    //     });
 
-    }
+    // }
     static async setAttacker(req:Request,res:Response){
         const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
+        //await PigeonsControler.updateUserInfo(user);
         if(!req.body.pigeonid){
             throw new ConnectError('INVALID_PARAMETERS');
         }
@@ -75,7 +75,7 @@ export class PigeonsControler extends AbstractController {
     }
     static async setDefender(req:Request,res:Response){
         const user = await PigeonsControler.getUserFromRequest(req);
-        await PigeonsControler.updateUserInfo(user);
+        //await PigeonsControler.updateUserInfo(user);
         if(!req.body.pigeonid){
             throw new ConnectError('INVALID_PARAMETERS');
         }

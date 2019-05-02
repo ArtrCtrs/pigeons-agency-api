@@ -11,7 +11,7 @@ export class AttackControler extends AbstractController {
             throw new ConnectError('INVALID_PARAMETERS');
         }
         if (user.nextpossibleattack > Date.now()) {
-            throw new ConnectError('REQUIREMENTS_ERROR');
+            throw new ConnectError('ATTACK_REQUIREMENTS');
         }
 
         await AttackService.attackPlayer(user, req.body.userid);

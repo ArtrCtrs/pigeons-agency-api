@@ -8,7 +8,7 @@ export class ExpeditionsControler extends AbstractController {
 
     static async getExpeditions(req: Request, res: Response) {
         const user = await ExpeditionsControler.getUserFromRequest(req);
-        await ExpeditionsControler.updateUserInfo(user);
+        //await ExpeditionsControler.updateUserInfo(user);
 
         let data = await ExpeditionsService.getExpeditions(user.id);
         res.status(200).send({

@@ -2,11 +2,12 @@ import { Response, Request } from 'express';
 import { AbstractController } from './abstract-controler';
 import { MessageService } from '../services/message-service';
 import {Message} from '../entities/message';
+import { ConnectError } from '../classes/connect-error';
 export class MessagesControler extends AbstractController {
 
     static async getMessages(req: Request, res: Response) {
         const user = await MessagesControler.getUserFromRequest(req);
-        await MessagesControler.updateUserInfo(user);
+        // await MessagesControler.updateUserInfo(user);
 
         let data = await MessageService.getMessages(user.id);
         await MessageService.readMessages(user.id);
@@ -17,8 +18,11 @@ export class MessagesControler extends AbstractController {
     }
     static async sendMessage(req: Request, res: Response) {
         const user = await MessagesControler.getUserFromRequest(req);
-        await MessagesControler.updateUserInfo(user);
+        // await MessagesControler.updateUserInfo(user);
 
+        if (req.body.message == null) {
+            throw new ConnectError('INVALID_PARAMETERS');
+        }
         const message:Message={
             ownerid:-2,
             title:"message from "+user.username,

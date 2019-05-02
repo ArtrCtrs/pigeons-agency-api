@@ -38,6 +38,18 @@ static handledErrors: Errors = {
 	'REQUIREMENTS_ERROR':{
 		errorCode: 409,
         errorMessage: 'You don\'t have the necessary ressources.'
+	},
+	'USER_NOT_FOUND':{
+		errorCode: 409,
+        errorMessage: 'User not found.'
+	},
+	'ATTACK_REQUIREMENTS':{
+		errorCode: 409,
+        errorMessage: 'You cannot attack this player at this time.'
+	},
+	'EXPEDITION_ERROR':{
+		errorCode: 409,
+        errorMessage: 'Expedition does not exist.'
 	}
 };
 

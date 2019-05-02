@@ -12,13 +12,13 @@ export class AttackService {
         let text = "SELECT * FROM USERS WHERE id=$1";
         let defender: User = (await pool.query(text, [defenderid])).rows[0];
         if (!defender) {
-            throw new ConnectError('INVALID_PARAMETERS');
+            throw new ConnectError('USER_NOT_FOUND');
         }
         if (defender.protecteduntil > Date.now()) {
-            throw new ConnectError('REQUIREMENTS_ERROR');
+            throw new ConnectError('ATTACK_REQUIREMENTS');
         }
         if (attacker.lastattack == defender.id) {
-            throw new ConnectError('REQUIREMENTS_ERROR');
+            throw new ConnectError('ATTACK_REQUIREMENTS');
         }
 
         UsersService.updateUserInfo(defender);
@@ -66,7 +66,7 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
-            const potentialStolenfeathers = (Math.round(defender.droppings / 100) + Math.round(defender.maxdroppings * 0.25 / 100)) / 2;
+            const potentialStolenfeathers = Math.round((defender.droppings / 100) + (defender.maxdroppings * 0.25 / 100) / 2);
             const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
             stolenDroppings = potentialStolenfeathers < attackerDroppingsSpace ? potentialStolenfeathers : attackerDroppingsSpace;
 

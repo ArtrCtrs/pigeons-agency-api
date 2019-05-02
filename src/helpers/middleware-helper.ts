@@ -48,8 +48,9 @@ export default class MiddlewareHelper {
 			body = req.body.username ? req.body.username : "";
 			userid = -1;
 		}
-
-		await LogService.logRequest(userid, req.method, req.url, body, req.connection.remoteAddress);
+		await LogService.logRequest(userid, req.method, req.url, body, req.headers['x-forwarded-for'] ||
+			req.connection.remoteAddress ||
+			req.socket.remoteAddress);//req.connection.remoteAddress);
 		next();
 	}
 

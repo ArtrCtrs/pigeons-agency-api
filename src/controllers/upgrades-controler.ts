@@ -11,7 +11,7 @@ export class UpgradesControler extends AbstractController {
 
     static async getCurrentUpgrades(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
-        await UpgradesControler.updateUserInfo(user);
+        //await UpgradesControler.updateUserInfo(user);
 
         res.status(200).send({
             message: 'ok',
@@ -26,7 +26,7 @@ export class UpgradesControler extends AbstractController {
 
     static async upgradeFarm(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
-        await UpgradesControler.updateUserInfo(user);
+        //await UpgradesControler.updateUserInfo(user);
 
         if (user.droppings < seedsUpgradesList[user.farmlvl + 1].droppingsCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
@@ -39,7 +39,7 @@ export class UpgradesControler extends AbstractController {
     }
     static async upgradeAviary(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
-        await UpgradesControler.updateUserInfo(user);
+        // await UpgradesControler.updateUserInfo(user);
         
         if (user.feathers < aviaryUpgradesList[user.aviarylvl + 1].feathersCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
