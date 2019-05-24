@@ -9,25 +9,28 @@ import { upgradesService } from '../services/upgrades-service';
 
 export class UpgradesControler extends AbstractController {
 
-    static async getCurrentUpgrades(req: Request, res: Response) {
-        const user = await UpgradesControler.getUserFromRequest(req);
-        //await UpgradesControler.updateUserInfo(user);
+    // static async getCurrentUpgrades(req: Request, res: Response) {
+    //     const user = await UpgradesControler.getUserFromRequest(req);
+    //     //await UpgradesControler.updateUserInfo(user);
 
-        res.status(200).send({
-            message: 'ok',
-            data: {
-                farmlvl: user.farmlvl,
-                aviarylvl: user.aviarylvl,
-                farmstoragelvl: user.farmstoragelvl,
-                droppingsstoragelvl: user.droppingsstoragelvl
-            }
-        });
-    }
+    //     res.status(200).send({
+    //         message: 'ok',
+    //         data: {
+    //             farmlvl: user.farmlvl,
+    //             aviarylvl: user.aviarylvl,
+    //             farmstoragelvl: user.farmstoragelvl,
+    //             droppingsstoragelvl: user.droppingsstoragelvl
+    //         }
+    //     });
+    // }
 
     static async upgradeFarm(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
-        //await UpgradesControler.updateUserInfo(user);
+        await UpgradesControler.updateUserInfo(user);
 
+        if(user.lvl<=user.farmlvl){
+            throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
+        }
         if (user.droppings < seedsUpgradesList[user.farmlvl + 1].droppingsCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
@@ -39,8 +42,10 @@ export class UpgradesControler extends AbstractController {
     }
     static async upgradeAviary(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
-        // await UpgradesControler.updateUserInfo(user);
-        
+        await UpgradesControler.updateUserInfo(user);
+        if(user.lvl<=user.aviarylvl){
+            throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
+        }
         if (user.feathers < aviaryUpgradesList[user.aviarylvl + 1].feathersCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
@@ -53,6 +58,10 @@ export class UpgradesControler extends AbstractController {
 
     static async upgradeFarmStorage(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
+        await UpgradesControler.updateUserInfo(user);
+        if(user.lvl<=user.farmstoragelvl){
+            throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
+        }
         if (user.droppings < seedsStorageList[user.farmstoragelvl + 1].droppingsCost || user.feathers < seedsStorageList[user.farmstoragelvl + 1].feathersCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
@@ -64,6 +73,10 @@ export class UpgradesControler extends AbstractController {
     }
     static async upgradeDroppingsStorage(req: Request, res: Response) {
         const user = await UpgradesControler.getUserFromRequest(req);
+        await UpgradesControler.updateUserInfo(user);
+        if(user.lvl<=user.droppingsstoragelvl){
+            throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
+        }
         if (user.seeds < droppingsStorageList[user.droppingsstoragelvl + 1].seedsCost || user.feathers < droppingsStorageList[user.droppingsstoragelvl + 1].feathersCost) {
             throw new ConnectError('REQUIREMENTS_ERROR');
         }

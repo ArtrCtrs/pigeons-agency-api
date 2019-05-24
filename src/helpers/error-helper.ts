@@ -50,6 +50,10 @@ static handledErrors: Errors = {
 	'EXPEDITION_ERROR':{
 		errorCode: 409,
         errorMessage: 'Expedition does not exist.'
+	},
+	'LEVEL_REQUIREMENT_ERROR':{
+		errorCode: 409,
+        errorMessage: 'Player level must be greater than upgrade level.'
 	}
 };
 
