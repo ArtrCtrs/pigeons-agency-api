@@ -1,99 +1,33 @@
-const aviaryUpgradesList = [
-    {
-        lvl: 0,
-        feathersCost: 0,
-        newBirds: 10
-    },
-    {
-        lvl: 1,
-        feathersCost: 4,
-        newBirds: 12
-    },
-    {
-        lvl: 2,
-        feathersCost: 10,
-        newBirds: 14
-    },
-    {
-        lvl: 3,
-        feathersCost: 25,
-        newBirds: 16
-    },
-    {
-        lvl: 4,
-        feathersCost: 60,
-        newBirds: 18
-    },
-    {
-        lvl: 5,
-        feathersCost: 100,
-        newBirds: 20
-    },
-    {
-        lvl: 6,
-        feathersCost: 150,
-        newBirds: 22
-    },
-    {
-        lvl: 7,
-        feathersCost: 200,
-        newBirds: 24
-    },
-    {
-        lvl: 8,
-        feathersCost: 300,
-        newBirds: 26
-    },
-    {
-        lvl: 9,
-        feathersCost: 500,
-        newBirds: 28
-    },
-    {
-        lvl: 10,
-        feathersCost: 750,
-        newBirds: 30
-    },
-    {
-        lvl: 11,
-        feathersCost: 1000,
-        newBirds: 32
-    },
-    {
-        lvl: 13,
-        feathersCost: 1250,
-        newBirds: 34
-    },
-    {
-        lvl: 14,
-        feathersCost: 1600,
-        newBirds: 36
-    },
-    {
-        lvl: 15,
-        feathersCost: 2500,
-        newBirds: 38
-    },
-    {
-        lvl: 16,
-        feathersCost: 3000,
-        newBirds: 40
-    },
-    {
-        lvl: 17,
-        feathersCost: 3500,
-        newBirds: 41
-    },
-    {
-        lvl: 18,
-        feathersCost: 4500,
-        newBirds: 42
-    },
-    {
-        lvl: 17,
-        feathersCost: 5500,
-        newBirds: 43
-    }
-]
-
-export default aviaryUpgradesList;
+const aviaryUpgradesList    = [
+    {lvl: 0,feathersCost: 0,newBirds:10 },
+    {lvl: 1,feathersCost: 2,newBirds:12 },
+    {lvl: 2,feathersCost: 6,newBirds:14 },
+    {lvl: 3,feathersCost: 16,newBirds:16 },
+    {lvl: 4,feathersCost: 40,newBirds:18 },
+    {lvl: 5,feathersCost: 90,newBirds:20 },
+    {lvl: 6,feathersCost: 189,newBirds:22 },
+    {lvl: 7,feathersCost: 360,newBirds:24 },
+    {lvl: 8,feathersCost: 630,newBirds:26 },
+    {lvl: 9,feathersCost: 1100,newBirds:28 },
+    {lvl: 10,feathersCost: 1760,newBirds:30 },
+    {lvl: 11,feathersCost: 2640,newBirds:32 },
+    {lvl: 12,feathersCost: 3705,newBirds:34 },
+    {lvl: 13,feathersCost: 4900,newBirds:36 },
+    {lvl: 14,feathersCost: 6375,newBirds:38 },
+    {lvl: 15,feathersCost: 8000,newBirds:40 },
+    {lvl: 16,feathersCost: 10200,newBirds:42 },
+    {lvl: 17,feathersCost: 12600,newBirds:44 },
+    {lvl: 18,feathersCost: 15200,newBirds:46 },
+    {lvl: 19,feathersCost: 18000,newBirds:48 },
+    {lvl: 20,feathersCost: 21000,newBirds:50 },
+    {lvl: 21,feathersCost: 26400,newBirds:52 },
+    {lvl: 22,feathersCost: 32200,newBirds:54 },
+    {lvl: 23,feathersCost: 38400,newBirds:56 },
+    {lvl: 24,feathersCost: 45000,newBirds:58 },
+    {lvl: 25,feathersCost: 52000,newBirds:60 },
+    {lvl: 26,feathersCost: 64800,newBirds:62 },
+    {lvl: 27,feathersCost: 78400,newBirds:64 },
+    {lvl: 28,feathersCost: 92800,newBirds:66 },
+    {lvl: 29,feathersCost: 108000,newBirds:68 },
+    ]
+    export default aviaryUpgradesList ;

@@ -22,9 +22,11 @@ export class ExpeditionsControler extends AbstractController {
     static async launchExpedition(req: Request, res: Response) {
 
         if (globalhelper.getExpSem()) {
+            console.log("expedition delayed")
             setTimeout(() => ExpeditionsControler.launchExpedition(req, res), 50);
         } else {
             globalhelper.setExpTrue();
+        
 
             const user = await ExpeditionsControler.getUserFromRequest(req);
             await ExpeditionsControler.updateUserInfo(user);
@@ -32,10 +34,16 @@ export class ExpeditionsControler extends AbstractController {
             const expeditiontype: number = req.body.expeditiontype;
 
             if (expeditiontype < 0 || expeditiontype >= expeditionsList.length) {
+                globalhelper.setExpFalse();
                 throw new ConnectError('REQUIREMENTS_ERROR');
             }
             if (user.seeds < expeditionsList[expeditiontype].seeds) {
+                globalhelper.setExpFalse();
                 throw new ConnectError('REQUIREMENTS_ERROR');
+            }
+            if(user.lvl < expeditionsList[expeditiontype].exprank){
+                globalhelper.setExpFalse();
+                throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
             }
             await ExpeditionsService.launchExpedition(user.id, expeditiontype, expeditionsList[expeditiontype].duration);
 
@@ -43,6 +51,7 @@ export class ExpeditionsControler extends AbstractController {
             user.totalspentseeds += expeditionsList[expeditiontype].seeds;
             await ExpeditionsService.updatePlayer(user.id, user.seeds, user.totalspentseeds);
 
+            
             globalhelper.setExpFalse();
             res.status(200).send({
                 message: 'ok',

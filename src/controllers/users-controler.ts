@@ -1,6 +1,8 @@
 import { UsersService } from '../services/users-service';
 import { Response, Request } from 'express';
 import { AbstractController } from './abstract-controler';
+import globalhelper from '../helpers/globals-helper';
+
 export class UsersControler extends AbstractController {
 
 
@@ -25,16 +27,24 @@ export class UsersControler extends AbstractController {
 
     }
 
-    static async getUpdatedUserInfo(req: Request, res: Response){
-        let user = await UsersControler.getUserFromRequest(req);
-        await UsersControler.updateUserInfo(user);
+    static async getUpdatedUserInfo(req: Request, res: Response) {
 
-        user = await UsersControler.getUserFromRequest(req);
+        if (globalhelper.getExpSem()) {
+            console.log("delayed")
+            setTimeout(() => UsersControler.getUpdatedUserInfo(req, res), 50);
+        } else {
+            globalhelper.setExpTrue();
+            let user = await UsersControler.getUserFromRequest(req);
+            await UsersControler.updateUserInfo(user);
 
-        res.status(200).send({
-            message: 'ok',
-            data: user
-        });
+            user = await UsersControler.getUserFromRequest(req);
+
+            globalhelper.setExpFalse();
+            res.status(200).send({
+                message: 'ok',
+                data: user
+            });
+        }
     }
 
 }

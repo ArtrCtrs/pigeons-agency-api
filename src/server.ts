@@ -83,7 +83,7 @@ async function dropDB() {
 }
 
 async function initDB() {
-    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,icon varchar(255),lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10,maxseeds int DEFAULT 25, maxdroppings int DEFAULT 30,maxexpeditions int DEFAULT -1, seeds int DEFAULT 0,seedsminute int DEFAULT 60, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord NUMERIC(10,4) DEFAULT 0, ycoord NUMERIC(10,4) DEFAULT 0, lastupdate bigint NOT NULL,farmlvl int DEFAULT 0,aviarylvl int DEFAULT 0,farmstoragelvl int DEFAULT 0, droppingsstoragelvl int DEFAULT 0,totalspentseeds int DEFAULT 0, totalspentdroppings int DEFAULT 0, totalspentfeathers int DEFAULT 0,hasnotifications boolean DEFAULT false,istravelling boolean DEFAULT false,nextpossibleattack bigint DEFAULT 0,protecteduntil bigint DEFAULT 0,militaryscore int DEFAULT 0,totalattacks int DEFAULT 0,totaldefenses int DEFAULT 0,creationtime bigint DEFAULT 0, PRIMARY KEY (id));";
+    let text = "CREATE TABLE IF NOT EXISTS USERS (id SERIAL,username varchar(255) NOT NULL,password varchar(255) NOT NULL,icon varchar(255),lvl int DEFAULT 1,birds int DEFAULT 0, maxbirds int DEFAULT 10,maxseeds int DEFAULT 25, maxdroppings int DEFAULT 30,maxexpeditions int DEFAULT -1, seeds int DEFAULT 0,seedsminute int DEFAULT 60, droppings int DEFAULT 0, totaldroppingsminute int DEFAULT 0, feathers int DEFAULT 0,xcoord NUMERIC(10,4) DEFAULT 0, ycoord NUMERIC(10,4) DEFAULT 0, lastupdate bigint NOT NULL,farmlvl int DEFAULT 0,aviarylvl int DEFAULT 0,farmstoragelvl int DEFAULT 0, droppingsstoragelvl int DEFAULT 0,totalspentseeds int DEFAULT 0, totalspentdroppings int DEFAULT 0, totalspentfeathers int DEFAULT 0,hasnotifications boolean DEFAULT false,istravelling boolean DEFAULT false,nextpossibleattack bigint DEFAULT 0,protecteduntil bigint DEFAULT 0,militaryscore int DEFAULT 0,totalattacks int DEFAULT 0,totaldefenses int DEFAULT 0,creationtime bigint DEFAULT 0,lastattack int DEFAULT -1, PRIMARY KEY (id));";
     let res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS PIGEONS (id SERIAL, type int NOT NULL,name varchar(255), rank int DEFAULT 1,attack int DEFAULT 1, attackrandomness int default 0, shield int DEFAULT 1,defense int DEFAULT 3,defenserandomness int default 0,energy int,maxenergy int,feedcost int default 10,element int default 0, droppingsminute int DEFAULT 2,feathers int DEFAULT 2,creationtime bigint,attacker boolean default false,defender boolean default false,nickname varchar(255) default \'bob\', ownerid int REFERENCES USERS(id),PRIMARY KEY (id));'
@@ -99,6 +99,7 @@ async function initDB() {
     res = await pool.query(text);
 
     text = 'CREATE TABLE IF NOT EXISTS MESSAGES(id SERIAL,ownerid int, title VARCHAR(255),body TEXT,sender VARCHAR(255), date bigint, PRIMARY KEY (id));'
+    //much alter
     res = await pool.query(text);
 }
 

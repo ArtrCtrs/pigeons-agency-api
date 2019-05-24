@@ -47,16 +47,13 @@ export class UsersService {
     }
 
     static async updateExpeditions(user: User) {
-
         const text = "SELECT * FROM EXPEDITIONS WHERE ownerid=$1 AND finished = false;";
         let expeditions = (await pool.query(text, [user.id])).rows;
-
         if (expeditions.length > 0) {
             const time = Date.now();
             const text2 = "SELECT COUNT(*) FROM PIGEONS where ownerid=$1;";
             let nbrBirds: number = (await pool.query(text2, [user.id])).rows[0].count;
             let toUpdate = false;
-
 
             for (let i = 0; i < expeditions.length; i++) {
                 if (time > Number.parseInt(expeditions[i].starttime) + Number.parseInt(expeditions[i].duration)) {

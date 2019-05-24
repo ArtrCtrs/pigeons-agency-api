@@ -5,6 +5,7 @@ import config from '../config/config.json';
 import { ConnectError } from '../classes/connect-error';
 import db from '../db/pgpool';
 import { UsersService } from '../services/users-service';
+
 let pool = db.getPool();
 
 export class AbstractController {
@@ -36,4 +37,5 @@ export class AbstractController {
     }
 
 }
+
 

@@ -5,6 +5,8 @@ import { MessageService } from './message-service';
 import { UsersService } from './users-service';
 import { Message } from '../entities/message';
 import { ConnectError } from '../classes/connect-error';
+import globalhelper from '../helpers/globals-helper';
+
 let pool = db.getPool();
 
 export class AttackService {
@@ -12,12 +14,15 @@ export class AttackService {
         let text = "SELECT * FROM USERS WHERE id=$1";
         let defender: User = (await pool.query(text, [defenderid])).rows[0];
         if (!defender) {
+            globalhelper.setExpFalse();
             throw new ConnectError('USER_NOT_FOUND');
         }
         if (defender.protecteduntil > Date.now()) {
+            globalhelper.setExpFalse();
             throw new ConnectError('ATTACK_REQUIREMENTS');
         }
         if (attacker.lastattack == defender.id) {
+            globalhelper.setExpFalse();
             throw new ConnectError('ATTACK_REQUIREMENTS');
         }
 
