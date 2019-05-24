@@ -3,13 +3,13 @@ let expeditionsem: boolean = false;
 let globalhelper: any = null;
 try {
     globalhelper = {
-        getSem: () => {
+        getExpSem: () => {
             return expeditionsem;
         },
-        setTrue: () => {
+        setExpTrue: () => {
             expeditionsem = true;
         },
-        setFalse: () => {
+        setExpFalse: () => {
             expeditionsem = false;
         }
     };
