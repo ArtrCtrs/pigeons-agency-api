@@ -13,7 +13,6 @@ try {
             expeditionsem = false;
         }
     };
-    console.log(expeditionsem)
 } catch (e) {
     console.log(e);
 }
