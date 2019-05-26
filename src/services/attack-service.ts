@@ -62,7 +62,7 @@ export class AttackService {
         let stolenDroppings = 0;
 
 
-        if (attacktotal > defensetotal) {
+        if (attacktotal >= defensetotal) {
             if (!higherscore) {
                 attackerwonpoints = 7;
                 defenderwonpoints = -6;
@@ -70,10 +70,11 @@ export class AttackService {
                 attackerwonpoints = (7 - Math.round(diff / 5)) > 0 ? (7 - Math.round(diff / 5)) : 0;
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
-            stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal));
-            const potentialStolenfeathers = Math.round((defender.droppings / 100) + (defender.maxdroppings * 0.25 / 100) / 2);
+            stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal) * attackerwonpoints / 7);
+            const potentialStolenDroppings = Math.round(((defender.droppings / 100) + (defender.maxdroppings * 0.25 / 100) / 2) * attackerwonpoints / 7);
             const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
-            stolenDroppings = potentialStolenfeathers < attackerDroppingsSpace ? potentialStolenfeathers : attackerDroppingsSpace;
+            stolenDroppings = potentialStolenDroppings < attackerDroppingsSpace ? potentialStolenDroppings : attackerDroppingsSpace;
+            stolenDroppings = stolenDroppings > defender.droppings ? defender.droppings : stolenDroppings;
 
 
         } else {
@@ -84,6 +85,12 @@ export class AttackService {
                 attackerwonpoints = (5 - Math.round(diff / 6)) > 0 ? -(5 - Math.round(diff / 6)) : 0;
                 defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6 - Math.round(diff / 6)) : 0;
             }
+            stolenFeathers = -Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal) * 0.5);
+            const potentialStolenDroppings = Math.round(((attacker.droppings / 100) + (attacker.maxdroppings * 0.25 / 100) / 2) * 0.5);
+            const defenderDroppingsSpace = (defender.maxdroppings - defender.droppings);
+            stolenDroppings = potentialStolenDroppings < defenderDroppingsSpace ? potentialStolenDroppings : defenderDroppingsSpace;
+            stolenDroppings = stolenDroppings > attacker.droppings ? attacker.droppings : stolenDroppings;
+            stolenDroppings = -stolenDroppings;
 
         }
         // messagebody += "<br>" + (attacktotal > defensetotal ? "<strong>Attacker " + attacker.username + " has won !</strong> <br>" : "<strong>Defender " + defender.username + " has won !</strong> <br>");
@@ -109,7 +116,7 @@ export class AttackService {
             body: messagebody,
             sender: "info",
             isattack: 2,
-            iswin: attacktotal > defensetotal ? 2 : 1,
+            iswin: attacktotal >= defensetotal ? 2 : 1,
             attackvalue: attacktotal,
             defensevalue: defensetotal,
             shieldvalue: shieldtotal,
@@ -130,7 +137,7 @@ export class AttackService {
             body: messagebody,
             sender: "info",
             isattack: 1,
-            iswin: attacktotal > defensetotal ? 1 : 2,
+            iswin: attacktotal >= defensetotal ? 1 : 2,
             attackvalue: attacktotal,
             defensevalue: defensetotal,
             shieldvalue: shieldtotal,
