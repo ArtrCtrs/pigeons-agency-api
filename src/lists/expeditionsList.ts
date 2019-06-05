@@ -1,7 +1,7 @@
 const expeditionsList =[
-    {id: 0,seeds: 10,duration:9,name: "exp-atk1",exprank:1,reward:[
+    {id: 0,seeds: 10,duration:9000,name: "exp-atk1",exprank:1,reward:[
     {pigeontype:1,probability:36},{pigeontype:2,probability:63},{pigeontype:3,probability:83},{pigeontype:4,probability:96},{pigeontype:5,probability:100}, ]},
-    {id: 1,seeds: 20,duration:12,name: "exp-atk2",exprank:2,reward:[
+    {id: 1,seeds: 20,duration:12000,name: "exp-atk2",exprank:2,reward:[
     {pigeontype:6,probability:36},{pigeontype:7,probability:63},{pigeontype:8,probability:83},{pigeontype:9,probability:96},{pigeontype:10,probability:100}, ]},
     {id: 2,seeds: 40,duration:16,name: "exp-atk3",exprank:3,reward:[
     {pigeontype:11,probability:36},{pigeontype:12,probability:63},{pigeontype:13,probability:83},{pigeontype:14,probability:96},{pigeontype:15,probability:100}, ]},
