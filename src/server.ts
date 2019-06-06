@@ -59,6 +59,8 @@ app.get('/api/allusers/attacks', [MiddlewareHelper.logRequest, MiddlewareHelper.
 app.post('/api/register', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.register));
 app.post('/api/login', [MiddlewareHelper.logRequest], wrapAsync(AuthentificationControler.login));
 
+//app.get('/api/event', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(EventControler.getEventInfo));
+
 app.use(ErrorHelper.clientErrorHandler);
 
 const PORT = 5000;
@@ -100,6 +102,12 @@ async function initDB() {
 
     text = 'CREATE TABLE IF NOT EXISTS MESSAGES(id SERIAL,ownerid int, title VARCHAR(255),body TEXT,sender VARCHAR(255), date bigint, PRIMARY KEY (id));'
     //much alter
+    res = await pool.query(text);
+
+    text = 'CREATE TABLE IF NOT EXISTS EVENTS(id SERIAL, starttime bigint, endtime bigint, period int, type int, title VARCHAR(255), description TEXT, imgsrc VARCHAR(255), PRIMARY KEY (id));'
+    res = await pool.query(text);
+
+    text = 'CREATE TABLE IF NOT EXISTS EVENTSPLAYERS(id SERIAL, userid int REFERENCES USERS(id), participating boolean DEFAULT FALSE, lastactiontime bigint, nextactiontime bigint, stat1 int DEFAULT 0, stat2 int DEFAULT 0, honorpoints int DEFAULT 0, PRIMARY KEY (id)'
     res = await pool.query(text);
 }
 
