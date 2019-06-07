@@ -71,6 +71,10 @@ app.listen(PORT, () => {
 async function dropDB() {
     let text = 'DROP TABLE IF EXISTS PIGEONS';
     let res = await pool.query(text);
+    text = 'DROP TABLE IF EXISTS EVENTSPLAYERS';
+    res = await pool.query(text);
+    text = 'DROP TABLE IF EXISTS EVENTS';
+    res = await pool.query(text);
     text = 'DROP TABLE IF EXISTS EXPEDITIONS';
     res = await pool.query(text);
      text = 'DROP TABLE IF EXISTS USERS';
@@ -107,7 +111,7 @@ async function initDB() {
     text = 'CREATE TABLE IF NOT EXISTS EVENTS(id SERIAL, starttime bigint, endtime bigint, period int, type int, title VARCHAR(255), description TEXT, imgsrc VARCHAR(255), PRIMARY KEY (id));'
     res = await pool.query(text);
 
-    text = 'CREATE TABLE IF NOT EXISTS EVENTSPLAYERS(id SERIAL, userid int REFERENCES USERS(id), participating boolean DEFAULT FALSE, lastactiontime bigint, nextactiontime bigint, stat1 int DEFAULT 0, stat2 int DEFAULT 0, honorpoints int DEFAULT 0, PRIMARY KEY (id)'
+    text = 'CREATE TABLE IF NOT EXISTS EVENTSPLAYERS(id SERIAL, userid int REFERENCES USERS(id),eventid int REFERENCES EVENTS(id), participating boolean DEFAULT FALSE, lastactiontime bigint, nextactiontime bigint, stat1 int DEFAULT 0, stat2 int DEFAULT 0, honorpoints int DEFAULT 0, PRIMARY KEY (id)'
     res = await pool.query(text);
 }
 
