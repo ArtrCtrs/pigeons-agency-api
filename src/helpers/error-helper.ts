@@ -54,6 +54,10 @@ static handledErrors: Errors = {
 	'LEVEL_REQUIREMENT_ERROR':{
 		errorCode: 409,
         errorMessage: 'Player level must be greater than upgrade level.'
+	},
+	'EVENT_REQUIREMENTS':{
+		errorCode: 409,
+        errorMessage: 'You cannot activate event at this time.'
 	}
 };
 

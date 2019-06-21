@@ -15,4 +15,15 @@ export class EventControler extends AbstractController {
             data: data
         });
     }
+
+    static async doEventAction(req: Request, res: Response) {
+
+        let user = await EventControler.getUserFromRequest(req);
+
+        const data = await EventService.doEventAction(user);
+        res.status(200).send({
+            message: 'ok',
+            data: data
+        });
+    }
 }
