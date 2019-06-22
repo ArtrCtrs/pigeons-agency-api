@@ -65,7 +65,7 @@ app.post('/api/event', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn
 
 app.use(ErrorHelper.clientErrorHandler);
 
-const PORT = 5000;
+const PORT = 5001;
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`);
 });

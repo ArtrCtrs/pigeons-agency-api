@@ -5,6 +5,7 @@ import { Message } from '../entities/message';
 import { ConnectError } from '../classes/connect-error';
 import { Eventuser } from '../entities/eventuser';
 import { EventResponse } from '../entities/eventsresponse';
+import globalhelper from '../helpers/globals-helper';
 
 let pool = db.getPool();
 
@@ -13,7 +14,7 @@ export class EventService {
         let text = "SELECT * FROM EVENTS ORDER BY id DESC LIMIT 1";
         let event: Event = (await pool.query(text)).rows[0];
 
-        text = "SELECT eventsplayers.*,users.username,users.honorpoints FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1;"
+        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1;"
         let eventusers: Eventuser[] = (await pool.query(text, [event.id])).rows;
         switch (event.period) {
             case 0:
@@ -27,10 +28,8 @@ export class EventService {
                     //update infos and give rewards
                 }
                 break;
-            case 2:
-                break;
         }
-        const eventresp: EventResponse = { "event": event, "users": eventusers };
+        const eventresp: EventResponse = { "event": event, "users": eventusers, "userid": user.id };
 
         return eventresp;
     }
@@ -40,6 +39,7 @@ export class EventService {
         const tnow = Date.now();
 
         if (eventresp.event.period != 1) {
+            globalhelper.setExpFalse();
             throw new ConnectError('EVENT_REQUIREMENTS');
         }
         let thiseventuser = null;
@@ -53,6 +53,7 @@ export class EventService {
             case 1: //attack with all pigeons
                 if (thiseventuser != null) {
                     if (thiseventuser.nextactiontime > tnow) {
+                        globalhelper.setExpFalse();
                         throw new ConnectError('EVENT_REQUIREMENTS');
                     }
                     const text = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1";
@@ -76,6 +77,9 @@ export class EventService {
 
                     const text2 = "INSERT INTO EVENTSPLAYERS(userid,eventid,lastactiontime,nextactiontime,stat1) VALUES($1,$2,$3,$4,$5) RETURNING *";
                     thiseventuser = (await pool.query(text2, [user.id, eventresp.event.id, tnow, tnow + 1000 * 30, attack])).rows[0];
+                    thiseventuser.username = user.username;
+                    thiseventuser.honorpoints = user.honorpoints;
+                    thiseventuser.lvl = user.lvl;
                     eventresp.users.push(thiseventuser);
                 }
                 break;

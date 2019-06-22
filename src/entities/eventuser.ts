@@ -7,4 +7,5 @@ export interface Eventuser {
     stat2: number;
     honorpoints:number;
     username:string;
+    lvl:number;
 }

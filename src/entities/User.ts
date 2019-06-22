@@ -33,4 +33,5 @@ export interface User {
     totaldefenses:number;
     creationtime:number;
     lastattack:number;
+    honorpoints:number;
 }

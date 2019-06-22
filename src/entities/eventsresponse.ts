@@ -3,4 +3,5 @@ import { Eventuser } from '../entities/eventuser';
 export interface EventResponse {
     event: Event;
     users: Eventuser[];
+    userid:number;
 }
