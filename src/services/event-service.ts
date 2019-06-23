@@ -20,6 +20,7 @@ export class EventService {
             case 0:
                 if (event.starttime < Date.now()) {
                     event.period = 1;
+                    //send message?
                 }
                 break;
             case 1:
@@ -49,41 +50,66 @@ export class EventService {
             }
         }
 
-        switch (eventresp.event.type) {
-            case 1: //attack with all pigeons
-                if (thiseventuser != null) {
-                    if (thiseventuser.nextactiontime > tnow) {
-                        globalhelper.setExpFalse();
-                        throw new ConnectError('EVENT_REQUIREMENTS');
-                    }
-                    const text = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1";
-                    let attack: number = (await pool.query(text, [user.id])).rows[0].sum;
+        let attack = 0;
+        let timeToNextAction = 60 * 60 * 1000;
+        if (thiseventuser != null) {
+            if (thiseventuser.nextactiontime > tnow) {
+                globalhelper.setExpFalse();
+                throw new ConnectError('EVENT_REQUIREMENTS');
+            }
+            let eventtext;
+            switch (eventresp.event.type) {
+                case 1: //attack with all pigeons
+                    eventtext = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+                case 2: //attack with bottom 10 pigeons
+                    eventtext = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1 ORDER BY attack ASC LIMIT 10";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+                case 3: //top 10 shield
+                    eventtext = "SELECT SUM(shield) FROM PIGEONS WHERE ownerid=$1 ORDER BY shield DESC LIMIT 10";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+            }
+            thiseventuser.stat1 = +thiseventuser.stat1 + +attack;
+            thiseventuser.stat2 = +thiseventuser.stat2 + 1;
+            thiseventuser.lastactiontime = tnow;
+            thiseventuser.nextactiontime = tnow + timeToNextAction;
 
-                    thiseventuser.stat1 = +thiseventuser.stat1 + +attack;
-                    thiseventuser.lastactiontime = tnow;
-                    thiseventuser.nextactiontime = tnow + 1000 * 30;
+            const text2 = "UPDATE EVENTSPLAYERS SET stat1 = $1,stat2=$2,lastactiontime=$3,nextactiontime=$4  WHERE id =$5;";
+            await pool.query(text2, [thiseventuser.stat1, thiseventuser.stat2, thiseventuser.lastactiontime, thiseventuser.nextactiontime, thiseventuser.id]);
 
-                    const text2 = "UPDATE EVENTSPLAYERS SET stat1 = $1,lastactiontime=$2,nextactiontime=$3  WHERE id =$4;";
-                    await pool.query(text2, [thiseventuser.stat1, thiseventuser.lastactiontime, thiseventuser.nextactiontime, thiseventuser.id]);
-
-                    for (let i = 0; i < eventresp.users.length; i++) {
-                        if (user.id == eventresp.users[i].userid) {
-                            eventresp.users[i] = thiseventuser;
-                        }
-                    }
-                } else {
-                    const text = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1";
-                    let attack: number = (await pool.query(text, [user.id])).rows[0].sum;
-
-                    const text2 = "INSERT INTO EVENTSPLAYERS(userid,eventid,lastactiontime,nextactiontime,stat1) VALUES($1,$2,$3,$4,$5) RETURNING *";
-                    thiseventuser = (await pool.query(text2, [user.id, eventresp.event.id, tnow, tnow + 1000 * 30, attack])).rows[0];
-                    thiseventuser.username = user.username;
-                    thiseventuser.honorpoints = user.honorpoints;
-                    thiseventuser.lvl = user.lvl;
-                    eventresp.users.push(thiseventuser);
+            for (let i = 0; i < eventresp.users.length; i++) {
+                if (user.id == eventresp.users[i].userid) {
+                    eventresp.users[i] = thiseventuser;
                 }
-                break;
+            }
+        } else {
+            let eventtext;
+            switch (eventresp.event.type) {
+                case 1: //attack with all pigeons
+                    eventtext = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1 ";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+                case 2: //attack with bottom 10 pigeons
+                    eventtext = "SELECT SUM(attack) FROM PIGEONS WHERE ownerid=$1 ORDER BY attack ASC LIMIT 10";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+                case 3: //top 10 shield
+                    eventtext = "SELECT SUM(shield) FROM PIGEONS WHERE ownerid=$1 ORDER BY shield DESC LIMIT 10";
+                    attack = (await pool.query(eventtext, [user.id])).rows[0].sum;
+                    break;
+            }
+            const text2 = "INSERT INTO EVENTSPLAYERS(userid,eventid,lastactiontime,nextactiontime,stat1,stat2) VALUES($1,$2,$3,$4,$5,$6) RETURNING *";
+            thiseventuser = (await pool.query(text2, [user.id, eventresp.event.id, tnow, tnow + 1000 * 30, attack, 1])).rows[0];
+            thiseventuser.username = user.username;
+            thiseventuser.honorpoints = user.honorpoints;
+            thiseventuser.lvl = user.lvl;
+            eventresp.users.push(thiseventuser);
         }
+
+
         return eventresp;
     }
 }

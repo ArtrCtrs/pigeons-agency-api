@@ -14,6 +14,7 @@ export class EventControler extends AbstractController {
             let user = await EventControler.getUserFromRequest(req);
 
             const data = await EventService.getEventInfo(user);
+            globalhelper.setExpFalse();
             res.status(200).send({
                 message: 'ok',
                 data: data
@@ -30,6 +31,7 @@ export class EventControler extends AbstractController {
             let user = await EventControler.getUserFromRequest(req);
 
             const data = await EventService.doEventAction(user);
+            globalhelper.setExpFalse();
             res.status(200).send({
                 message: 'ok',
                 data: data

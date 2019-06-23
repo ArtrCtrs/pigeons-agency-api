@@ -4,6 +4,7 @@ import config from '../config/config.json';
 import { ConnectError } from "../classes/connect-error";
 import iconsList from "../lists/iconsList";
 import db from '../db/pgpool';
+import globalhelper from '../helpers/globals-helper.js';
 let pool = db.getPool();
 
 export class AuthentificationService {
@@ -11,12 +12,14 @@ export class AuthentificationService {
 
 
 		if (!username || !password) {
+			globalhelper.setExpFalse();
 			throw new ConnectError('INVALID_PARAMETERS');
 		}
 		let prep = "SELECT username FROM USERS WHERE username = $1";
 		let dbres = await pool.query(prep, [username]);
 
 		if (dbres.rows.length > 0) {
+			globalhelper.setExpFalse();
 			throw new ConnectError('USERNAME_ALREADY_EXISTS');
 		}
 
@@ -38,6 +41,7 @@ export class AuthentificationService {
 
 	static async loginUser(username: string, password: string) {
 		if (!username || !password) {
+			globalhelper.setExpFalse();
 			throw new ConnectError('INVALID_PARAMETERS');
 		}
 
@@ -45,11 +49,13 @@ export class AuthentificationService {
 		let user = (await pool.query(prep, [username])).rows[0];
 
 		if (!user) {
+			globalhelper.setExpFalse();
 			throw new ConnectError('INVALID_CREDENTIALS');
 		}
 
 		const match = await bcrypt.compare(password, String(user.password));
 		if (!match) {
+			globalhelper.setExpFalse();
 			throw new ConnectError('INVALID_CREDENTIALS');
 		}
 

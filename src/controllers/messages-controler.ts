@@ -3,6 +3,7 @@ import { AbstractController } from './abstract-controler';
 import { MessageService } from '../services/message-service';
 import {Message} from '../entities/message';
 import { ConnectError } from '../classes/connect-error';
+import globalhelper from '../helpers/globals-helper';
 export class MessagesControler extends AbstractController {
 
     static async getMessages(req: Request, res: Response) {
@@ -21,6 +22,7 @@ export class MessagesControler extends AbstractController {
         // await MessagesControler.updateUserInfo(user);
 
         if (req.body.message == null) {
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_PARAMETERS');
         }
         const message:Message={

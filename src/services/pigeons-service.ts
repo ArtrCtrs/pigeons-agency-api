@@ -4,6 +4,7 @@ import pigeonList from '../lists/pigeonsList';
 import namesList from '../lists/namesList';
 import { User } from '../entities/User';
 import { ConnectError } from '../classes/connect-error';
+import globalhelper from '../helpers/globals-helper';
 let pool = db.getPool();
 
 export class PigeonsService {
@@ -125,6 +126,7 @@ export class PigeonsService {
             text = 'SELECT COUNT(*) FROM PIGEONS WHERE ownerid=$1 AND defender=true';
             const nbrDefs = (await pool.query(text, [user.id])).rows[0].count;
             if (nbrDefs >= 5) {
+                globalhelper.setExpFalse();
                 throw new ConnectError('REQUIREMENTS_ERROR');
             }
             text = 'UPDATE PIGEONS SET defender = true WHERE id = $1';
@@ -142,6 +144,7 @@ export class PigeonsService {
             text = 'SELECT COUNT(*) FROM PIGEONS WHERE ownerid=$1 AND attacker=true';
             const nbrAtks = (await pool.query(text, [user.id])).rows[0].count;
             if (nbrAtks >= 5) {
+                globalhelper.setExpFalse();
                 throw new ConnectError('REQUIREMENTS_ERROR');
             }
             text = 'UPDATE PIGEONS SET attacker = true WHERE id = $1';

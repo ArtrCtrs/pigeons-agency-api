@@ -2,6 +2,7 @@ import { PigeonsService } from '../services/pigeons-service';
 import { Response, Request } from 'express';
 import { ConnectError } from "../classes/connect-error";
 import { AbstractController } from './abstract-controler';
+import globalhelper from '../helpers/globals-helper';
 export class PigeonsControler extends AbstractController {
 
     static async getPigeons(req: Request, res: Response) {
@@ -10,9 +11,11 @@ export class PigeonsControler extends AbstractController {
         //await PigeonsControler.updateUserInfo(user);
         
         if(!req.query.orderby){
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_PARAMETERS');
         }
         if(isNaN(req.query.orderby)){
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_PARAMETERS');
         }
         let data = await PigeonsService.getPigeons(user.id,req.query.orderby);
@@ -64,6 +67,7 @@ export class PigeonsControler extends AbstractController {
         const user = await PigeonsControler.getUserFromRequest(req);
         //await PigeonsControler.updateUserInfo(user);
         if(!req.body.pigeonid){
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_PARAMETERS');
         }
        
@@ -77,6 +81,7 @@ export class PigeonsControler extends AbstractController {
         const user = await PigeonsControler.getUserFromRequest(req);
         //await PigeonsControler.updateUserInfo(user);
         if(!req.body.pigeonid){
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_PARAMETERS');
         }
        

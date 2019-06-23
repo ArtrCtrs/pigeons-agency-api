@@ -5,6 +5,7 @@ import config from '../config/config.json';
 import { ConnectError } from '../classes/connect-error';
 import db from '../db/pgpool';
 import { UsersService } from '../services/users-service';
+import globalhelper from '../helpers/globals-helper';
 
 let pool = db.getPool();
 
@@ -21,10 +22,12 @@ export class AbstractController {
         const decodedPayload: any = jwt.verify(token, config.jwtSecret);
 
         if (!decodedPayload.user.id) {
+            globalhelper.setExpFalse();
             throw new ConnectError('INVALID_TOKEN');
         }
         let user: User = await UsersService.getUserFromRequest(decodedPayload.user.id);
         if (!user) {
+            globalhelper.setExpFalse();
             throw new ConnectError('USER_NOT_FOUND');
         }
         return user;
