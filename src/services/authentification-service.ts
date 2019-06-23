@@ -4,7 +4,7 @@ import config from '../config/config.json';
 import { ConnectError } from "../classes/connect-error";
 import iconsList from "../lists/iconsList";
 import db from '../db/pgpool';
-import globalhelper from '../helpers/globals-helper.js';
+import globalhelper from '../helpers/globals-helper';
 let pool = db.getPool();
 
 export class AuthentificationService {
