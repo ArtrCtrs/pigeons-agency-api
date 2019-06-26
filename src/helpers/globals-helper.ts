@@ -4,6 +4,9 @@ let globalhelper: any = null;
 try {
     globalhelper = {
         getExpSem: () => {
+            if (expeditionsem) {
+                console.log("sem taken");
+            }
             return expeditionsem;
         },
         setExpTrue: () => {
