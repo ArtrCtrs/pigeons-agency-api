@@ -8,4 +8,6 @@ export interface Eventuser {
     honorpoints:number;
     username:string;
     lvl:number;
+    totaldroppingsminute:number;
+    birds:number;
 }
