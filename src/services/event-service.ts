@@ -62,6 +62,7 @@ export class EventService {
                         let pigeondefense;
                         let pigeonshield = 5;
                         let pigeondroppings;
+                        let newhonorpoints;
                         switch (prize) {
                             case 1:
                                 pigeontype = eventusers[i].lvl * 5;
@@ -70,6 +71,7 @@ export class EventService {
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
                                 pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 5);
                                 pigeonshield = 6;
+                                newhonorpoints = 100;
 
                                 break;
                             case 2:
@@ -77,45 +79,51 @@ export class EventService {
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance + 4;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 8)
+                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 8);
+                                newhonorpoints = 60;
                                 break;
                             case 3:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance + 2;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 14)
+                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 14);
+                                newhonorpoints = 40;
                                 break;
                             case 4:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
+                                newhonorpoints = 30;
                                 break;
                             case 5:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack;
                                 pigeondefense = pigeonList[pigeontype].defense;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute;
+                                newhonorpoints = 20;
                                 break;
                             case 6:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack - pigeonList[pigeontype].attackvariance;
                                 pigeondefense = pigeonList[pigeontype].defense - pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute - pigeonList[pigeontype].droppingsminutevariance;
+                                newhonorpoints = 10;
                                 break;
                             case 7:
                                 pigeontype = eventusers[i].lvl * 5 - 1;
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
+                                newhonorpoints = 5;
                                 break;
                         }
                         const text = "INSERT INTO PIGEONS(type,name,rank,attack,attackrandomness,shield,defense,defenserandomness,droppingsminute,feathers,energy,maxenergy,element,feedcost,creationtime,ownerid,nickname) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)";
                         await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, tnow, eventusers[i].userid, "Event Pigeon"]);
 
-                        const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2 where id=$3;";
-                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].userid]);
+                        const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3 where id=$4;";
+                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints, eventusers[i].userid]);
                     }
                     break;
                 }
