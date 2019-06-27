@@ -16,7 +16,7 @@ export class EventService {
         let text = "SELECT * FROM EVENTS ORDER BY id DESC LIMIT 1";
         let event: Event = (await pool.query(text)).rows[0];
 
-        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
+        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
         let eventusers: Eventuser[] = (await pool.query(text, [event.id])).rows;
 
         switch (event.period) {
@@ -26,8 +26,7 @@ export class EventService {
                     text = "UPDATE EVENTS SET period = 1;";
                     await pool.query(text, [])
 
-                    //to fix
-                    text = "INSERT INTO public.messages(ownerid, title, body, sender, date, isattack)VALUES (-1,'New event','Admin',$1,0);"
+                    text = "INSERT INTO public.messages(ownerid, title, body, sender, date, isattack)VALUES (-1,'Opening of event','Go check the event tab.','Event info',$1,0);"
                     await pool.query(text, [tnow])
                 }
                 break;
@@ -114,9 +113,12 @@ export class EventService {
                         }
                         const text = "INSERT INTO PIGEONS(type,name,rank,attack,attackrandomness,shield,defense,defenserandomness,droppingsminute,feathers,energy,maxenergy,element,feedcost,creationtime,ownerid,nickname) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)";
                         await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, tnow, eventusers[i].userid, "Event Pigeon"]);
+
+                        const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2 where id=$3;";
+                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].userid]);
                     }
+                    break;
                 }
-                break;
         }
         const eventresp: EventResponse = { "event": event, "users": eventusers, "userid": user.id };
 
