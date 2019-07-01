@@ -26,7 +26,7 @@ export class EventService {
                     text = "UPDATE EVENTS SET period = 1;";
                     await pool.query(text, [])
 
-                    text = "INSERT INTO public.messages(ownerid, title, body, sender, date, isattack)VALUES (-1,'Opening of event','Go check the event tab.','Event info',$1,0);"
+                    text = "INSERT INTO public.messages(ownerid, title, body, sender, date, isattack)VALUES (-1,'','NEW EVENT','Event info',$1,0);"
                     await pool.query(text, [tnow])
                 }
                 break;
