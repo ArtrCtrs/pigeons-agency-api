@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { ConnectError } from "../classes/connect-error";
 import { ErrorService } from '../services/error-service';
+import globalhelper from '../helpers/globals-helper';
+
 export default class ErrorHelper {
 static handledErrors: Errors = {
     'MISSING_TOKEN': {
@@ -94,6 +96,8 @@ static handledErrors: Errors = {
 		} else {
 			// unhandled error
 			console.error(err.stack);
+			
+			globalhelper.setExpFalse();
 
 			let data = null;
 
