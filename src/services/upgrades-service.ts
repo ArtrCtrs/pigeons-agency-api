@@ -8,21 +8,28 @@ let pool = db.getPool();
 
 export class upgradesService {
     static async upgradeFarm(user: User) {
-        const droppingscost = seedsUpgradesList[user.farmlvl + 1].droppingsCost;
+        //const droppingscost = seedsUpgradesList[user.farmlvl + 1].droppingsCost;
+        const featherscost = seedsUpgradesList[user.farmlvl + 1].feathersCost;
         if (user.aviarylvl == user.lvl && user.farmstoragelvl == user.lvl && user.droppingsstoragelvl == user.lvl) {
             user.lvl++;
         }
-        const text = "UPDATE USERS SET seedsminute = $1,droppings=$2,farmlvl=$3,totalspentdroppings=$4,lvl=$5  WHERE id =$6;";
-        await pool.query(text, [seedsUpgradesList[user.farmlvl + 1].newSeeds, user.droppings - droppingscost, user.farmlvl + 1, user.totalspentdroppings + droppingscost, user.lvl, user.id]);
+        const text = "UPDATE USERS SET seedsminute = $1,feathers=$2,farmlvl=$3,totalspentfeathers=$4,lvl=$5  WHERE id =$6;";
+        await pool.query(text, [seedsUpgradesList[user.farmlvl + 1].newSeeds, user.feathers - featherscost, user.farmlvl + 1, user.totalspentfeathers + featherscost, user.lvl, user.id]);
+        //const text = "UPDATE USERS SET seedsminute = $1,droppings=$2,farmlvl=$3,totalspentdroppings=$4,lvl=$5  WHERE id =$6;";
+        //await pool.query(text, [seedsUpgradesList[user.farmlvl + 1].newSeeds, user.droppings - droppingscost, user.farmlvl + 1, user.totalspentdroppings + droppingscost, user.lvl, user.id]);
 
     }
     static async upgradeAviary(user: User) {
-        const featherscost = aviaryUpgradesList[user.aviarylvl + 1].feathersCost;
+        //const featherscost = aviaryUpgradesList[user.aviarylvl + 1].feathersCost;
+        const droppingscost = aviaryUpgradesList[user.aviarylvl + 1].droppingsCost;
         if (user.farmstoragelvl == user.lvl && user.farmlvl == user.lvl && user.droppingsstoragelvl == user.lvl) {
             user.lvl++;
         }
-        const text = "UPDATE USERS SET maxbirds = $1,feathers=$2 ,aviarylvl=$3, totalspentfeathers=$4,lvl=$5 WHERE id =$6;";
-        await pool.query(text, [aviaryUpgradesList[user.aviarylvl + 1].newBirds, user.feathers - featherscost, user.aviarylvl + 1, user.totalspentfeathers + featherscost, user.lvl, user.id]);
+        const text = "UPDATE USERS SET maxbirds = $1,droppings=$2 ,aviarylvl=$3, totalspentdroppings=$4,lvl=$5 WHERE id =$6;";
+        await pool.query(text, [aviaryUpgradesList[user.aviarylvl + 1].newBirds, user.droppings - droppingscost, user.aviarylvl + 1, user.totalspentdroppings + droppingscost, user.lvl, user.id]);
+
+        // const text = "UPDATE USERS SET maxbirds = $1,feathers=$2 ,aviarylvl=$3, totalspentfeathers=$4,lvl=$5 WHERE id =$6;";
+        //await pool.query(text, [aviaryUpgradesList[user.aviarylvl + 1].newBirds, user.feathers - featherscost, user.aviarylvl + 1, user.totalspentfeathers + featherscost, user.lvl, user.id]);
 
     }
     static async upgradeFarmStorage(user: User) {
