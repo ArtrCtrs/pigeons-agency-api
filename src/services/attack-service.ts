@@ -71,7 +71,7 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal) * attackerwonpoints / 7);
-            const potentialStolenDroppings = Math.round(((defender.droppings / 100) + (defender.maxdroppings * 0.25 / 100) / 2) * attackerwonpoints / 7);
+            const potentialStolenDroppings = Math.round(((defender.droppings / 100) + (defender.maxdroppings * 0.85 / 100) / 2) * attackerwonpoints / 7);
             const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
             stolenDroppings = potentialStolenDroppings < attackerDroppingsSpace ? potentialStolenDroppings : attackerDroppingsSpace;
             stolenDroppings = stolenDroppings > defender.droppings ? defender.droppings : stolenDroppings;
@@ -85,7 +85,7 @@ export class AttackService {
                 attackerwonpoints = (5 - Math.round(diff / 6)) > 0 ? -(5 - Math.round(diff / 6)) : 0;
                 defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6 - Math.round(diff / 6)) : 0;
             }
-            stolenFeathers = -Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal) * 0.5);
+            stolenFeathers = -Math.round(attacker.feathers * (0.3 - 0.01 * shieldtotal) * 0.5);
             const potentialStolenDroppings = Math.round(((attacker.droppings / 100) + (attacker.maxdroppings * 0.25 / 100) / 2) * 0.5);
             const defenderDroppingsSpace = (defender.maxdroppings - defender.droppings);
             stolenDroppings = potentialStolenDroppings < defenderDroppingsSpace ? potentialStolenDroppings : defenderDroppingsSpace;
