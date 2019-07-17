@@ -19,6 +19,7 @@ export class EventService {
         text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
         let eventusers: Eventuser[] = (await pool.query(text, [event.id])).rows;
 
+
         switch (event.period) {
             case 0:
                 if (event.starttime < tnow) {
@@ -28,6 +29,9 @@ export class EventService {
 
                     text = "INSERT INTO public.messages(ownerid, title, body, sender, date, isattack)VALUES (-1,'','NEW EVENT','Event info',$1,0);"
                     await pool.query(text, [tnow])
+
+                    text = "UPDATE USERS SET hasnotifications=true;"
+                    await pool.query(text, []);
                 }
                 break;
             case 1:
