@@ -30,5 +30,6 @@ const seedsStorageList = [
 {lvl: 28,droppingsCost: 64865000,feathersCost:106400,seedsStorage: 210000 },
 {lvl: 29,droppingsCost: 71162000,feathersCost:124700,seedsStorage: 230000 },
 {lvl: 30,droppingsCost: 107265000,feathersCost:150000,seedsStorage: 300000 },
+{lvl: 31,droppingsCost: 9999999999999,feathersCost:9999999999,seedsStorage: 99999999999 },
 ]
 export default seedsStorageList;

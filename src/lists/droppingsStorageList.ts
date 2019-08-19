@@ -30,5 +30,6 @@ const droppingsStorageList  = [
 {lvl: 28,seedsCost: 210000,feathersCost:106400,droppingsStorage: 71162000 },
 {lvl: 29,seedsCost: 230000,feathersCost:124700,droppingsStorage: 107265000 },
 {lvl: 30,seedsCost: 300000,feathersCost:150000,droppingsStorage:  9999999999},
+{lvl: 31,seedsCost: 99999999999,feathersCost:999999999,droppingsStorage:  9999999999},
 ]
 export default droppingsStorageList;

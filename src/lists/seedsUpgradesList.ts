@@ -30,5 +30,6 @@ const seedsUpgradesList   = [
 {lvl: 28,feathersCost: 38000,newSeeds:1500 },
 {lvl: 29,feathersCost: 43000,newSeeds:1550 },
 {lvl: 30,feathersCost: 50000,newSeeds:1600 },
+{lvl: 31,feathersCost: 9999999999,newSeeds:9999 },
 ]
 export default seedsUpgradesList;
