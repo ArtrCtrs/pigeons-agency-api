@@ -23,8 +23,9 @@ export class UsersService {
     }
 
     static async getUsersForAttacks(user: User): Promise<User[]> {
-        const text = 'SELECT * FROM USERS ORDER BY (ABS($1 - lvl)) ASC,(ABS($2 - militaryscore)) ASC,lastupdate DESC;';
-        const users: User[] = (await pool.query(text, [user.lvl,user.militaryscore])).rows;
+        // const text = 'SELECT * FROM USERS ORDER BY (ABS($1 - lvl)) ASC,(ABS($2 - militaryscore)) ASC,lastupdate DESC;';
+        const text = 'SELECT * FROM USERS ORDER BY (ABS($1 - militaryscore)) ASC,(ABS($2 - lvl)) ASC,lastupdate DESC;';
+        const users: User[] = (await pool.query(text, [user.militaryscore,user.lvl])).rows;
         users.forEach(element => {
             element.password = null;
         });
