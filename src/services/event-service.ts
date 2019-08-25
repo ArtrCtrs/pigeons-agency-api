@@ -37,8 +37,8 @@ export class EventService {
             case 1:
 
                 if (event.endtime < tnow) {
-                    text = "SELECT DISTINCT USERS.lvl,  FIRST_VALUE(EVENTSPLAYERS.id) OVER (PARTITION BY USERS.lvl ORDER BY EVENTSPLAYERS.stat1 DESC)FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE EVENTSPLAYERS.eventid=$1;"
-                    let bestPerLevel = (await pool.query(text, [event.id])).rows; //TOCHECK
+                    text = "SELECT DISTINCT USERS.lvl,  FIRST_VALUE(EVENTSPLAYERS.id) OVER (PARTITION BY USERS.lvl ORDER BY EVENTSPLAYERS.stat1 DESC) as id FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE EVENTSPLAYERS.eventid=$1;"
+                    let bestPerLevel = (await pool.query(text, [event.id])).rows;
 
                     text = "UPDATE EVENTS SET period = 2 where id = $1;";
                     await pool.query(text, [event.id])
@@ -58,7 +58,7 @@ export class EventService {
                         } else {
                             prize = 7;
                         }
-                        if (bestPerLevel.some((ev: { id: number; }) => ev.id === eventusers[i].id) && prize > 5) { //TOFIX
+                        if (bestPerLevel.some((ev: { id: number; }) => ev.id === eventusers[i].id) && prize > 5) { 
                             prize = 5;
                         }
                         let pigeontype;
