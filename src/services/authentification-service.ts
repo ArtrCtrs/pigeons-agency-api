@@ -33,8 +33,10 @@ export class AuthentificationService {
 		const y = (Math.random() * 100) - 50;
 		const random = Math.floor(Math.random() * (iconsList.length - 1));
 		const icon = iconsList[random];
-		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime,xcoord,ycoord,icon,seeds) VALUES($1,$2,$3,$4,$5,$6,$7,$8)";
-		dbres = await pool.query(prep, [username, hash, time, Date.now(), x, y,icon,25]);
+		prep = "INSERT INTO USERS(username,password,lastupdate,creationtime,xcoord,ycoord,icon,seeds) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id;";
+		dbres = await pool.query(prep, [username, hash, time, Date.now(), x, y,icon,23]);
+		prep = "INSERT INTO ACHIEVEMENTS(username,ownerid) VALUES($1,$2)";
+		await pool.query(prep, [username,dbres.rows[0].id]);
 
 	};
 

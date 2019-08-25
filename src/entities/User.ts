@@ -30,8 +30,12 @@ export interface User {
     protecteduntil:number;
     militaryscore:number;
     totalattacks:number;
+    totalwinattacks:number;
     totaldefenses:number;
+    totalwindefenses:number;
     creationtime:number;
     lastattack:number;
     honorpoints:number;
+    legendaries:number;
+    soldpigeons:number;
 }

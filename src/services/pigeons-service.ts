@@ -77,6 +77,11 @@ export class PigeonsService {
         const randomname = namesList[(Math.floor(Math.random() * namesList.length))];
         const text = "INSERT INTO PIGEONS(type,name,rank,attack,attackrandomness,shield,defense,defenserandomness,droppingsminute,feathers,energy,maxenergy,element,feedcost,creationtime,ownerid,nickname) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)";
         await pool.query(text, [pigeontype, pigeonList[pigeontype].name, pigeonList[pigeontype].rank, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, Date.now(), user.id, randomname]);
+
+        if (pigeonList[pigeontype].rank == 5 && expeditionsList[expeditiontype].exprank == user.lvl) {
+            const text4 = "UPDATE users SET legendaries=$1 where id=$2;";
+            await pool.query(text4, [user.legendaries + 1, user.id]);
+        }
     }
 
     // static async updateUser(user: User, droppings: number) {
@@ -87,8 +92,12 @@ export class PigeonsService {
     static async sellPigeon(user: User, pigeonid: number) {
         let text = "SELECT ownerid,droppingsminute,feathers FROM PIGEONS WHERE id=$1"
         const pigeon = (await pool.query(text, [pigeonid])).rows[0];
-        text = "UPDATE USERS SET totaldroppingsminute = $1,feathers=$2,birds=$3  WHERE id =$4;";
-        await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers, user.birds - 1, pigeon.ownerid]);
+        if (pigeon == null) {
+            globalhelper.setExpFalse();
+            throw new ConnectError('PIGEON_REQUIREMENTS');
+        }
+        text = "UPDATE USERS SET totaldroppingsminute = $1,feathers=$2,birds=$3,soldpigeons=$4  WHERE id =$5;";
+        await pool.query(text, [user.totaldroppingsminute - pigeon.droppingsminute, user.feathers + pigeon.feathers, user.birds - 1, user.soldpigeons + 1, pigeon.ownerid]);
         text = "DELETE FROM PIGEONS WHERE id=$1"
         await pool.query(text, [pigeonid]);
     }

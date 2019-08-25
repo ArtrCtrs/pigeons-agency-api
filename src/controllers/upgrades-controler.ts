@@ -68,7 +68,7 @@ export class UpgradesControler extends AbstractController {
             globalhelper.setExpFalse();
             throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
         }
-        if (user.droppings < seedsStorageList[user.farmstoragelvl + 1].droppingsCost || user.feathers < seedsStorageList[user.farmstoragelvl + 1].feathersCost) {
+        if (user.seeds < seedsStorageList[user.farmstoragelvl + 1].seedsCost || user.feathers < seedsStorageList[user.farmstoragelvl + 1].feathersCost) {
             globalhelper.setExpFalse();
             throw new ConnectError('REQUIREMENTS_ERROR');
         }
@@ -85,7 +85,7 @@ export class UpgradesControler extends AbstractController {
             globalhelper.setExpFalse();
             throw new ConnectError('LEVEL_REQUIREMENT_ERROR');
         }
-        if (user.seeds < droppingsStorageList[user.droppingsstoragelvl + 1].seedsCost || user.feathers < droppingsStorageList[user.droppingsstoragelvl + 1].feathersCost) {
+        if (user.droppings < droppingsStorageList[user.droppingsstoragelvl + 1].droppingsCost || user.feathers < droppingsStorageList[user.droppingsstoragelvl + 1].feathersCost) {
             globalhelper.setExpFalse();
             throw new ConnectError('REQUIREMENTS_ERROR');
         }

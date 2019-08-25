@@ -41,16 +41,18 @@ export class AttackService {
         text = "SELECT * FROM Pigeons WHERE ownerid=$1 AND defender=true"
         let defendingPigeons: Pigeon[] = (await pool.query(text, [defender.id])).rows;
 
+        messagedetails += "<b>Attackers</b><br>"
         attackingPigeons.forEach(p => {
             const currentattack = p.attack + (Math.round(Math.random() * 2 * p.attackrandomness - p.attackrandomness));
             attacktotal += currentattack;
-            messagedetails += p.name + " rank " + p.rank + " has attacked for " + currentattack + "<br>";
+            messagedetails += "Lvl " + this.typeToLvl(p.type) + " " + this.rankToText(p.rank) + " : atk " + currentattack + "<br>";
         });
+        messagedetails += "<b>Defenders</b><br>";
         defendingPigeons.forEach(p => {
             const currentdefense = p.defense + (Math.round(Math.random() * 2 * p.defenserandomness - p.defenserandomness));
             defensetotal += currentdefense;
             shieldtotal += p.shield;
-            messagedetails += p.name + " rank " + p.rank + " has defended for " + currentdefense + "<br>";
+            messagedetails += "Lvl " + this.typeToLvl(p.type) + " " + this.rankToText(p.rank) + " : def " + currentdefense + "<br>";
         });
 
 
@@ -60,9 +62,12 @@ export class AttackService {
         let defenderwonpoints;
         let stolenFeathers = 0;
         let stolenDroppings = 0;
+        let defenderwon = 0;
+        let attackerwon = 0;
 
 
         if (attacktotal >= defensetotal) {
+            attackerwon = 1;
             if (!higherscore) {
                 attackerwonpoints = 7;
                 defenderwonpoints = -6;
@@ -71,13 +76,14 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 5)) > 0 ? -(6 - Math.round(diff / 5)) : 0;
             }
             stolenFeathers = Math.round(defender.feathers * (0.3 - 0.01 * shieldtotal) * attackerwonpoints / 7);
-            const potentialStolenDroppings = Math.round(((defender.droppings / 100) + (defender.maxdroppings * 0.5 / 100) / 2) * attackerwonpoints / 7);
-            const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
-            stolenDroppings = potentialStolenDroppings < attackerDroppingsSpace ? potentialStolenDroppings : attackerDroppingsSpace;
+            stolenDroppings = Math.round(((defender.droppings / 100) + (defender.maxdroppings * 0.5 / 100) / 2 * 1.2) * attackerwonpoints / 7);
+            // const attackerDroppingsSpace = (attacker.maxdroppings - attacker.droppings);
+            // stolenDroppings = potentialStolenDroppings < attackerDroppingsSpace ? potentialStolenDroppings : attackerDroppingsSpace;
             stolenDroppings = stolenDroppings > defender.droppings ? defender.droppings : stolenDroppings;
 
 
         } else {
+            defenderwon = 1;
             if (higherscore) {
                 attackerwonpoints = -5;
                 defenderwonpoints = 6;
@@ -86,9 +92,9 @@ export class AttackService {
                 defenderwonpoints = (6 - Math.round(diff / 6)) > 0 ? (6 - Math.round(diff / 6)) : 0;
             }
             stolenFeathers = -Math.round(attacker.feathers * (0.3 - 0.01 * shieldtotal) * 0.5);
-            const potentialStolenDroppings = Math.round(((attacker.droppings / 100) + (attacker.maxdroppings * 0.25 / 100) / 2) * 0.5);
-            const defenderDroppingsSpace = (defender.maxdroppings - defender.droppings);
-            stolenDroppings = potentialStolenDroppings < defenderDroppingsSpace ? potentialStolenDroppings : defenderDroppingsSpace;
+            stolenDroppings = Math.round(((attacker.droppings / 100) + (attacker.maxdroppings * 0.25 / 100) / 2) * 0.8);
+            // const defenderDroppingsSpace = (defender.maxdroppings - defender.droppings);
+            // stolenDroppings = potentialStolenDroppings < defenderDroppingsSpace ? potentialStolenDroppings : defenderDroppingsSpace;
             stolenDroppings = stolenDroppings > attacker.droppings ? attacker.droppings : stolenDroppings;
             stolenDroppings = -stolenDroppings;
 
@@ -99,15 +105,15 @@ export class AttackService {
         // messagebody += "Attacker military score got  : " + attackerwonpoints + " points<br>";
         // messagebody += "Defender military score got  : " + defenderwonpoints + " points<br>";
 
-        messagebody += "<br>Details : <br>" + messagedetails + "";
+        messagebody += "<br>" + messagedetails + "";
 
-        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5,droppings=$6,lastattack=$7  WHERE id =$8 ";
-        const newattackkscore = (attacker.militaryscore + attackerwonpoints) > 0 ? (attacker.militaryscore + attackerwonpoints) : 0;
-        await pool.query(text, [newattackkscore, Date.now() + (1500 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.droppings + stolenDroppings, defender.id, attacker.id]);
+        text = "UPDATE USERS SET militaryscore = $1,nextpossibleattack=$2,protecteduntil=$3,feathers=$4,totalattacks=$5,droppings=$6,lastattack=$7,totalwinattacks=$8  WHERE id =$9 ";
+        const newattackscore = (attacker.militaryscore + attackerwonpoints) > 0 ? (attacker.militaryscore + attackerwonpoints) : 0;
+        await pool.query(text, [newattackscore, Date.now() + (1500 * 60), Date.now(), attacker.feathers + stolenFeathers, attacker.totalattacks + 1, attacker.droppings + stolenDroppings, defender.id, attacker.totalwinattacks + attackerwon, attacker.id]);
 
         const newdefensescore = (defender.militaryscore + defenderwonpoints) > 0 ? (defender.militaryscore + defenderwonpoints) : 0;
-        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4,droppings=$5  WHERE id =$6 ";
-        await pool.query(text, [newdefensescore, Date.now() + (20000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.droppings - stolenDroppings, defender.id]);
+        text = "UPDATE USERS SET militaryscore = $1,protecteduntil=$2,feathers=$3,totaldefenses=$4,droppings=$5,totalwindefenses=$6  WHERE id =$7 ";
+        await pool.query(text, [newdefensescore, Date.now() + (20000 * 60), defender.feathers - stolenFeathers, defender.totaldefenses + 1, defender.droppings - stolenDroppings, defender.totalwindefenses + defenderwon, defender.id]);
 
 
         message = {
@@ -122,7 +128,7 @@ export class AttackService {
             shieldvalue: shieldtotal,
             stolenfeathers: stolenFeathers,
             myscore: newdefensescore,
-            opponentscore: newattackkscore,
+            opponentscore: newattackscore,
             mynewpoints: defenderwonpoints,
             opponentnewpoints: attackerwonpoints,
             stolenDroppings: stolenDroppings
@@ -142,7 +148,7 @@ export class AttackService {
             defensevalue: defensetotal,
             shieldvalue: shieldtotal,
             stolenfeathers: stolenFeathers,
-            myscore: newattackkscore,
+            myscore: newattackscore,
             opponentscore: newdefensescore,
             mynewpoints: attackerwonpoints,
             opponentnewpoints: defenderwonpoints,
@@ -151,4 +157,40 @@ export class AttackService {
         await MessageService.createMessage(message);
 
     }
+    static rankToText(rank: number): String {
+        let text = "";
+        switch (rank) {
+            case 1:
+                text = "Common"
+                break;
+            case 2:
+                text = "Uncommon"
+                break;
+            case 3:
+                text = "Rare"
+                break;
+            case 4:
+                text = "Epic"
+                break;
+            case 5:
+                text = "Legendary"
+                break;
+            case -1:
+                text = "Event"
+                break;
+        }
+        return text;
+
+    }
+    static typeToLvl(type: number): number {
+        let lvl = 0;
+        if (type > 0 && type <= 150) {
+            lvl = Math.floor(type / 5) + 1
+        } else if (type > 150 && type <= 300) {
+            lvl = Math.floor((type - 150) / 5) + 1
+        }
+        return lvl;
+
+    }
 }
+

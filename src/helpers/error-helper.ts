@@ -60,6 +60,10 @@ static handledErrors: Errors = {
 	'EVENT_REQUIREMENTS':{
 		errorCode: 409,
         errorMessage: 'You cannot activate event at this time.'
+	},
+	'PIGEON_REQUIREMENTS':{
+		errorCode: 409,
+        errorMessage: 'This pigeon dosnt exist anymore.'
 	}
 };
 

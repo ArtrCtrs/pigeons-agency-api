@@ -29,7 +29,7 @@ const aviaryUpgradesList    = [
 {lvl: 27,droppingsCost: 5900000,newBirds:64 },
 {lvl: 28,droppingsCost: 6500000,newBirds:66 },
 {lvl: 29,droppingsCost: 7000000,newBirds:68 },
-{lvl: 30,droppingsCost: 11000000,newBirds:70},
-{lvl: 31,droppingsCost: 9999999999999,newBirds:99},
+{lvl: 30,droppingsCost: 11000000,newBirds:70 },
+{lvl: 31,droppingsCost: 999999999,newBirds:99 },
 ]
 export default aviaryUpgradesList ;
