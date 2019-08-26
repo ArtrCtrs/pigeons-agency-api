@@ -63,7 +63,7 @@ app.get('/api/achievements', [MiddlewareHelper.logRequest, MiddlewareHelper.isLo
 app.post('/api/achievements', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(AchievementsControler.claimAchievement));
 
 app.post('/api/merchant/htf', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MerchantControler.honorpointsToFeathers));
-app.post('/api/achievements/ftd', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MerchantControler.feathersToDroppings));
+app.post('/api/merchant/ftd', [MiddlewareHelper.logRequest, MiddlewareHelper.isLoggedIn], wrapAsync(MerchantControler.feathersToDroppings));
 
 app.use(ErrorHelper.clientErrorHandler);
 
