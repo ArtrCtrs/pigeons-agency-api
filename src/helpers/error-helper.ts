@@ -64,6 +64,14 @@ static handledErrors: Errors = {
 	'PIGEON_REQUIREMENTS':{
 		errorCode: 409,
         errorMessage: 'This pigeon dosnt exist anymore.'
+	},
+	'UNKNOWN_ACHIEVEMENT':{
+		errorCode: 409,
+        errorMessage: 'This achievement does not exist.'
+	},
+	'ACHIEVEMENT_REQUIREMENTS':{
+		errorCode: 409,
+        errorMessage: 'You do not meet the required goals.'
 	}
 };
 
