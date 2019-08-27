@@ -13,16 +13,17 @@ export class AchievementsService {
 
     static async claimAchievement(user: User, achievement: any) {
         let userachievements = await this.getAchievements(user);
-        if (userachievements[achievement.id] == true) {
+        if (userachievements[achievement.id]) {
             globalhelper.setExpFalse();
             throw new ConnectError('ACHIEVEMENT_REQUIREMENTS');
         }
-        userachievements[achievement.id] = false;
+        userachievements[achievement.id] = true;
         const text = "UPDATE ACHIEVEMENTS set " + achievement.id + " = true where ownerid= $1;"
         await pool.query(text, [user.id]);
 
+        user.honorpoints += achievement.reward;
         const text2 = "UPDATE USERS set honorpoints = $1 where id= $2;"
-        await pool.query(text2, [achievement.honorpoints, user.id])
+        await pool.query(text2, [user.honorpoints, user.id])
 
         return userachievements;
     }

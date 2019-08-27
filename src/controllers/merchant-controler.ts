@@ -44,6 +44,7 @@ export class MerchantControler extends AbstractController {
 
             user.feathers -= tradeList[user.lvl].fromFeathers;
             user.droppings += tradeList[user.lvl].toDroppings;
+            user.totalspentfeathers+=tradeList[user.lvl].fromFeathers;
 
             await MerchantService.feathersToDroppings(user);
 

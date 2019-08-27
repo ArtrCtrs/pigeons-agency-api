@@ -26,13 +26,12 @@ export class AchievementsControler extends AbstractController {
             const user = await AchievementsControler.getUserFromRequest(req);
             await AchievementsControler.updateUserInfo(user);
 
-
-            if (req.body.achievementid == null) {
+            if (req.body.id == null) {
                 globalhelper.setExpFalse();
                 throw new ConnectError('UNKNOWN_ACHIEVEMENT');
             }
             const achievement = achievementslist.filter(obj => {
-                return obj.id === req.body.achievementid
+                return obj.id === req.body.id
             })
             if (achievement == null) {
                 globalhelper.setExpFalse();

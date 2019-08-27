@@ -8,7 +8,7 @@ export class MerchantService {
         await pool.query(text, [user.honorpoints, user.feathers, user.id]);
     }
     static async feathersToDroppings(user: User) {
-        const text = "UPDATE USERS set droppings = $1,feathers=$2 where id= $3;";
-        await pool.query(text, [user.droppings, user.feathers, user.id]);
+        const text = "UPDATE USERS set droppings = $1,feathers=$2,totalspentfeathers=$3 where id= $4;";
+        await pool.query(text, [user.droppings, user.feathers,user.totalspentfeathers, user.id]);
     }
 }

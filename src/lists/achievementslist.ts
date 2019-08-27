@@ -13,13 +13,13 @@ const achievementslist    = [
     {id: "legendary100",name: "I should buy lottery tickets",description:"Get 100 legendary pigeons (of your level)", value:100,attribute:"legendaries",reward:40},
     {id: "legendary500",name: "I did this without cheating ?",description:"Get 500 legendary pigeons (of your level)", value:500,attribute:"legendaries",reward:50},
 
-    {id: "droppingsminute20",name: "Beginning of a fortune",description:"Reach 20 droppings per minute", value:20,attribute:"droppingsminute",reward:10},
-    {id: "droppingsminute100",name: "I should build a house",description:"Reach 100 droppings per minute", value:100,attribute:"droppingsminute",reward:20},
-    {id: "droppingsminute500",name: "That's a lot of poop",description:"Reach 500 droppings per minute", value:500,attribute:"droppingsminute",reward:30},
-    {id: "droppingsminute1000",name: "Where will I store all this ?",description:"Reach 1000 droppings per minute", value:1000,attribute:"droppingsminute",reward:40},
-    {id: "droppingsminute5000",name: "Should I go to the vet ?",description:"Reach 5000 droppings per minute", value:5000,attribute:"droppingsminute",reward:50},
-    {id: "droppingsminute10000",name: "Yes, guano",description:"Reach 10000 droppings per minute", value:10000,attribute:"droppingsminute",reward:60},
-    {id: "droppingsminute20000",name: "Please stop",description:"Reach 20000 droppings per minute", value:20000,attribute:"droppingsminute",reward:70},
+    {id: "droppingsminute20",name: "Beginning of a fortune",description:"Reach 20 droppings per minute", value:20,attribute:"totaldroppingsminute",reward:10},
+    {id: "droppingsminute100",name: "I should build a house",description:"Reach 100 droppings per minute", value:100,attribute:"totaldroppingsminute",reward:20},
+    {id: "droppingsminute500",name: "That's a lot of poop",description:"Reach 500 droppings per minute", value:500,attribute:"totaldroppingsminute",reward:30},
+    {id: "droppingsminute1000",name: "Where will I store all this ?",description:"Reach 1000 droppings per minute", value:1000,attribute:"totaldroppingsminute",reward:40},
+    {id: "droppingsminute5000",name: "Should I go to the vet ?",description:"Reach 5000 droppings per minute", value:5000,attribute:"totaldroppingsminute",reward:50},
+    {id: "droppingsminute10000",name: "Yes, guano",description:"Reach 10000 droppings per minute", value:10000,attribute:"totaldroppingsminute",reward:60},
+    {id: "droppingsminute20000",name: "Please stop",description:"Reach 20000 droppings per minute", value:20000,attribute:"totaldroppingsminute",reward:70},
 
     {id: "militaryscore10",name: "Noob",description:"Reach a military score of 10", value:10,attribute:"militaryscore",reward:10},
     {id: "militaryscore30",name: "Ranking up",description:"Reach a military score of 30", value:30,attribute:"militaryscore",reward:20},
@@ -42,9 +42,9 @@ const achievementslist    = [
     {id: "attack50",name: "Aggressive much ?",description:"Do 50 succcessful attacks", value:50,attribute:"totalwinattacks",reward:20},
     {id: "attack500",name: "I should call the police",description:"Do 500 succcessful attacks", value:500,attribute:"totalwinattacks",reward:30},
 
-    {id: "defend5",name: "Me and my tough pigeons",description:"Do 5 succcessful defenses", value:5,attribute:"totalwindefences",reward:10},
-    {id: "defend50",name: "You shall not pass !",description:"Do 50 succcessful defenses", value:50,attribute:"totalwindefences",reward:20},
-    {id: "defend500",name: "Stop attacking me please.",description:"Do 500 succcessful defenses", value:500,attribute:"totalwindefences",reward:30},
+    {id: "defend5",name: "Me and my tough pigeons",description:"Do 5 succcessful defenses", value:5,attribute:"totalwindefenses",reward:10},
+    {id: "defend50",name: "You shall not pass !",description:"Do 50 succcessful defenses", value:50,attribute:"totalwindefenses",reward:20},
+    {id: "defend500",name: "Stop attacking me please.",description:"Do 500 succcessful defenses", value:500,attribute:"totalwindefenses",reward:30},
 
 ]
     export default achievementslist ;
