@@ -58,7 +58,7 @@ export class EventService {
                         } else {
                             prize = 7;
                         }
-                        if (bestPerLevel.some((ev: { id: number; }) => ev.id === eventusers[i].id) && prize > 5) { 
+                        if (bestPerLevel.some((ev: { id: number; }) => ev.id === eventusers[i].id) && prize > 5) {
                             prize = 5;
                         }
                         let pigeontype;
@@ -73,7 +73,7 @@ export class EventService {
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance + 7;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 5);
+                                pigeondroppings = Math.round(pigeondroppings * 1.2);
                                 const rand = Math.random();
                                 if (rand > 0.8) {
                                     pigeonshield = 6;
@@ -86,7 +86,7 @@ export class EventService {
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance + 4;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 8);
+                                pigeondroppings = Math.round(pigeondroppings * 1.1);
                                 newhonorpoints = 60;
                                 break;
                             case 3:
@@ -94,7 +94,7 @@ export class EventService {
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance + 2;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                pigeondroppings = Math.round(pigeondroppings + pigeondroppings / 14);
+                                pigeondroppings = Math.round(pigeondroppings * 1.05);
                                 newhonorpoints = 40;
                                 break;
                             case 4:
@@ -131,6 +131,10 @@ export class EventService {
 
                         const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3 where id=$4;";
                         await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints, eventusers[i].userid]);
+
+                        eventusers[i].newHonorPoints = newhonorpoints;
+                        const text3 = "UPDATE EVENTSPLAYERS SET newHonorPoints=$1  WHERE id =$2;";
+                        await pool.query(text3, [newhonorpoints, eventusers[i].id]);
                     }
                     break;
                 }
