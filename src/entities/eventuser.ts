@@ -11,4 +11,5 @@ export interface Eventuser {
     totaldroppingsminute:number;
     birds:number;
     newHonorPoints:number;
+    eventparticipation:number;
 }
