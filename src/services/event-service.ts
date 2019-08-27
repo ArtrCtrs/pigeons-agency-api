@@ -1,7 +1,6 @@
 import { User } from '../entities/User';
 import db from '../db/pgpool';
 import { Event } from '../entities/event';
-import { Message } from '../entities/message';
 import { ConnectError } from '../classes/connect-error';
 import { Eventuser } from '../entities/eventuser';
 import { EventResponse } from '../entities/eventsresponse';
@@ -16,7 +15,7 @@ export class EventService {
         let text = "SELECT * FROM EVENTS ORDER BY id DESC LIMIT 1";
         let event: Event = (await pool.query(text)).rows[0];
 
-        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
+        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds,user.eventparticipation FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
         let eventusers: Eventuser[] = (await pool.query(text, [event.id])).rows;
 
 
@@ -47,8 +46,10 @@ export class EventService {
                     let prize = 7;
                     const nbrplayers = eventusers.length;
                     for (let i = 0; i < nbrplayers; i++) {
+                        let eventparticipation = 1;
                         if (i < 3) {
                             prize = i + 1;
+                            eventparticipation = i == 0 ? 3 : 2;
                         } else if (i <= nbrplayers * 0.2) {
                             prize = 4;
                         } else if (i <= nbrplayers * 0.5) {
@@ -61,6 +62,8 @@ export class EventService {
                         if (bestPerLevel.some((ev: { id: number; }) => ev.id === eventusers[i].id) && prize > 5) {
                             prize = 5;
                         }
+                        eventparticipation = eventparticipation > eventusers[i].eventparticipation ? eventparticipation : eventusers[i].eventparticipation;
+
                         let pigeontype;
                         let pigeonattack;
                         let pigeondefense;
@@ -129,8 +132,8 @@ export class EventService {
                         const text = "INSERT INTO PIGEONS(type,name,rank,attack,attackrandomness,shield,defense,defenserandomness,droppingsminute,feathers,energy,maxenergy,element,feedcost,creationtime,ownerid,nickname) VALUES  ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)";
                         await pool.query(text, [-1, "Event Pigeon", -1, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, tnow, eventusers[i].userid, "Bob"]);
 
-                        const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3 where id=$4;";
-                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints, eventusers[i].userid]);
+                        const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3,eventparticipation=$4 where id=$5;";
+                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints,eventparticipation, eventusers[i].userid]);
 
                         eventusers[i].newHonorPoints = newhonorpoints;
                         const text3 = "UPDATE EVENTSPLAYERS SET newHonorPoints=$1  WHERE id =$2;";
