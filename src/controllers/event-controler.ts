@@ -27,8 +27,16 @@ export class EventControler extends AbstractController {
             console.log("delay event");
             setTimeout(() => EventControler.doEventAction(req, res), 50);
         } else {
-
             let user = await EventControler.getUserFromRequest(req);
+
+            if (req.body.droppingsM == null) {
+                globalhelper.setExpFalse();
+                throw new ConnectError('EVENT_REQUIREMENT_NULL');
+            }
+            if (req.body.droppingsM !=user.totaldroppingsminute) {
+                globalhelper.setExpFalse();
+                throw new ConnectError('EVENT_REQUIREMENT_WRONG');
+            }
 
             const data = await EventService.doEventAction(user);
             globalhelper.setExpFalse();
