@@ -4,85 +4,93 @@ import { ErrorService } from '../services/error-service';
 import globalhelper from '../helpers/globals-helper';
 
 export default class ErrorHelper {
-static handledErrors: Errors = {
-    'MISSING_TOKEN': {
-        errorCode: 403,
-        errorMessage: 'Failed to get an access token.'
-    },
-    'EXPIRED_TOKEN': {
-        errorCode: 401,
-        errorMessage: 'Expired access token.'
-    },
-    'INVALID_TOKEN': {
-        errorCode: 403,
-        errorMessage: 'Failed to verify the access token.'
-    },
-    'INVALID_PARAMETERS': {
-        errorCode: 400,
-        errorMessage: 'Your browser sent a request that our server could not understand.'
-    },
-    'INVALID_CREDENTIALS': {
-        errorCode: 401,
-        errorMessage: 'The given username or password is incorrect.'
-    },
-    'FORBIDDEN': {
-        errorCode: 403,
-        errorMessage: 'You do not have permission to access this resource.'
-    },
-    'USERNAME_ALREADY_EXISTS': {
-        errorCode: 409,
-        errorMessage: 'This username is not available.'
-    },
-    'EMAIL_ALREADY_EXISTS': {
-        errorCode: 409,
-        errorMessage: 'This email is not available.'
-	},
-	'REQUIREMENTS_ERROR':{
-		errorCode: 409,
-        errorMessage: 'You don\'t have the necessary ressources.'
-	},
-	'USER_NOT_FOUND':{
-		errorCode: 409,
-        errorMessage: 'User not found.'
-	},
-	'ATTACK_REQUIREMENTS':{
-		errorCode: 409,
-        errorMessage: 'You cannot attack this player at this time.'
-	},
-	'EXPEDITION_ERROR':{
-		errorCode: 409,
-        errorMessage: 'Expedition does not exist.'
-	},
-	'LEVEL_REQUIREMENT_ERROR':{
-		errorCode: 409,
-        errorMessage: 'Player level must be greater than upgrade level.'
-	},
-	'EVENT_REQUIREMENTS':{
-		errorCode: 409,
-        errorMessage: 'You cannot activate event at this time.'
-	},
-	'PIGEON_REQUIREMENTS':{
-		errorCode: 409,
-        errorMessage: 'This pigeon dosnt exist anymore.'
-	},
-	'UNKNOWN_ACHIEVEMENT':{
-		errorCode: 409,
-        errorMessage: 'This achievement does not exist.'
-	},
-	'ACHIEVEMENT_REQUIREMENTS':{
-		errorCode: 409,
-        errorMessage: 'You do not meet the required goals.'
-	}
-};
+	static handledErrors: Errors = {
+		'MISSING_TOKEN': {
+			errorCode: 403,
+			errorMessage: 'Failed to get an access token.'
+		},
+		'EXPIRED_TOKEN': {
+			errorCode: 401,
+			errorMessage: 'Expired access token.'
+		},
+		'INVALID_TOKEN': {
+			errorCode: 403,
+			errorMessage: 'Failed to verify the access token.'
+		},
+		'INVALID_PARAMETERS': {
+			errorCode: 400,
+			errorMessage: 'Your browser sent a request that our server could not understand.'
+		},
+		'INVALID_CREDENTIALS': {
+			errorCode: 401,
+			errorMessage: 'The given username or password is incorrect.'
+		},
+		'FORBIDDEN': {
+			errorCode: 403,
+			errorMessage: 'You do not have permission to access this resource.'
+		},
+		'USERNAME_ALREADY_EXISTS': {
+			errorCode: 409,
+			errorMessage: 'This username is not available.'
+		},
+		'EMAIL_ALREADY_EXISTS': {
+			errorCode: 409,
+			errorMessage: 'This email is not available.'
+		},
+		'REQUIREMENTS_ERROR': {
+			errorCode: 409,
+			errorMessage: 'You don\'t have the necessary ressources.'
+		},
+		'USER_NOT_FOUND': {
+			errorCode: 409,
+			errorMessage: 'User not found.'
+		},
+		'ATTACK_REQUIREMENTS': {
+			errorCode: 409,
+			errorMessage: 'You cannot attack this player at this time.'
+		},
+		'EXPEDITION_ERROR': {
+			errorCode: 409,
+			errorMessage: 'Expedition does not exist.'
+		},
+		'LEVEL_REQUIREMENT_ERROR': {
+			errorCode: 409,
+			errorMessage: 'Player level must be greater than upgrade level.'
+		},
+		'EVENT_REQUIREMENTS': {
+			errorCode: 409,
+			errorMessage: 'You cannot activate event at this time.'
+		},
+		'EVENT_REQUIREMENTS_NULL': {
+			errorCode: 409,
+			errorMessage: 'You cannot activate event at this time (null).'
+		},
+		'EVENT_REQUIREMENTS_WRONG': {
+			errorCode: 409,
+			errorMessage: 'You cannot activate event at this time (wrong).'
+		},
+		'PIGEON_REQUIREMENTS': {
+			errorCode: 409,
+			errorMessage: 'This pigeon dosnt exist anymore.'
+		},
+		'UNKNOWN_ACHIEVEMENT': {
+			errorCode: 409,
+			errorMessage: 'This achievement does not exist.'
+		},
+		'ACHIEVEMENT_REQUIREMENTS': {
+			errorCode: 409,
+			errorMessage: 'You do not meet the required goals.'
+		}
+	};
 
-/**
-	 * Returns the right error code to the client
-	 * 
-	 * @param err 
-	 * @param req 
-	 * @param res 
-	 * @param next 
-	 */
+	/**
+		 * Returns the right error code to the client
+		 * 
+		 * @param err 
+		 * @param req 
+		 * @param res 
+		 * @param next 
+		 */
 	static async clientErrorHandler(err: Error, req: Request, res: Response, next: Function) {
 		if (err instanceof ConnectError) {
 			// handled error
@@ -103,12 +111,12 @@ static handledErrors: Errors = {
 				data: null,
 				message: errorMessage
 			});
-			
-			await ErrorService.logError(errorCode,errorMessage);
+
+			await ErrorService.logError(errorCode, errorMessage);
 		} else {
 			// unhandled error
 			console.error(err.stack);
-			
+
 			globalhelper.setExpFalse();
 
 			let data = null;
@@ -123,13 +131,13 @@ static handledErrors: Errors = {
 				data: data,
 				message: 'Something went wrong.'
 			});
-			await ErrorService.logError(500,err.stack);
+			await ErrorService.logError(500, err.stack);
 		}
-		
+
 	}
 }
 interface Errors {
-    [key: string]: {
+	[key: string]: {
 		errorCode: number;
 		errorMessage: string;
 	};
