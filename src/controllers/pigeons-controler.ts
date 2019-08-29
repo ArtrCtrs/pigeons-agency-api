@@ -23,11 +23,12 @@ export class PigeonsControler extends AbstractController {
                 globalhelper.setExpFalse();
                 throw new ConnectError('INVALID_PARAMETERS');
             }
-            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
 
             user = await PigeonsControler.getUserFromRequest(req);
             await PigeonsControler.updateUserInfo(user);
             user = await PigeonsControler.getUserFromRequest(req);
+
+            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
 
             globalhelper.setExpFalse();
 
@@ -64,11 +65,12 @@ export class PigeonsControler extends AbstractController {
             }
             await PigeonsService.sellPigeon(user, req.body.pigeonid);
 
-            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
-
             user = await PigeonsControler.getUserFromRequest(req);
             await PigeonsControler.updateUserInfo(user);
             user = await PigeonsControler.getUserFromRequest(req);
+
+            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
+
             globalhelper.setExpFalse();
 
 
@@ -104,11 +106,12 @@ export class PigeonsControler extends AbstractController {
             }
             await PigeonsService.setAttacker(user, req.body.pigeonid);
 
-            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
-
             user = await PigeonsControler.getUserFromRequest(req);
             await PigeonsControler.updateUserInfo(user);
             user = await PigeonsControler.getUserFromRequest(req);
+
+            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
+
             globalhelper.setExpFalse();
 
             res.status(200).send({
@@ -142,11 +145,12 @@ export class PigeonsControler extends AbstractController {
                 throw new ConnectError('INVALID_PARAMETERS');
             }
             await PigeonsService.setDefender(user, req.body.pigeonid);
-            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
 
             user = await PigeonsControler.getUserFromRequest(req);
             await PigeonsControler.updateUserInfo(user);
             user = await PigeonsControler.getUserFromRequest(req);
+
+            let pigeons = await PigeonsService.getPigeons(user.id, req.query.orderby);
             globalhelper.setExpFalse();
 
             res.status(200).send({
