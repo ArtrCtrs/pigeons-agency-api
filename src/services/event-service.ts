@@ -50,11 +50,11 @@ export class EventService {
                         if (i < 3) {
                             prize = i + 1;
                             eventparticipation = i == 0 ? 3 : 2;
-                        } else if (i <= nbrplayers * 0.2) {
+                        } else if (i <= nbrplayers * 0.3) {
                             prize = 4;
                         } else if (i <= nbrplayers * 0.5) {
                             prize = 5;
-                        } else if (i <= nbrplayers * 0.7) {
+                        } else if (i <= nbrplayers * 0.75) {
                             prize = 6;
                         } else {
                             prize = 7;
@@ -81,7 +81,7 @@ export class EventService {
                                 if (rand > 0.8) {
                                     pigeonshield = 6;
                                 }
-                                newhonorpoints = 100;
+                                newhonorpoints = 50;
 
                                 break;
                             case 2:
@@ -90,7 +90,7 @@ export class EventService {
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
                                 pigeondroppings = Math.round(pigeondroppings * 1.1);
-                                newhonorpoints = 60;
+                                newhonorpoints = 40;
                                 break;
                             case 3:
                                 pigeontype = eventusers[i].lvl * 5;
@@ -98,21 +98,21 @@ export class EventService {
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
                                 pigeondroppings = Math.round(pigeondroppings * 1.05);
-                                newhonorpoints = 40;
+                                newhonorpoints = 30;
                                 break;
                             case 4:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack + pigeonList[pigeontype].attackvariance;
                                 pigeondefense = pigeonList[pigeontype].defense + pigeonList[pigeontype].defensevariance;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute + pigeonList[pigeontype].droppingsminutevariance;
-                                newhonorpoints = 30;
+                                newhonorpoints = 20;
                                 break;
                             case 5:
                                 pigeontype = eventusers[i].lvl * 5;
                                 pigeonattack = pigeonList[pigeontype].attack;
                                 pigeondefense = pigeonList[pigeontype].defense;
                                 pigeondroppings = pigeonList[pigeontype].droppingsminute;
-                                newhonorpoints = 20;
+                                newhonorpoints = 15;
                                 break;
                             case 6:
                                 pigeontype = eventusers[i].lvl * 5;
@@ -133,7 +133,7 @@ export class EventService {
                         await pool.query(text, [-1, "Event Pigeon", -1, pigeonattack, pigeonList[pigeontype].attackrandomness, pigeonshield, pigeondefense, pigeonList[pigeontype].defenserandomness, pigeondroppings, pigeonList[pigeontype].feathers, pigeonList[pigeontype].energy, pigeonList[pigeontype].energy, pigeonList[pigeontype].element, pigeonList[pigeontype].feedcost, tnow, eventusers[i].userid, "Bob"]);
 
                         const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3,eventparticipation=$4 where id=$5;";
-                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints,eventparticipation, eventusers[i].userid]);
+                        await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints, eventparticipation, eventusers[i].userid]);
 
                         eventusers[i].newHonorPoints = newhonorpoints;
                         const text3 = "UPDATE EVENTSPLAYERS SET newHonorPoints=$1  WHERE id =$2;";
