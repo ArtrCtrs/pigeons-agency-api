@@ -33,9 +33,17 @@ export class EventControler extends AbstractController {
                 globalhelper.setExpFalse();
                 throw new ConnectError('EVENT_REQUIREMENT_NULL');
             }
+            if (req.body.feathers == null) {
+                globalhelper.setExpFalse();
+                throw new ConnectError('EVENT_REQUIREMENT_NULL_2');
+            }
             if (req.body.droppingsM !=user.totaldroppingsminute) {
                 globalhelper.setExpFalse();
                 throw new ConnectError('EVENT_REQUIREMENT_WRONG');
+            }
+            if (req.body.feathers !=""+user.feathers) {
+                globalhelper.setExpFalse();
+                throw new ConnectError('EVENT_REQUIREMENT_WRONG_2');
             }
 
             const data = await EventService.doEventAction(user);

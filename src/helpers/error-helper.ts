@@ -69,6 +69,14 @@ export default class ErrorHelper {
 			errorCode: 409,
 			errorMessage: 'You cannot activate event at this time (wrong).'
 		},
+		'EVENT_REQUIREMENTS_NULL_2': {
+			errorCode: 409,
+			errorMessage: 'You cannot activate event at this time (null2).'
+		},
+		'EVENT_REQUIREMENTS_WRONG_2': {
+			errorCode: 409,
+			errorMessage: 'You cannot activate event at this time (wrong2).'
+		},
 		'PIGEON_REQUIREMENTS': {
 			errorCode: 409,
 			errorMessage: 'This pigeon dosnt exist anymore.'
