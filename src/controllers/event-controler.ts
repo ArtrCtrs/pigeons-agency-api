@@ -12,7 +12,6 @@ export class EventControler extends AbstractController {
         } else {
 
             let user = await EventControler.getUserFromRequest(req);
-
             const data = await EventService.getEventInfo(user);
             globalhelper.setExpFalse();
             res.status(200).send({
@@ -29,21 +28,22 @@ export class EventControler extends AbstractController {
         } else {
             let user = await EventControler.getUserFromRequest(req);
 
-            if (req.body.droppingsM == null) {
+            // if (req.body.droppingsM == null) {
+            //     globalhelper.setExpFalse();
+            //     throw new ConnectError('EVENT_REQUIREMENTS_NULL');
+            // }
+            if (typeof req.body.feathers === 'undefined' || !req.body.feathers) {
+
                 globalhelper.setExpFalse();
-                throw new ConnectError('EVENT_REQUIREMENT_NULL');
+                throw new ConnectError('EVENT_REQUIREMENTS_NULL_2');
             }
-            if (req.body.feathers == null) {
+            // if (req.body.droppingsM !=user.totaldroppingsminute) {
+            //     globalhelper.setExpFalse();
+            //     throw new ConnectError('EVENT_REQUIREMENTS_WRONG');
+            // }
+            if (req.body.feathers != "" + user.feathers) {
                 globalhelper.setExpFalse();
-                throw new ConnectError('EVENT_REQUIREMENT_NULL_2');
-            }
-            if (req.body.droppingsM !=user.totaldroppingsminute) {
-                globalhelper.setExpFalse();
-                throw new ConnectError('EVENT_REQUIREMENT_WRONG');
-            }
-            if (req.body.feathers !=""+user.feathers) {
-                globalhelper.setExpFalse();
-                throw new ConnectError('EVENT_REQUIREMENT_WRONG_2');
+                throw new ConnectError('EVENT_REQUIREMENTS_WRONG_2');
             }
 
             const data = await EventService.doEventAction(user);

@@ -15,9 +15,8 @@ export class EventService {
         let text = "SELECT * FROM EVENTS ORDER BY id DESC LIMIT 1";
         let event: Event = (await pool.query(text)).rows[0];
 
-        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds,user.eventparticipation FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
+        text = "SELECT eventsplayers.*,users.username,users.honorpoints,users.lvl,users.totaldroppingsminute,users.birds,users.eventparticipation FROM EVENTSPLAYERS LEFT JOIN USERS ON users.id=eventsplayers.userid WHERE eventsplayers.eventid=$1 ORDER BY eventsplayers.stat1 DESC;"
         let eventusers: Eventuser[] = (await pool.query(text, [event.id])).rows;
-
 
         switch (event.period) {
             case 0:
