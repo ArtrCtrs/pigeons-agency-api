@@ -67,7 +67,7 @@ app.post('/api/merchant/ftd', [MiddlewareHelper.logRequest, MiddlewareHelper.isL
 
 app.use(ErrorHelper.clientErrorHandler);
 
-const PORT = 5001;
+const PORT = 5002;
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`);
 });
