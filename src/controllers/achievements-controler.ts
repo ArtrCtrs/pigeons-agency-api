@@ -1,7 +1,7 @@
 import { AchievementsService } from './../services/achievements-service';
 import { Response, Request } from 'express';
 import { AbstractController } from './abstract-controler';
-import achievementslist from '../lists/achievementsList';
+import achievementsList from '../lists/achievementsList';
 import { ConnectError } from '../classes/connect-error';
 import globalhelper from '../helpers/globals-helper';
 export class AchievementsControler extends AbstractController {
@@ -30,7 +30,7 @@ export class AchievementsControler extends AbstractController {
                 globalhelper.setExpFalse();
                 throw new ConnectError('UNKNOWN_ACHIEVEMENT');
             }
-            const achievement = achievementslist.filter(obj => {
+            const achievement = achievementsList.filter(obj => {
                 return obj.id === req.body.id
             })
             if (achievement == null) {

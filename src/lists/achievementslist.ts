@@ -1,4 +1,4 @@
-const achievementslist    = [
+const achievementsList    = [
     {id: "lvl2",name: "I understand the game !",description:"Get to lvl 2", value:2,attribute:"lvl",reward:5},
     {id: "lvl5",name: "Leveling up !",description:"Get to lvl 5", value:5,attribute:"lvl",reward:10},
     {id: "lvl10",name: "Getting serious.",description:"Get to lvl 10", value:10,attribute:"lvl",reward:15},
@@ -46,4 +46,4 @@ const achievementslist    = [
     {id: "defend50",name: "You shall not pass !",description:"Do 50 succcessful defenses", value:50,attribute:"totalwindefenses",reward:10},
     {id: "defend500",name: "Stop attacking me please.",description:"Do 500 succcessful defenses", value:500,attribute:"totalwindefenses",reward:15},
 ]
-    export default achievementslist ;
+    export default achievementsList ;
