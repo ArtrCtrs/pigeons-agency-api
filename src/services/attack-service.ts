@@ -185,9 +185,9 @@ export class AttackService {
     static typeToLvl(type: number): number {
         let lvl = 0;
         if (type > 0 && type <= 150) {
-            lvl = Math.floor(type / 5) + 1
+            lvl = Math.floor((type - 1) / 5) + 1
         } else if (type > 150 && type <= 300) {
-            lvl = Math.floor((type - 150) / 5) + 1
+            lvl = Math.floor((type - 151) / 5) + 1
         }
         return lvl;
 
