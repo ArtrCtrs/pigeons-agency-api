@@ -49,11 +49,11 @@ export class EventService {
                         if (i < 3) {
                             prize = i + 1;
                             eventparticipation = i == 0 ? 3 : 2;
-                        } else if (i <= nbrplayers * 0.3) {
-                            prize = 4;
                         } else if (i <= nbrplayers * 0.5) {
-                            prize = 5;
+                            prize = 4;
                         } else if (i <= nbrplayers * 0.75) {
+                            prize = 5;
+                        } else if (i <= nbrplayers * 0.9) {
                             prize = 6;
                         } else {
                             prize = 7;
