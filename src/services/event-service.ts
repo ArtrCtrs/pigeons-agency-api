@@ -134,8 +134,8 @@ export class EventService {
                         const text2 = "UPDATE users SET birds=$1,totaldroppingsminute=$2,honorpoints=$3,eventparticipation=$4 where id=$5;";
                         await pool.query(text2, [eventusers[i].birds + 1, eventusers[i].totaldroppingsminute + pigeondroppings, eventusers[i].honorpoints + newhonorpoints, eventparticipation, eventusers[i].userid]);
 
-                        eventusers[i].newHonorPoints = newhonorpoints;
-                        const text3 = "UPDATE EVENTSPLAYERS SET newHonorPoints=$1  WHERE id =$2;";
+                        eventusers[i].newhonorpoints = newhonorpoints;
+                        const text3 = "UPDATE EVENTSPLAYERS SET newhonorpoints=$1  WHERE id =$2;";
                         await pool.query(text3, [newhonorpoints, eventusers[i].id]);
                     }
                     break;
