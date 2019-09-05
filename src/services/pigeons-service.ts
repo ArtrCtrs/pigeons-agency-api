@@ -40,10 +40,10 @@ export class PigeonsService {
                 statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY type desc,creationtime desc;"
                 break;
             case 9:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attacker desc,creationtime desc;"
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY attacker desc,attack desc,shield desc,creationtime desc;"
                 break;
             case 10:
-                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defender desc,creationtime desc;"
+                statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY defender desc,defense desc,shield desc,creationtime desc;"
                 break;
             default:
                 statement = "SELECT * FROM PIGEONS WHERE ownerid=$1 ORDER BY creationtime desc;"
