@@ -1,4 +1,4 @@
-**pigeons-agency-api
+**pigeons-agency-api**
 
 Project created in 2019. Web application/game - Angular frontend, NodeJs backend, configured and hosted at : https://pigeons.agency
 
