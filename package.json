@@ -24,7 +24,7 @@
 		"@types/jsonwebtoken": "^8.3.0",
 		"@types/node": "^10.12.18",
 		"@types/validatorjs": "^3.7.1",
-		"jest": "^23.6.0",
+		"jest": "^29.3.1",
 		"nodemon": "^1.18.9",
 		"ts-jest": "^23.10.5",
 		"ts-node": "^7.0.1",
